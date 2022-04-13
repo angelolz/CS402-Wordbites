@@ -1,18 +1,49 @@
 import { StatusBar } from 'expo-status-bar';
-import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useState } from 'react';
+import { Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
+const STYLES = ['default', 'dark-content', 'light-content'];
 
 var wordBites = () =>{
+  const[hidden, setHidden] = useState(false);
+  const[statusBarStyle, setStatusBarStyle] = useState(STYLES[0]);
+  
+  const changeStatusBarVisibility = () => setHidden(!hidden);
+  
+  const changeStatusBarStyle = () =>{
+    const styleId = STYLES.indexOf(statusBarStyle) + 1;
+    if (styleId === STYLES.length) {
+      setStatusBarStyle(STYLES[0]);
+    } else {
+      setStatusBarStyle(STYLES[styleId]);
+    }
+  }
+  
+  function play(){
+    console.log("Pushed the play");
+  }
+  function account(){
+    console.log("Pushed the account");
+  }
+  function stats(){
+    console.log("Pushed the stats");
+  }
+  function settings(){
+    console.log("Pushed the setting");
+  }
+  
+  
   
   var buttonRow = <View style={styles.rowBlock}>
                   <View style={styles.buttonContainer}>
-                  <Text>This is where the WordleGo logo will go</Text>
-                  <Button title="Button1"/>
-                  <Button title="Button2"/>
-                  <Button title="Button3"/>
-                  <Button title="Button4"/>
+                  <StatusBar barStyle={statusBarStyle}/>
+                  <Text>WordleGo logo </Text>
+                  <Pressable style={styles.button} onPress ={() => play()}><Text style={styles.text}>Play</Text></Pressable>
+                  <Pressable style={styles.button} onPress ={() => account()}><Text style={styles.text}>Account</Text></Pressable>
+                  <Pressable style={styles.button} onPress ={() => stats()}><Text style={styles.text}>Stats</Text></Pressable>
+                  <Pressable style={styles.button} onPress ={() => settings()}><Text style={styles.text}>Settings</Text></Pressable>
                   </View>
   </View>
-  
   
   var alist = <View style = {styles.container}>
               {buttonRow}
@@ -22,6 +53,7 @@ var wordBites = () =>{
 
 export default wordBites;
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -29,4 +61,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  buttonContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  button:{
+    borderWidth: 2,
+    padding: 15,
+    borderRadius: 5,
+    backgroundColor: "blue",
+    paddingVertical: 12,
+    marginBottom: 20,
+    
+  },
+  text: {
+    color: 'white',
+    letterSpacing: 0.25,
+    fontWeight: 'bold',
+    textTransform: "uppercase"
+  }
 });
