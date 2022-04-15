@@ -1,6 +1,6 @@
-import { StatusBar } from 'expo-status-bar';
+import { setStatusBarBackgroundColor, setStatusBarNetworkActivityIndicatorVisible, StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 const STYLES = ['default', 'dark-content', 'light-content'];
 
@@ -32,15 +32,13 @@ var wordBites = () =>{
     console.log("Pushed the setting");
   }
   
-  
-  
   var buttonRow = <View style={styles.rowBlock}>
                   <View style={styles.buttonContainer}>
                   <StatusBar barStyle={statusBarStyle}/>
                   <Text>WordleGo logo </Text>
-                  <Pressable style={styles.button} onPress ={() => play()}><Text style={styles.text}>Play</Text></Pressable>
+                  <Pressable style={styles.smallWordButton} onPress ={() => play()}><Text style={styles.text}>Play</Text></Pressable>
                   <Pressable style={styles.button} onPress ={() => account()}><Text style={styles.text}>Account</Text></Pressable>
-                  <Pressable style={styles.button} onPress ={() => stats()}><Text style={styles.text}>Stats</Text></Pressable>
+                  <Pressable style={styles.smallWordButton} onPress ={() => stats()}><Text style={styles.text}>Stats</Text></Pressable>
                   <Pressable style={styles.button} onPress ={() => settings()}><Text style={styles.text}>Settings</Text></Pressable>
                   </View>
   </View>
@@ -52,7 +50,6 @@ var wordBites = () =>{
 }
 
 export default wordBites;
-
 
 const styles = StyleSheet.create({
   container: {
@@ -74,6 +71,14 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     marginBottom: 20,
     
+  },
+  smallWordButton: {
+    borderWidth: 2,
+    borderRadius: 5,
+    backgroundColor: "blue",
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+    marginBottom: 20
   },
   text: {
     color: 'white',
