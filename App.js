@@ -20,16 +20,16 @@ var wordBites = () =>{
   }
   
   function play(){
-    console.log("Pushed the play");
+    
   }
   function account(){
-    console.log("Pushed the account");
+    
   }
   function stats(){
-    console.log("Pushed the stats");
+   
   }
   function settings(){
-    console.log("Pushed the setting");
+   
   }
   
   var buttonRow = <View style={styles.rowBlock}>
