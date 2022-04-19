@@ -66,7 +66,7 @@ const KeyboardComponent = (props) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex: 0.5,
         padding: 10,
     },
     keyrow: {
