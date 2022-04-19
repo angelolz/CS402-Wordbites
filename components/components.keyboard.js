@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { backgroundColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 
 var allKeys = [
     {key: 'Q', disabled: false},
