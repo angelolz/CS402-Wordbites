@@ -26,13 +26,13 @@ var wordBites = () =>{
     setView('GAME');
   }
   function account(){
-    
+    setView('ACCOUNT');
   }
   function stats(){
-   
+    setView('STATS');
   }
   function settings(){
-   
+    setView('SETTINGS');
   }
   
   var buttonRow = <View style={styles.rowBlock}>
