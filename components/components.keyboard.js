@@ -39,7 +39,7 @@ const KeyboardComponent = (props) => {
     function logKey(pressedKey){
         const newKeyStates = keys.map((curKey) => {
             if(curKey.key === pressedKey.key){
-                curKey.disabled = true;
+                curKey.disabled = !curKey.disabled;
             }
             return curKey;
         });
