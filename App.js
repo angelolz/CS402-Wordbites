@@ -1,6 +1,7 @@
 import { setStatusBarBackgroundColor, setStatusBarNetworkActivityIndicatorVisible, StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import KeyboardComponent from './components/components.keyboard';
 
 const STYLES = ['default', 'dark-content', 'light-content'];
 
@@ -8,6 +9,8 @@ var wordBites = () =>{
   const[hidden, setHidden] = useState(false);
   const[statusBarStyle, setStatusBarStyle] = useState(STYLES[0]);
   
+  const[curView, setView] = useState("MENU");
+
   const changeStatusBarVisibility = () => setHidden(!hidden);
   
   const changeStatusBarStyle = () =>{
@@ -20,7 +23,7 @@ var wordBites = () =>{
   }
   
   function play(){
-    
+    setView('GAME');
   }
   function account(){
     
@@ -42,9 +45,19 @@ var wordBites = () =>{
                   <Pressable style={styles.button} onPress ={() => settings()}><Text style={styles.text}>Settings</Text></Pressable>
                   </View>
   </View>
-  
+  const view  = () => {
+    switch(curView){
+      case 'MENU':
+        return buttonRow;
+      case 'GAME':
+        return <KeyboardComponent />
+      default:
+        return buttonRow;
+    }
+  }
+
   var alist = <View style = {styles.container}>
-              {buttonRow}
+                {view()}
               </View>
   return (alist)  
 }
