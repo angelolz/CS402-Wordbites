@@ -1,33 +1,40 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
+const keyState = Object.freeze({
+    unused: 1,
+    wrong: 0,
+    close: 2,
+    correct: 3
+});
+
 var allKeys = [
-    {key: 'Q', disabled: false},
-    {key: 'W', disabled: false},
-    {key: 'E', disabled: false},
-    {key: 'R', disabled: false},
-    {key: 'T', disabled: false},
-    {key: 'Y', disabled: false},
-    {key: 'U', disabled: false},
-    {key: 'I', disabled: false},
-    {key: 'O', disabled: false},
-    {key: 'P', disabled: false},
-    {key: 'A', disabled: false},
-    {key: 'S', disabled: false},
-    {key: 'D', disabled: false},
-    {key: 'F', disabled: false},
-    {key: 'G', disabled: false},
-    {key: 'H', disabled: false},
-    {key: 'J', disabled: false},
-    {key: 'K', disabled: false},
-    {key: 'L', disabled: false},
-    {key: 'Z', disabled: false},
-    {key: 'X', disabled: false},
-    {key: 'C', disabled: false},
-    {key: 'V', disabled: false},
-    {key: 'B', disabled: false},
-    {key: 'N', disabled: false},
-    {key: 'M', disabled: false},
+    {key: 'Q', state: keyState.unused},
+    {key: 'W', state: keyState.unused},
+    {key: 'E', state: keyState.unused},
+    {key: 'R', state: keyState.unused},
+    {key: 'T', state: keyState.unused},
+    {key: 'Y', state: keyState.unused},
+    {key: 'U', state: keyState.unused},
+    {key: 'I', state: keyState.unused},
+    {key: 'O', state: keyState.unused},
+    {key: 'P', state: keyState.unused},
+    {key: 'A', state: keyState.unused},
+    {key: 'S', state: keyState.unused},
+    {key: 'D', state: keyState.unused},
+    {key: 'F', state: keyState.unused},
+    {key: 'G', state: keyState.unused},
+    {key: 'H', state: keyState.unused},
+    {key: 'J', state: keyState.unused},
+    {key: 'K', state: keyState.unused},
+    {key: 'L', state: keyState.unused},
+    {key: 'Z', state: keyState.unused},
+    {key: 'X', state: keyState.unused},
+    {key: 'C', state: keyState.unused},
+    {key: 'V', state: keyState.unused},
+    {key: 'B', state: keyState.unused},
+    {key: 'N', state: keyState.unused},
+    {key: 'M', state: keyState.unused},
 ];
 
 const KeyboardComponent = (props) => {
@@ -38,7 +45,7 @@ const KeyboardComponent = (props) => {
     function logKey(pressedKey){
         const newKeyStates = keys.map((curKey) => {
             if(curKey.key === pressedKey.key){
-                curKey.disabled = !curKey.disabled;
+                curKey.state = keyState.wrong;
             }
             return curKey;
         });
@@ -47,7 +54,21 @@ const KeyboardComponent = (props) => {
     }
 
     const key = (keyboardKey) => {
-        const bgColor = keyboardKey.disabled ? '#00FF00' : '#FF0000';
+        let bgColor;
+        switch(keyboardKey.state) {
+            case keyState.unused:
+                bgColor = '#EDF2EE';
+                break;
+            case keyState.wrong:
+                bgColor = '#404140';
+                break;
+            case keyState.close:
+                bgColor = '#E9E546';
+                break;
+            case keyState.correct:
+                bgColor = '#10D445';
+                break;
+        }
         return (
             <TouchableOpacity onPress={() => logKey(keyboardKey)} style={[styles.key, {backgroundColor: bgColor}]} key={keyboardKey.key}>
                 <Text>{keyboardKey.key}</Text>
