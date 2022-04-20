@@ -45,7 +45,7 @@ const KeyboardComponent = (props) => {
     function logKey(pressedKey){
         const newKeyStates = keys.map((curKey) => {
             if(curKey.key === pressedKey.key){
-                curKey.state = keyState.wrong;
+                curKey.state = keyState.correct;
             }
             return curKey;
         });
@@ -70,7 +70,7 @@ const KeyboardComponent = (props) => {
                 break;
         }
         return (
-            <TouchableOpacity onPress={() => logKey(keyboardKey)} style={[styles.key, {backgroundColor: bgColor}]} key={keyboardKey.key}>
+            <TouchableOpacity onPress={() => logKey(keyboardKey)} style={[styles.key, {backgroundColor: bgColor}]} key={keyboardKey.key} disabled={(keyboardKey.state !== keyState.unused)}>
                 <Text>{keyboardKey.key}</Text>
             </TouchableOpacity>
         );
