@@ -46,22 +46,51 @@ const KeyboardComponent = (props) => {
         updateKeys(newKeyStates);
     }
 
-    var keyboard = 
-    <View style={styles.container}>
-        <View style={styles.keyrow}>
-            {
-            keys.map((keyboardKey) => {
-                const bgColor = keyboardKey.disabled ? '#00FF00' : '#FF0000';
-                return (
-                    <TouchableOpacity onPress={() => logKey(keyboardKey)} style={[styles.key, {backgroundColor: bgColor}]} key={keyboardKey.key}>
-                        <Text>{keyboardKey.key}</Text>
-                    </TouchableOpacity>
-                );
-            })
-            }
+    const key = (keyboardKey) => {
+        const bgColor = keyboardKey.disabled ? '#00FF00' : '#FF0000';
+        return (
+            <TouchableOpacity onPress={() => logKey(keyboardKey)} style={[styles.key, {backgroundColor: bgColor}]} key={keyboardKey.key}>
+                <Text>{keyboardKey.key}</Text>
+            </TouchableOpacity>
+        );
+    };
+
+    return (
+        <View style={styles.container}>
+           <View style={styles.keyrow}>
+                {key(keys[0])}
+                {key(keys[1])}
+                {key(keys[2])}
+                {key(keys[3])}
+                {key(keys[4])}
+                {key(keys[5])}
+                {key(keys[6])}
+                {key(keys[7])}
+                {key(keys[8])}
+                {key(keys[9])}
+            </View>
+            <View style={styles.keyrow}>
+                {key(keys[10])}
+                {key(keys[11])}
+                {key(keys[12])}
+                {key(keys[13])}
+                {key(keys[14])}
+                {key(keys[15])}
+                {key(keys[16])}
+                {key(keys[17])}
+                {key(keys[18])}
+            </View>
+            <View style={styles.keyrow}>
+                {key(keys[19])}
+                {key(keys[20])}
+                {key(keys[21])}
+                {key(keys[22])}
+                {key(keys[23])}
+                {key(keys[24])}
+                {key(keys[25])}
+            </View>
         </View>
-    </View>;
-    return keyboard;
+    );
 };
 
 const styles = StyleSheet.create({
@@ -70,7 +99,6 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     keyrow: {
-        flex: 1,
         justifyContent: 'center',
         flexDirection: 'row',
         flexWrap: 'wrap'
