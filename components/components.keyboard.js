@@ -103,6 +103,9 @@ const KeyboardComponent = (props) => {
                 {key(keys[18])}
             </View>
             <View style={styles.keyrow}>
+                <TouchableOpacity style={[styles.key, {backgroundColor: '#10D445'}]} key='enter'>
+                    <Text style={[{fontSize: 10}]}>ENTER</Text>
+                </TouchableOpacity>
                 {key(keys[19])}
                 {key(keys[20])}
                 {key(keys[21])}
@@ -110,6 +113,9 @@ const KeyboardComponent = (props) => {
                 {key(keys[23])}
                 {key(keys[24])}
                 {key(keys[25])}
+                <TouchableOpacity style={[styles.key, {backgroundColor: '#10D445'}]} key='erase'>
+                    <Text>$</Text> 
+                </TouchableOpacity>
             </View>
         </View>
     );
@@ -127,7 +133,7 @@ const styles = StyleSheet.create({
     key: {
         margin: 2,
         paddingHorizontal: ((width > height) ? width / 25 : height / 65),
-        paddingVertical: ((width > height) ? height / 25 : width / 50)
+        paddingVertical: ((width > height) ? height / 25 : width / 20)
     }
 });
 
