@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
+const { width, height } = Dimensions.get('window');
+
 
 const keyState = Object.freeze({
     unused: 1,
@@ -40,7 +42,6 @@ var allKeys = [
 const KeyboardComponent = (props) => {
 
     const[keys, updateKeys] = useState(allKeys);
-    
 
     function logKey(pressedKey){
         const newKeyStates = keys.map((curKey) => {
@@ -116,7 +117,7 @@ const KeyboardComponent = (props) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 0.5,
+        flex: 1,
         padding: 10,
     },
     keyrow: {
@@ -124,8 +125,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     key: {
-        padding: 11.5,
-        margin: 2
+        margin: 2,
+        paddingHorizontal: ((width > height) ? width / 25 : height / 65),
+        paddingVertical: ((width > height) ? height / 25 : width / 50)
     }
 });
 
