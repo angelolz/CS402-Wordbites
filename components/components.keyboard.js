@@ -11,41 +11,41 @@ const keyState = Object.freeze({
 });
 
 var allKeys = [
-    {key: 'Q', state: keyState.unused},
-    {key: 'W', state: keyState.unused},
-    {key: 'E', state: keyState.unused},
-    {key: 'R', state: keyState.unused},
-    {key: 'T', state: keyState.unused},
-    {key: 'Y', state: keyState.unused},
-    {key: 'U', state: keyState.unused},
-    {key: 'I', state: keyState.unused},
-    {key: 'O', state: keyState.unused},
-    {key: 'P', state: keyState.unused},
-    {key: 'A', state: keyState.unused},
-    {key: 'S', state: keyState.unused},
-    {key: 'D', state: keyState.unused},
-    {key: 'F', state: keyState.unused},
-    {key: 'G', state: keyState.unused},
-    {key: 'H', state: keyState.unused},
-    {key: 'J', state: keyState.unused},
-    {key: 'K', state: keyState.unused},
-    {key: 'L', state: keyState.unused},
-    {key: 'Z', state: keyState.unused},
-    {key: 'X', state: keyState.unused},
-    {key: 'C', state: keyState.unused},
-    {key: 'V', state: keyState.unused},
-    {key: 'B', state: keyState.unused},
-    {key: 'N', state: keyState.unused},
-    {key: 'M', state: keyState.unused},
+    { key: 'Q', state: keyState.unused },
+    { key: 'W', state: keyState.unused },
+    { key: 'E', state: keyState.unused },
+    { key: 'R', state: keyState.unused },
+    { key: 'T', state: keyState.unused },
+    { key: 'Y', state: keyState.unused },
+    { key: 'U', state: keyState.unused },
+    { key: 'I', state: keyState.unused },
+    { key: 'O', state: keyState.unused },
+    { key: 'P', state: keyState.unused },
+    { key: 'A', state: keyState.unused },
+    { key: 'S', state: keyState.unused },
+    { key: 'D', state: keyState.unused },
+    { key: 'F', state: keyState.unused },
+    { key: 'G', state: keyState.unused },
+    { key: 'H', state: keyState.unused },
+    { key: 'J', state: keyState.unused },
+    { key: 'K', state: keyState.unused },
+    { key: 'L', state: keyState.unused },
+    { key: 'Z', state: keyState.unused },
+    { key: 'X', state: keyState.unused },
+    { key: 'C', state: keyState.unused },
+    { key: 'V', state: keyState.unused },
+    { key: 'B', state: keyState.unused },
+    { key: 'N', state: keyState.unused },
+    { key: 'M', state: keyState.unused },
 ];
 
 const KeyboardComponent = (props) => {
 
-    const[keys, updateKeys] = useState(allKeys);
+    const [keys, updateKeys] = useState(allKeys);
 
-    function logKey(pressedKey){
+    function logKey(pressedKey) {
         const newKeyStates = keys.map((curKey) => {
-            if(curKey.key === pressedKey.key){
+            if (curKey.key === pressedKey.key) {
                 curKey.state = keyState.wrong;
             }
             return curKey;
@@ -56,7 +56,7 @@ const KeyboardComponent = (props) => {
 
     const key = (keyboardKey) => {
         let bgColor;
-        switch(keyboardKey.state) {
+        switch (keyboardKey.state) {
             case keyState.unused:
                 bgColor = '#EDF2EE';
                 break;
@@ -71,7 +71,7 @@ const KeyboardComponent = (props) => {
                 break;
         }
         return (
-            <TouchableOpacity onPress={() => logKey(keyboardKey)} style={[styles.key, {backgroundColor: bgColor}]} key={keyboardKey.key} disabled={(keyboardKey.state !== keyState.unused)}>
+            <TouchableOpacity onPress={() => logKey(keyboardKey)} style={[styles.key, { backgroundColor: bgColor }]} key={keyboardKey.key} disabled={(keyboardKey.state !== keyState.unused)}>
                 <Text>{keyboardKey.key}</Text>
             </TouchableOpacity>
         );
@@ -79,7 +79,7 @@ const KeyboardComponent = (props) => {
 
     return (
         <View style={styles.container}>
-           <View style={styles.keyrow}>
+            <View style={styles.keyrow}>
                 {key(keys[0])}
                 {key(keys[1])}
                 {key(keys[2])}
@@ -103,8 +103,8 @@ const KeyboardComponent = (props) => {
                 {key(keys[18])}
             </View>
             <View style={styles.keyrow}>
-                <TouchableOpacity style={[styles.key, {backgroundColor: '#10D445'}]} key='enter'>
-                    <Text style={[{fontSize: 10}]}>ENTER</Text>
+                <TouchableOpacity style={[styles.key, { backgroundColor: '#10D445', flex: 1 }]} key='enter'>
+                    <Text style={[{ fontSize: 10 }]}>AAAAAAA</Text>
                 </TouchableOpacity>
                 {key(keys[19])}
                 {key(keys[20])}
@@ -113,8 +113,8 @@ const KeyboardComponent = (props) => {
                 {key(keys[23])}
                 {key(keys[24])}
                 {key(keys[25])}
-                <TouchableOpacity style={[styles.key, {backgroundColor: '#10D445'}]} key='erase'>
-                    <Text>$</Text> 
+                <TouchableOpacity style={[styles.key, { backgroundColor: '#10D445', flex: 1 }]} key='erase'>
+                    <Text>AAAAAAAA</Text>
                 </TouchableOpacity>
             </View>
         </View>
