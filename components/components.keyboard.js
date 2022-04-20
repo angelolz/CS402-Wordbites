@@ -45,7 +45,7 @@ const KeyboardComponent = (props) => {
     function logKey(pressedKey){
         const newKeyStates = keys.map((curKey) => {
             if(curKey.key === pressedKey.key){
-                curKey.state = keyState.correct;
+                curKey.state = keyState.wrong;
             }
             return curKey;
         });
