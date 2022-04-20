@@ -101,10 +101,9 @@ const styles = StyleSheet.create({
     keyrow: {
         justifyContent: 'center',
         flexDirection: 'row',
-        flexWrap: 'wrap'
     },
     key: {
-        padding: 10,
+        padding: 11.5,
         margin: 2
     }
 });
