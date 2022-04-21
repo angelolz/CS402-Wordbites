@@ -72,7 +72,7 @@ const KeyboardComponent = (props) => {
         }
         return (
             <TouchableOpacity onPress={() => logKey(keyboardKey)} style={[styles.key, { backgroundColor: bgColor }]} key={keyboardKey.key} disabled={(keyboardKey.state !== keyState.unused)}>
-                <Text>{keyboardKey.key}</Text>
+                <Text style={styles.text}>{keyboardKey.key}</Text>
             </TouchableOpacity>
         );
     };
@@ -92,6 +92,7 @@ const KeyboardComponent = (props) => {
                 {key(keys[9])}
             </View>
             <View style={styles.keyrow}>
+                <View style={{ flex: 0.5, margin: 2 }}></View>
                 {key(keys[10])}
                 {key(keys[11])}
                 {key(keys[12])}
@@ -101,10 +102,11 @@ const KeyboardComponent = (props) => {
                 {key(keys[16])}
                 {key(keys[17])}
                 {key(keys[18])}
+                <View style={{ flex: 0.5, margin: 2 }}></View>
             </View>
             <View style={styles.keyrow}>
-                <TouchableOpacity style={[styles.key, { backgroundColor: '#10D445', flex: 1 }]} key='enter'>
-                    <Text style={[{ fontSize: 10 }]}>AAAAAAA</Text>
+                <TouchableOpacity style={[styles.key, { backgroundColor: '#10D445', flex: 1.5 }]} key='enter'>
+                    <Text style={styles.text}>ENT</Text>
                 </TouchableOpacity>
                 {key(keys[19])}
                 {key(keys[20])}
@@ -113,8 +115,8 @@ const KeyboardComponent = (props) => {
                 {key(keys[23])}
                 {key(keys[24])}
                 {key(keys[25])}
-                <TouchableOpacity style={[styles.key, { backgroundColor: '#10D445', flex: 1 }]} key='erase'>
-                    <Text>AAAAAAAA</Text>
+                <TouchableOpacity style={[styles.key, { backgroundColor: '#10D445', flex: 1.5 }]} key='erase'>
+                    <Text style={styles.text}>ERS</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -123,17 +125,26 @@ const KeyboardComponent = (props) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        padding: 10,
+        width: "100%",
+        paddingHorizontal: 5,
     },
     keyrow: {
-        justifyContent: 'center',
         flexDirection: 'row',
     },
     key: {
+        flex: 1,
         margin: 2,
-        paddingHorizontal: ((width > height) ? width / 25 : height / 65),
-        paddingVertical: ((width > height) ? height / 25 : width / 20)
+        height: ((width > height) ? width / 12 : height / 12),
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: 5
+
+        // paddingHorizontal: ((width > height) ? width / 25 : height / 65),
+        // paddingVertical: ((width > height) ? height / 25 : width / 20)
+    },
+    text: {
+        fontWeight: "bold",
+        fontSize: ((width > height) ? width / 12 : height / 48)
     }
 });
 
