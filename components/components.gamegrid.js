@@ -12,7 +12,7 @@ const GameGridComponent = (props) => {
         for(let i = 0; i < wordLength; i++){
             box.push(
                 <View key={`${rowNum}:${i}`} style={styles.box}>
-                    <Text>i</Text>
+                    <Text>{`${rowNum}:${i}`}</Text>
                 </View>
             );
         }
