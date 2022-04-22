@@ -2,17 +2,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('window');
 
-const GameGridComponent = (props) => {
-    const [wordLength, setWordLength] = useState(5);
-    const [guesses, setGuesses] = useState(6);
-
+const GameGrid = (props) => {
     const boxes = (rowNum) => {
         let box = [];
 
-        for(let i = 0; i < wordLength; i++){
+        for (let i = 0; i < props.wordLength; i++) {
             box.push(
                 <View key={`${rowNum}:${i}`} style={styles.box}>
-                    <Text>{`${rowNum}:${i}`}</Text>
+                    <Text style={styles.text} adjustsFontSizeToFit={true}>i</Text>
                 </View>
             );
         }
@@ -23,7 +20,7 @@ const GameGridComponent = (props) => {
     const rows = () => {
         let row = [];
 
-        for(let i = 0; i < guesses; i++){
+        for (let i = 0; i < props.maxGuesses; i++) {
             row.push(
                 <View key={`${i}`} style={styles.row}>
                     {boxes(i)}
@@ -43,20 +40,26 @@ const GameGridComponent = (props) => {
 
 const styles = StyleSheet.create({
     container: {
-        width: "100%",
-        paddingHorizontal: 5
+        paddingHorizontal: 2
     },
     row: {
         flexDirection: 'row',
-        justifyContent: 'space-evenly'
     },
     box: {
+        flex: 0.5,
+        alignItems: "center",
+        justifyContent: "center",
+        aspectRatio: 1 / 1,
         borderColor: "black",
-        borderWidth: 5,
+        borderWidth: 1,
+        borderRadius: 5,
         color: "black",
-        padding: 10
+        margin: 2,
+    },
 
+    text: {
+        fontSize: 100
     }
 });
 
-export default GameGridComponent;
+export default GameGrid;

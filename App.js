@@ -1,9 +1,8 @@
 import { setStatusBarBackgroundColor, setStatusBarNetworkActivityIndicatorVisible, StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import KeyboardComponent from './components/components.keyboard';
-import GameGridComponent from './components/components.gamegrid';
 
+import GameBoard from './components/components.gameboard';
 const STYLES = ['default', 'dark-content', 'light-content'];
 
 var wordBites = () => {
@@ -51,13 +50,9 @@ var wordBites = () => {
       case 'MENU':
         return buttonRow;
       case 'GAME':
-        return < GameGridComponent />
-      // return (
-      //   // <View style={styles.container}>
-      //   {/* <GameGridComponent /> */ }
-
-      //   // </View>
-      // );
+        return (
+          <GameBoard />
+        );
       default:
         return buttonRow;
     }
@@ -73,7 +68,8 @@ export default wordBites;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
+    width: "100%",
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
