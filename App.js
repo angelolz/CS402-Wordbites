@@ -1,13 +1,15 @@
 import { setStatusBarBackgroundColor, setStatusBarNetworkActivityIndicatorVisible, StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Button, Pressable, StyleSheet, Text, View } from 'react-native';
 import KeyboardComponent from './components/components.keyboard';
+import SettingScreen from './components/settingsScreen';
 
 const STYLES = ['default', 'dark-content', 'light-content'];
 
 var wordBites = () =>{
   const[hidden, setHidden] = useState(false);
   const[statusBarStyle, setStatusBarStyle] = useState(STYLES[0]);
+  const[appBackground, setAppBackGround] = useState(STYLES[2]);
   
   const[curView, setView] = useState("MENU");
 
@@ -45,12 +47,73 @@ var wordBites = () =>{
                   <Pressable style={styles.button} onPress ={() => settings()}><Text style={styles.text}>Settings</Text></Pressable>
                   </View>
   </View>
+  
+  var lightSettingScreen = <View >
+                      <View>
+                        <Text style={styles.lightSettingText}>Settings</Text>
+                      </View>
+                      <View style={styles.rowBlock}>
+                        <StatusBar barStyle={statusBarStyle}/>
+                      
+                      <Text>Background: </Text>
+                      <View style={{flexDirection: 'row'}}>
+                        <View>
+                          <Pressable style={styles.button} onPress={() => changeAppBackground('light-content')}><Text>Light</Text></Pressable> 
+                        </View>
+                        <View>
+                        <Pressable style={styles.button} onPress={() => changeAppBackground('dark-content')}><Text>Dark</Text></Pressable>
+                        </View> 
+                      </View>  
+                      </View>                                      
+  </View>
+  
+  var darkSettingScreen = <View >
+  <View>
+    <Text style={styles.lightSettingText}>Settings Dark Mode!!</Text>
+  </View>
+  <View style={styles.rowBlock}>
+    <StatusBar barStyle={statusBarStyle}/>
+  
+  <Text>Background: </Text>
+  <View style={{flexDirection: 'row'}}>
+    <View>
+      <Pressable style={styles.button} onPress={() => changeAppBackground('light-content')}><Text>Dark</Text></Pressable> 
+    </View>
+    <View>
+    <Pressable style={styles.button} onPress={() => changeAppBackground('dark-content')}><Text>Dark</Text></Pressable>
+    </View> 
+  </View>  
+  </View>                                      
+  </View>
+  
+  function changeAppBackground(appBackgroundColor){
+    console.log("The current value is: ", appBackground)
+    switch(appBackgroundColor){
+      case 'light-content':
+        setAppBackGround('light-content');
+        console.log("The variable was set to: ",appBackground);
+        return lightSettingScreen;
+      case 'dark-content':
+        
+        setAppBackGround('dark-content');
+        console.log("The variable was set to: ", appBackground);
+        return darkSettingScreen;
+    }
+  }
+  
+  
+  
+  
+  
+  
   const view  = () => {
     switch(curView){
       case 'MENU':
         return buttonRow;
       case 'GAME':
         return <KeyboardComponent />
+      case 'SETTINGS':
+        return <SettingScreen/> 
       default:
         return buttonRow;
     }
@@ -76,6 +139,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
+  settingContainer: {
+    flex: 0.5,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 3
+  },
   button:{
     borderWidth: 2,
     padding: 15,
@@ -98,5 +167,9 @@ const styles = StyleSheet.create({
     letterSpacing: 0.25,
     fontWeight: 'bold',
     textTransform: "uppercase"
+  },
+  lightSettingText: {
+    margin: -100,
+    borderWidth: 3
   }
 });
