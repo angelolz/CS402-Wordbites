@@ -37,7 +37,7 @@ var wordBites = () =>{
     setView('SETTINGS');
   }
   
-  var buttonRow = <View style={styles.rowBlock}>
+  var buttonRow = <View>
                   <View style={styles.buttonContainer}>
                   <StatusBar barStyle={statusBarStyle}/>
                   <Text>WordleGo logo </Text>
@@ -48,64 +48,6 @@ var wordBites = () =>{
                   </View>
   </View>
   
-  var lightSettingScreen = <View >
-                      <View>
-                        <Text style={styles.lightSettingText}>Settings</Text>
-                      </View>
-                      <View style={styles.rowBlock}>
-                        <StatusBar barStyle={statusBarStyle}/>
-                      
-                      <Text>Background: </Text>
-                      <View style={{flexDirection: 'row'}}>
-                        <View>
-                          <Pressable style={styles.button} onPress={() => changeAppBackground('light-content')}><Text>Light</Text></Pressable> 
-                        </View>
-                        <View>
-                        <Pressable style={styles.button} onPress={() => changeAppBackground('dark-content')}><Text>Dark</Text></Pressable>
-                        </View> 
-                      </View>  
-                      </View>                                      
-  </View>
-  
-  var darkSettingScreen = <View >
-  <View>
-    <Text style={styles.lightSettingText}>Settings Dark Mode!!</Text>
-  </View>
-  <View style={styles.rowBlock}>
-    <StatusBar barStyle={statusBarStyle}/>
-  
-  <Text>Background: </Text>
-  <View style={{flexDirection: 'row'}}>
-    <View>
-      <Pressable style={styles.button} onPress={() => changeAppBackground('light-content')}><Text>Dark</Text></Pressable> 
-    </View>
-    <View>
-    <Pressable style={styles.button} onPress={() => changeAppBackground('dark-content')}><Text>Dark</Text></Pressable>
-    </View> 
-  </View>  
-  </View>                                      
-  </View>
-  
-  function changeAppBackground(appBackgroundColor){
-    console.log("The current value is: ", appBackground)
-    switch(appBackgroundColor){
-      case 'light-content':
-        setAppBackGround('light-content');
-        console.log("The variable was set to: ",appBackground);
-        return lightSettingScreen;
-      case 'dark-content':
-        
-        setAppBackGround('dark-content');
-        console.log("The variable was set to: ", appBackground);
-        return darkSettingScreen;
-    }
-  }
-  
-  
-  
-  
-  
-  
   const view  = () => {
     switch(curView){
       case 'MENU':
@@ -113,16 +55,25 @@ var wordBites = () =>{
       case 'GAME':
         return <KeyboardComponent />
       case 'SETTINGS':
-        return <SettingScreen/> 
+        return <SettingScreen backGroundColor ={appBackground} toggleBackGround = {setAppBackGround} changeView={setView}/>
       default:
         return buttonRow;
     }
   }
-
-  var alist = <View style = {styles.container}>
-                {view()}
-              </View>
-  return (alist)  
+ 
+  if(appBackground === 'light-content'){
+    var alist = <View style = {styles.container}>
+                  {view()}
+                </View>
+                
+    return (alist) 
+  }else{
+    var alist = <View style = {styles.darkContainer}>
+                  {view()}
+                </View>
+    return (alist) 
+  }
+   
 }
 
 export default wordBites;
@@ -134,16 +85,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  buttonContainer: {
+  darkContainer: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  settingContainer: {
-    flex: 0.5,
+    backgroundColor: '#363537',
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 3
+  },
+  buttonContainer: {
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   button:{
     borderWidth: 2,
@@ -152,7 +102,6 @@ const styles = StyleSheet.create({
     backgroundColor: "blue",
     paddingVertical: 12,
     marginBottom: 20,
-    
   },
   smallWordButton: {
     borderWidth: 2,
@@ -167,9 +116,5 @@ const styles = StyleSheet.create({
     letterSpacing: 0.25,
     fontWeight: 'bold',
     textTransform: "uppercase"
-  },
-  lightSettingText: {
-    margin: -100,
-    borderWidth: 3
   }
 });
