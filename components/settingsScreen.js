@@ -86,14 +86,6 @@ const SettingScreen = (props) =>{
         }
     }
     
-    const changeStatusBarStyle = () =>{
-        if(appBackground == 'light-content'){
-            setStatusBarStyle(STYLES[1]);
-        }else{
-            setStatusBarStyle(STYLES[0]);
-        }
-    }
-    
     return(
         currentSetting
     );     
