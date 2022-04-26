@@ -39,7 +39,7 @@ var allKeys = [
     { key: 'M', state: keyState.unused },
 ];
 
-const KeyboardComponent = (props) => {
+const Keyboard = (props) => {
 
     const [keys, updateKeys] = useState(allKeys);
 
@@ -148,4 +148,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default KeyboardComponent;
+export default Keyboard;
