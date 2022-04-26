@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('window');
 
+import GameGrid from './components.gamegrid';
 
 const keyState = Object.freeze({
     unused: 1,
@@ -44,14 +45,48 @@ const Keyboard = (props) => {
     const [keys, updateKeys] = useState(allKeys);
 
     function logKey(pressedKey) {
-        const newKeyStates = keys.map((curKey) => {
-            if (curKey.key === pressedKey.key) {
-                curKey.state = keyState.wrong;
-            }
-            return curKey;
-        });
+        var guesses = props.guesses;
+        var currentGuess = guesses[props.numGuesses];
 
-        updateKeys(newKeyStates);
+        if (pressedKey.key === "erase") {
+            guesses[props.numGuesses] = currentGuess.substring(0, currentGuess.length - 1)
+            console.log(guesses)
+            props.updateGuesses(guesses);
+        }
+
+        else {
+            if (currentGuess.length < props.wordLength) {
+                guesses[props.numGuesses] = currentGuess + pressedKey.key
+                console.log(guesses)
+                props.updateGuesses(guesses);
+            }
+
+            else {
+                console.log("word full")
+            }
+        }
+
+        // const newKeyStates = keys.map((curKey) => {
+        //     if (curKey.key === pressedKey.key) {
+        //         curKey.state = keyState.wrong;
+        //     }
+        //     return curKey;
+        // });
+
+        // updateKeys(newKeyStates);
+    }
+
+    function submitGuess() {
+        var guesses = props.guesses;
+        var currentGuess = guesses[props.numGuesses];
+
+        if (currentGuess.length != props.wordLength) {
+            console.log("not enough letters!")
+        }
+
+        else {
+            props.incrementGuesses(props.numGuesses + 1)
+        }
     }
 
     const key = (keyboardKey) => {
@@ -71,7 +106,7 @@ const Keyboard = (props) => {
                 break;
         }
         return (
-            <TouchableOpacity onPress={() => logKey(keyboardKey)} style={[styles.key, { backgroundColor: bgColor }]} key={keyboardKey.key} disabled={(keyboardKey.state !== keyState.unused)}>
+            <TouchableOpacity onPress={() => logKey(keyboardKey)} style={[styles.key, { backgroundColor: bgColor }]} key={keyboardKey.key}>
                 <Text style={styles.text}>{keyboardKey.key}</Text>
             </TouchableOpacity>
         );
@@ -105,7 +140,7 @@ const Keyboard = (props) => {
                 <View style={{ flex: 0.5, margin: 2 }}></View>
             </View>
             <View style={styles.keyrow}>
-                <TouchableOpacity style={[styles.key, { backgroundColor: '#10D445', flex: 1.5 }]} key='enter'>
+                <TouchableOpacity onPress={submitGuess} style={[styles.key, { backgroundColor: '#10D445', flex: 1.5 }]} key='enter'>
                     <Text style={styles.text}>ENT</Text>
                 </TouchableOpacity>
                 {key(keys[19])}
@@ -115,7 +150,7 @@ const Keyboard = (props) => {
                 {key(keys[23])}
                 {key(keys[24])}
                 {key(keys[25])}
-                <TouchableOpacity style={[styles.key, { backgroundColor: '#10D445', flex: 1.5 }]} key='erase'>
+                <TouchableOpacity onPress={() => logKey({ key: "erase" })} style={[styles.key, { backgroundColor: '#10D445', flex: 1.5 }]} key='erase'>
                     <Text style={styles.text}>ERS</Text>
                 </TouchableOpacity>
             </View>
@@ -138,9 +173,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         borderRadius: 5
-
-        // paddingHorizontal: ((width > height) ? width / 25 : height / 65),
-        // paddingVertical: ((width > height) ? height / 25 : width / 20)
     },
     text: {
         fontWeight: "bold",
