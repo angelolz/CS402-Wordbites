@@ -87,10 +87,10 @@ const Keyboard = (props) => {
                 bgColor = '#404140';
                 break;
             case keyState.close:
-                bgColor = '#E9E546';
+                bgColor = '#b9a539';
                 break;
             case keyState.correct:
-                bgColor = '#10D445';
+                bgColor = '#55a24c';
                 break;
         }
         return (
