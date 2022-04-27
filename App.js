@@ -53,7 +53,7 @@ var wordBites = () =>{
       case 'MENU':
         return buttonRow;
       case 'GAME':
-        return <KeyboardComponent />
+        return <GameBoard />
       case 'SETTINGS':
         return <SettingScreen backGroundColor ={appBackground} toggleBackGround = {setAppBackGround} changeView={setView}/>
       default:
