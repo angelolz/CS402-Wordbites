@@ -94,7 +94,7 @@ const Keyboard = (props) => {
                 break;
         }
         return (
-            <TouchableOpacity onPress={() => logKey(keyboardKey)} style={[styles.key, { backgroundColor: bgColor }]} key={keyboardKey.key} disabled={keyboardKey.state === keyState.wrong}>
+            <TouchableOpacity onPress={() => logKey(keyboardKey)} style={[styles.key, { backgroundColor: bgColor }]} key={keyboardKey.key}>
                 <Text style={styles.text}>{keyboardKey.key}</Text>
             </TouchableOpacity>
         );
