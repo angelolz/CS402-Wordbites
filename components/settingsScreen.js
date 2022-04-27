@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { StyleSheet, Text, View, Pressable, Dimensions } from 'react-native';
-import { setStatusBarBackgroundColor, setStatusBarNetworkActivityIndicatorVisible, StatusBar } from 'expo-status-bar';
+import { StatusBar } from 'expo-status-bar';
 const {width, height} = Dimensions.get('window');
 
 const STYLES = ['default', 'dark-content', 'light-content'];
@@ -42,7 +42,7 @@ const SettingScreen = (props) =>{
             currentSetting = <View style={styles.rowBlockLight}>
                                 <StatusBar barStyle = {statusBarStyle}/>
                                 <View style={styles.backButton}>
-                                    <Pressable onPress={() => returnHome()}><Text>Home</Text></Pressable>
+                                    <Pressable onPress={() => returnHome()}><Text style={styles.lightButtonText}>Home</Text></Pressable>
                                 </View>
                                 <View>
                                     <Text style={styles.settingScreenText}>Settings</Text>
@@ -65,14 +65,14 @@ const SettingScreen = (props) =>{
             currentSetting = <View style={styles.rowBlockDark}>
                                 <StatusBar barStyle = {statusBarStyle}/>
                                 <View style={styles.backButton}>
-                                    <Pressable onPress={() => returnHome()}><Text>Home</Text></Pressable>
+                                    <Pressable onPress={() => returnHome()}><Text style={styles.lightButtonText}>Home</Text></Pressable>
                                 </View>
                                 <View>
-                                    <Text style={styles.settingScreenText}>Settings</Text>
+                                    <Text style={styles.darkSettingScreenText}>Settings</Text>
                                 </View>
                                 
                                 <View style={styles.buttonRow}>
-                                    <Text style={styles.settingScreenText}>Background Setting:</Text>
+                                    <Text style={styles.darkSettingScreenText}>Background Setting:</Text>
                                         <View style={{flexDirection: 'row'}}>
                                             <View>
                                                 <Pressable style={styles.button} onPress={() => changeAppBackground('light-content')}><Text style={styles.darkButtonText}>Light Mode</Text></Pressable> 
@@ -124,13 +124,20 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         paddingTop: 20,
     },
+    darkSettingScreenText: {
+        fontSize: ((width > height)? width/15 : height/60),
+        alignSelf: 'center',
+        paddingTop: 20,
+        color: 'white'
+    },
     backButton : {
         borderWidth: 2,
-        borderColor: 'pink',
         marginTop: 25,
+        marginLeft: 10,
         padding: 10,
         borderRadius: 5,
-        width: 100
+        width: 75,
+        backgroundColor: 'blue'
     }
 });
 
