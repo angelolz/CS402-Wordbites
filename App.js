@@ -4,18 +4,18 @@ import { Button, Pressable, StyleSheet, Text, View } from 'react-native';
 import KeyboardComponent from './components/components.keyboard';
 import SettingScreen from './components/settingsScreen';
 
+import GameBoard from './components/components.gameboard';
 const STYLES = ['default', 'dark-content', 'light-content'];
 
 var wordBites = () =>{
   const[hidden, setHidden] = useState(false);
   const[statusBarStyle, setStatusBarStyle] = useState(STYLES[0]);
-  const[appBackground, setAppBackGround] = useState(STYLES[2]);
-  
+  const[appBackground, setAppBackGround] = useState(STYLES[2]); 
   const[curView, setView] = useState("MENU");
 
   const changeStatusBarVisibility = () => setHidden(!hidden);
-  
-  const changeStatusBarStyle = () =>{
+
+  const changeStatusBarStyle = () => {
     const styleId = STYLES.indexOf(statusBarStyle) + 1;
     if (styleId === STYLES.length) {
       setStatusBarStyle(STYLES[0]);
@@ -23,17 +23,17 @@ var wordBites = () =>{
       setStatusBarStyle(STYLES[styleId]);
     }
   }
-  
-  function play(){
+
+  function play() {
     setView('GAME');
   }
-  function account(){
+  function account() {
     setView('ACCOUNT');
   }
-  function stats(){
+  function stats() {
     setView('STATS');
   }
-  function settings(){
+  function settings() {
     setView('SETTINGS');
   }
   
@@ -73,17 +73,18 @@ var wordBites = () =>{
                 </View>
     return (alist) 
   }
-   
 }
 
 export default wordBites;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
+    width: "100%",
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    flexDirection: 'column'
   },
   darkContainer: {
     flex: 1,
@@ -95,7 +96,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  button:{
+  button: {
     borderWidth: 2,
     padding: 15,
     borderRadius: 5,
