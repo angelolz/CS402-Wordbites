@@ -9,7 +9,9 @@ const GameGrid = (props) => {
         for (let i = 0; i < props.wordLength; i++) {
             box.push(
                 <View key={`${rowNum}:${i}`} style={styles.box}>
-                    <Text style={styles.text} adjustsFontSizeToFit={true}>i</Text>
+                    <Text style={styles.text} adjustsFontSizeToFit={true}>
+                        {props.guesses[rowNum].charAt(i)}
+                    </Text>
                 </View>
             );
         }
