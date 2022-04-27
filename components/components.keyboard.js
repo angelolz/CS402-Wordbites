@@ -39,6 +39,16 @@ const Keyboard = (props) => {
     const [keys, updateKeys] = useState(allKeys);
     const [letterIndex, changeIndex] = useState(-1);
 
+    useEffect(() => {
+        let newKeys = [...keys];
+        if(props.numGuesses > 0) {
+            props.guesses[props.numGuesses - 1].map((e) => {
+                newKeys[newKeys.findIndex((findKey) => findKey.key === e.key)].state = e.state
+            });
+            updateKeys(newKeys);
+        }
+    }, [props.numGuesses]);
+
     function logKey(pressedKey) {
         var guesses = [...props.guesses];
         var currentGuess = guesses[props.numGuesses];
@@ -84,7 +94,7 @@ const Keyboard = (props) => {
                 break;
         }
         return (
-            <TouchableOpacity onPress={() => logKey(keyboardKey)} style={[styles.key, { backgroundColor: bgColor }]} key={keyboardKey.key}>
+            <TouchableOpacity onPress={() => logKey(keyboardKey)} style={[styles.key, { backgroundColor: bgColor }]} key={keyboardKey.key} disabled={keyboardKey.state === keyState.wrong}>
                 <Text style={styles.text}>{keyboardKey.key}</Text>
             </TouchableOpacity>
         );
