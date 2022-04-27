@@ -5,8 +5,8 @@ const { width, height } = Dimensions.get('window');
 import GameGrid from './components.gamegrid';
 
 const keyState = Object.freeze({
-    unused: 1,
-    wrong: 0,
+    unused: 0,
+    wrong: 1,
     close: 2,
     correct: 3
 });
