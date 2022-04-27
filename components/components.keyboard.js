@@ -43,11 +43,8 @@ const Keyboard = (props) => {
         if (props.numGuesses > 0) {
             props.guesses[props.numGuesses - 1].map((e) => {
                 const foundKey = newKeys[newKeys.findIndex((findKey) => findKey.key === e.key)]
-                if (foundKey.state !== keyState.correct) {
-                    if (foundKey.state !== keyState.close) {
-                        foundKey.state = e.state;
-                    }
-                }
+                if (foundKey.state < e.state)
+                    foundKey.state = e.state;
             });
             updateKeys(newKeys);
         }
