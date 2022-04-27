@@ -45,7 +45,7 @@ const Keyboard = (props) => {
     const [keys, updateKeys] = useState(allKeys);
 
     function logKey(pressedKey) {
-        var guesses = props.guesses;
+        var guesses = [...props.guesses];
         var currentGuess = guesses[props.numGuesses];
 
         if (pressedKey.key === "erase") {
