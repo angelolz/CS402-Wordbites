@@ -77,8 +77,6 @@ const GameBoard = () => {
             else
                 currentGuess[i].state = keyState.wrong;
         }
-
-        console.log(currentGuesses);
         updateGuesses(currentGuesses);
         incrementGuesses(numGuesses + 1);
 
