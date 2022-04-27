@@ -7,11 +7,11 @@ import SettingScreen from './components/settingsScreen';
 import GameBoard from './components/components.gameboard';
 const STYLES = ['default', 'dark-content', 'light-content'];
 
-var wordBites = () =>{
-  const[hidden, setHidden] = useState(false);
-  const[statusBarStyle, setStatusBarStyle] = useState(STYLES[0]);
-  const[appBackground, setAppBackGround] = useState(STYLES[2]); 
-  const[curView, setView] = useState("MENU");
+var wordBites = () => {
+  const [hidden, setHidden] = useState(false);
+  const [statusBarStyle, setStatusBarStyle] = useState(STYLES[0]);
+  const [appBackground, setAppBackGround] = useState(STYLES[2]);
+  const [curView, setView] = useState("MENU");
 
   const changeStatusBarVisibility = () => setHidden(!hidden);
 
@@ -36,42 +36,42 @@ var wordBites = () =>{
   function settings() {
     setView('SETTINGS');
   }
-  
+
   var buttonRow = <View>
-                  <View style={styles.buttonContainer}>
-                  <StatusBar barStyle={statusBarStyle}/>
-                  <Text>WordleGo logo </Text>
-                  <Pressable style={styles.smallWordButton} onPress ={() => play()}><Text style={styles.text}>Play</Text></Pressable>
-                  <Pressable style={styles.button} onPress ={() => account()}><Text style={styles.text}>Account</Text></Pressable>
-                  <Pressable style={styles.smallWordButton} onPress ={() => stats()}><Text style={styles.text}>Stats</Text></Pressable>
-                  <Pressable style={styles.button} onPress ={() => settings()}><Text style={styles.text}>Settings</Text></Pressable>
-                  </View>
+    <View style={styles.buttonContainer}>
+      <StatusBar barStyle={statusBarStyle} />
+      <Text>WordleGo logo </Text>
+      <Pressable style={styles.smallWordButton} onPress={() => play()}><Text style={styles.text}>Play</Text></Pressable>
+      <Pressable style={styles.button} onPress={() => account()}><Text style={styles.text}>Account</Text></Pressable>
+      <Pressable style={styles.smallWordButton} onPress={() => stats()}><Text style={styles.text}>Stats</Text></Pressable>
+      <Pressable style={styles.button} onPress={() => settings()}><Text style={styles.text}>Settings</Text></Pressable>
+    </View>
   </View>
-  
-  const view  = () => {
-    switch(curView){
+
+  const view = () => {
+    switch (curView) {
       case 'MENU':
         return buttonRow;
       case 'GAME':
         return <GameBoard />
       case 'SETTINGS':
-        return <SettingScreen backGroundColor ={appBackground} toggleBackGround = {setAppBackGround} changeView={setView}/>
+        return <SettingScreen backGroundColor={appBackground} toggleBackGround={setAppBackGround} changeView={setView} />
       default:
         return buttonRow;
     }
   }
- 
-  if(appBackground === 'light-content'){
-    var alist = <View style = {styles.container}>
-                  {view()}
-                </View>
-                
-    return (alist) 
-  }else{
-    var alist = <View style = {styles.darkContainer}>
-                  {view()}
-                </View>
-    return (alist) 
+
+  if (appBackground === 'light-content') {
+    var alist = <View style={styles.container}>
+      {view()}
+    </View>
+
+    return (alist)
+  } else {
+    var alist = <View style={styles.darkContainer}>
+      {view()}
+    </View>
+    return (alist)
   }
 }
 

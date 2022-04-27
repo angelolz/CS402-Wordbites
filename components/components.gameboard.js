@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Dimensions, Pressable } from 'react-native';
+import { Overlay } from 'react-native-elements'
 const { width, height } = Dimensions.get('window');
 
 import Keyboard from './components.keyboard';
@@ -15,6 +16,21 @@ const GameBoard = () => {
     const [guesses, updateGuesses] = useState([]);
     const [word, setWord] = useState(null);
     const [gameState, setGameState] = useState("IN_PROGRESS");
+    const [showOverlay, toggleOverlay] = useState(false);
+
+    //game state effect
+    useEffect(() => {
+        if (gameState === "WON") {
+            console.log("YOU WIN!!!!")
+            toggleOverlay(true);
+        }
+
+        else if (gameState == "LOST") {
+            console.log("OMEGA LOSER")
+            toggleOverlay(true)
+        }
+    }, [gameState]);
+
 
     //init guesses array
     if (guesses.length == 0) {
@@ -83,20 +99,33 @@ const GameBoard = () => {
         //check if win or lose
         if (guesses[numGuesses].every(e => e.state == keyState.correct)) {
             console.log("you win!")
-            setGameState("WIN")
+            setGameState("WON")
         }
 
         else if (numGuesses + 1 == maxGuesses) {
             console.log("loser lmfao")
-            setGameState("LOSE");
+            setGameState("LOST");
         }
 
         //return true if valid guess
         return true;
     }
 
+    function resetGame() {
+        setWord(null);
+        updateGuesses([]);
+        incrementGuesses(0);
+        setGameState("IN_PROGRESS")
+    }
+
     return (
         <View style={styles.container}>
+            <Overlay style={styles.overlay} isVisible={showOverlay} >
+                <Text>{gameState === "WON" ? "You Won!" : "You lost! loser lol"}</Text>
+                <Pressable style={styles.button} onPress={() => { resetGame(); toggleOverlay(false) }}>
+                    <Text style={styles.text}>Play Again?</Text>
+                </Pressable>
+            </Overlay>
             <GameGrid
                 wordLength={wordLength}
                 maxGuesses={maxGuesses}
@@ -117,6 +146,24 @@ const GameBoard = () => {
 const styles = StyleSheet.create({
     container: {
         width: "100%"
+    },
+    overlay: {
+        flex: 1,
+        flexDirection: 'column'
+    },
+    button: {
+        borderWidth: 2,
+        padding: 15,
+        borderRadius: 5,
+        backgroundColor: "blue",
+        paddingVertical: 12,
+        marginBottom: 20,
+    },
+    text: {
+        color: 'white',
+        letterSpacing: 0.25,
+        fontWeight: 'bold',
+        textTransform: "uppercase"
     }
 });
 

@@ -133,7 +133,7 @@ const Keyboard = (props) => {
                 <View style={{ flex: 0.5, margin: 2 }}></View>
             </View>
             <View style={styles.keyrow}>
-                <TouchableOpacity onPress={() => { if (props.checkGuess()) changeIndex(-1) }} style={[styles.key, { backgroundColor: '#10D445', flex: 1.5 }]} key='enter'>
+                <TouchableOpacity onPress={() => { if (props.checkGuess()) changeIndex(-1) }} style={[styles.key, { backgroundColor: '#808080', flex: 1.5 }]} key='enter'>
                     <Text style={styles.text}>ENT</Text>
                 </TouchableOpacity>
                 {key(keys[19])}
@@ -143,7 +143,7 @@ const Keyboard = (props) => {
                 {key(keys[23])}
                 {key(keys[24])}
                 {key(keys[25])}
-                <TouchableOpacity onPress={() => logKey({ key: "erase" })} style={[styles.key, { backgroundColor: '#10D445', flex: 1.5 }]} key='erase'>
+                <TouchableOpacity onPress={() => logKey({ key: "erase" })} style={[styles.key, { backgroundColor: '#808080', flex: 1.5 }]} key='erase'>
                     <Text style={styles.text}>ERS</Text>
                 </TouchableOpacity>
             </View>
