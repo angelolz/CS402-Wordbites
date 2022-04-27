@@ -3,13 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-nati
 const { width, height } = Dimensions.get('window');
 
 import GameGrid from './components.gamegrid';
-
-const keyState = Object.freeze({
-    unused: 0,
-    wrong: 1,
-    close: 2,
-    correct: 3
-});
+import keyState from '../constants/keyState';
 
 var allKeys = [
     { key: 'Q', state: keyState.unused },
@@ -43,49 +37,33 @@ var allKeys = [
 const Keyboard = (props) => {
 
     const [keys, updateKeys] = useState(allKeys);
+    const [letterIndex, changeIndex] = useState(-1);
 
     function logKey(pressedKey) {
         var guesses = [...props.guesses];
         var currentGuess = guesses[props.numGuesses];
 
+        if (props.gameState !== "IN_PROGRESS") return;
+
         if (pressedKey.key === "erase") {
-            guesses[props.numGuesses] = currentGuess.substring(0, currentGuess.length - 1)
-            console.log(guesses)
-            props.updateGuesses(guesses);
+            if (letterIndex >= 0) {
+                currentGuess[letterIndex].key = "";
+                changeIndex(letterIndex - 1);
+                props.updateGuesses(guesses);
+            }
         }
 
         else {
-            if (currentGuess.length < props.wordLength) {
-                guesses[props.numGuesses] = currentGuess + pressedKey.key
-                console.log(guesses)
+            if (letterIndex < props.wordLength - 1) {
+                const curIndex = letterIndex + 1;
+                currentGuess[curIndex].key = pressedKey.key
+                changeIndex(curIndex)
                 props.updateGuesses(guesses);
             }
 
             else {
                 console.log("word full")
             }
-        }
-
-        // const newKeyStates = keys.map((curKey) => {
-        //     if (curKey.key === pressedKey.key) {
-        //         curKey.state = keyState.wrong;
-        //     }
-        //     return curKey;
-        // });
-
-        // updateKeys(newKeyStates);
-    }
-
-    function submitGuess() {
-        var guesses = props.guesses;
-        var currentGuess = guesses[props.numGuesses];
-
-        if (currentGuess.length != props.wordLength) {
-            console.log("not enough letters!")
-        }
-
-        else {
-            props.incrementGuesses(props.numGuesses + 1)
         }
     }
 
@@ -140,7 +118,7 @@ const Keyboard = (props) => {
                 <View style={{ flex: 0.5, margin: 2 }}></View>
             </View>
             <View style={styles.keyrow}>
-                <TouchableOpacity onPress={submitGuess} style={[styles.key, { backgroundColor: '#10D445', flex: 1.5 }]} key='enter'>
+                <TouchableOpacity onPress={() => { if (props.checkGuess()) changeIndex(-1) }} style={[styles.key, { backgroundColor: '#10D445', flex: 1.5 }]} key='enter'>
                     <Text style={styles.text}>ENT</Text>
                 </TouchableOpacity>
                 {key(keys[19])}
