@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('window');
 
-import GameGrid from './components.gamegrid';
 import keyState from '../constants/keyState';
 
 var allKeys = [
@@ -41,11 +40,11 @@ const Keyboard = (props) => {
 
     useEffect(() => {
         let newKeys = [...keys];
-        if(props.numGuesses > 0) {
+        if (props.numGuesses > 0) {
             props.guesses[props.numGuesses - 1].map((e) => {
                 const foundKey = newKeys[newKeys.findIndex((findKey) => findKey.key === e.key)]
-                if(foundKey.state !== keyState.correct){
-                    if(foundKey.state !== keyState.close){
+                if (foundKey.state !== keyState.correct) {
+                    if (foundKey.state !== keyState.close) {
                         foundKey.state = e.state;
                     }
                 }
@@ -104,7 +103,7 @@ const Keyboard = (props) => {
         }
         return (
             <TouchableOpacity onPress={() => logKey(keyboardKey)} style={[styles.key, { backgroundColor: bgColor }]} key={keyboardKey.key}>
-                <Text style={[styles.text, {color: textColor}]}>{keyboardKey.key}</Text>
+                <Text style={[styles.text, { color: textColor }]}>{keyboardKey.key}</Text>
             </TouchableOpacity>
         );
     };
