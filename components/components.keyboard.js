@@ -43,7 +43,12 @@ const Keyboard = (props) => {
         let newKeys = [...keys];
         if(props.numGuesses > 0) {
             props.guesses[props.numGuesses - 1].map((e) => {
-                newKeys[newKeys.findIndex((findKey) => findKey.key === e.key)].state = e.state
+                const foundKey = newKeys[newKeys.findIndex((findKey) => findKey.key === e.key)]
+                if(foundKey.state !== keyState.correct){
+                    if(foundKey.state !== keyState.close){
+                        foundKey.state = e.state;
+                    }
+                }
             });
             updateKeys(newKeys);
         }
@@ -82,20 +87,24 @@ const Keyboard = (props) => {
         switch (keyboardKey.state) {
             case keyState.unused:
                 bgColor = '#EDF2EE';
+                textColor = '#000000';
                 break;
             case keyState.wrong:
                 bgColor = '#404140';
+                textColor = '#FFFFFF';
                 break;
             case keyState.close:
                 bgColor = '#b9a539';
+                textColor = '#FFFFFF';
                 break;
             case keyState.correct:
                 bgColor = '#55a24c';
+                textColor = '#FFFFFF';
                 break;
         }
         return (
             <TouchableOpacity onPress={() => logKey(keyboardKey)} style={[styles.key, { backgroundColor: bgColor }]} key={keyboardKey.key}>
-                <Text style={styles.text}>{keyboardKey.key}</Text>
+                <Text style={[styles.text, {color: textColor}]}>{keyboardKey.key}</Text>
             </TouchableOpacity>
         );
     };
