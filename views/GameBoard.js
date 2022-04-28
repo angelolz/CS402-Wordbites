@@ -1,33 +1,33 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions, Pressable } from 'react-native';
 import { Overlay } from 'react-native-elements'
-const { width, height } = Dimensions.get('window');
 
-import Keyboard from './components.keyboard';
-import GameGrid from './components.gamegrid';
-import keyState from '../constants/keyState';
+import Keyboard from '../components/Keyboard';
+import GameGrid from '../components/GameGrid';
+import GameControls from '../components/GameControls';
+import KeyState from '../constants/KeyState';
+import Settings from './Settings';
 import { dictionary, commonWords } from '../constants/wordList';
 
-
-const GameBoard = () => {
+const GameBoard = (props) => {
     const [wordLength, setWordLength] = useState(5);
     const [maxGuesses, setMaxGuesses] = useState(6);
     const [numGuesses, incrementGuesses] = useState(0);
     const [guesses, updateGuesses] = useState([]);
     const [word, setWord] = useState(null);
     const [gameState, setGameState] = useState("IN_PROGRESS");
-    const [showOverlay, toggleOverlay] = useState(false);
+    const [showResultsOverlay, toggleResultsOverlay] = useState(false);
 
     //game state effect
     useEffect(() => {
         if (gameState === "WON") {
             console.log("YOU WIN!!!!")
-            toggleOverlay(true);
+            toggleResultsOverlay(true);
         }
 
         else if (gameState == "LOST") {
             console.log("OMEGA LOSER")
-            toggleOverlay(true)
+            toggleResultsOverlay(true)
         }
     }, [gameState]);
 
@@ -38,7 +38,7 @@ const GameBoard = () => {
         for (var i = 0; i < maxGuesses; i++) {
             var wordArray = [];
             for (var j = 0; j < wordLength; j++) {
-                wordArray.push({ key: "", state: keyState.unused });
+                wordArray.push({ key: "", state: KeyState.unused });
             }
 
             initArray.push(wordArray);
@@ -75,29 +75,29 @@ const GameBoard = () => {
         var tempWord = [...word];
         for (var i = 0; i < word.length; i++) {
             if (tempWord[i] === currentGuess[i].key) {
-                currentGuess[i].state = keyState.correct;
+                currentGuess[i].state = KeyState.correct;
                 tempWord[i] = "_"
             }
         }
 
         for (var i = 0; i < word.length; i++) {
-            if (currentGuess[i].state === keyState.correct)
+            if (currentGuess[i].state === KeyState.correct)
                 continue;
 
             const index = tempWord.findIndex((e) => e === currentGuess[i].key)
             if (index > -1) {
-                currentGuess[i].state = keyState.close;
+                currentGuess[i].state = KeyState.close;
                 tempWord[index] = "_";
             }
 
             else
-                currentGuess[i].state = keyState.wrong;
+                currentGuess[i].state = KeyState.wrong;
         }
         updateGuesses(currentGuesses);
         incrementGuesses(numGuesses + 1);
 
         //check if win or lose
-        if (guesses[numGuesses].every(e => e.state == keyState.correct)) {
+        if (guesses[numGuesses].every(e => e.state == KeyState.correct)) {
             console.log("you win!")
             setGameState("WON")
         }
@@ -120,12 +120,25 @@ const GameBoard = () => {
 
     return (
         <View style={styles.container}>
-            <Overlay style={styles.overlay} isVisible={showOverlay} >
+            {props.showSettingsOverlay ?
+                <Settings
+                    toggleSettingsOverlay={props.toggleSettingsOverlay}
+                    theme={props.theme}
+                    changeTheme={props.changeTheme}
+                /> : null
+            }
+            <Overlay style={styles.overlay} isVisible={showResultsOverlay} onBackdropPress={toggleResultsOverlay}>
                 <Text>{gameState === "WON" ? "You Won!" : "You lost! loser lol"}</Text>
-                <Pressable style={styles.button} onPress={() => { resetGame(); toggleOverlay(false) }}>
+                <Pressable style={styles.button} onPress={() => { resetGame(); toggleResultsOverlay(false) }}>
                     <Text style={styles.text}>Play Again?</Text>
                 </Pressable>
             </Overlay>
+            <GameControls
+                setView={props.setView}
+                gameState={gameState}
+                toggleResultsOverlay={toggleResultsOverlay}
+                toggleSettingsOverlay={props.toggleSettingsOverlay}
+            />
             <GameGrid
                 wordLength={wordLength}
                 maxGuesses={maxGuesses}
@@ -145,7 +158,8 @@ const GameBoard = () => {
 };
 const styles = StyleSheet.create({
     container: {
-        width: "100%"
+        flexDirection: 'column',
+        alignContent: 'space-between',
     },
     overlay: {
         flex: 1,

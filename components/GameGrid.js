@@ -1,27 +1,26 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
-const { width, height } = Dimensions.get('window');
+import React from 'react';
+import { StyleSheet, Text, View, Dimensions } from 'react-native';
 
-import keyState from '../constants/keyState';
+import KeyState from '../constants/KeyState';
 
 const GameGrid = (props) => {
     const boxItem = (rowNum, i) => {
         let bgColor;
         let textColor;
         switch (props.guesses[rowNum][i].state) {
-            case keyState.unused:
+            case KeyState.unused:
                 bgColor = '#EDF2EE';
                 textColor = '#000000';
                 break;
-            case keyState.wrong:
+            case KeyState.wrong:
                 bgColor = '#404140';
                 textColor = '#FFFFFF';
                 break;
-            case keyState.close:
+            case KeyState.close:
                 bgColor = '#b9a539';
                 textColor = '#FFFFFF';
                 break;
-            case keyState.correct:
+            case KeyState.correct:
                 bgColor = '#55a24c';
                 textColor = '#FFFFFF';
                 break;
@@ -38,16 +37,8 @@ const GameGrid = (props) => {
     const boxes = (rowNum) => {
         let box = [];
 
-        for (let i = 0; i < props.wordLength; i++) {
-            box.push(
-                boxItem(rowNum, i)
-                // <View key={`${rowNum}:${i}`} style={styles.box}>
-                //     <Text style={styles.text} adjustsFontSizeToFit={true}>
-                //         {props.guesses[rowNum][i].key}
-                //     </Text>
-                // </View>
-            );
-        }
+        for (let i = 0; i < props.wordLength; i++)
+            box.push(boxItem(rowNum, i));
 
         return box;
     }
@@ -75,13 +66,14 @@ const GameGrid = (props) => {
 
 const styles = StyleSheet.create({
     container: {
+        flexShrink: 1,
         paddingHorizontal: 2
     },
     row: {
         flexDirection: 'row',
     },
     box: {
-        flex: 0.5,
+        flex: 1,
         alignItems: "center",
         justifyContent: "center",
         aspectRatio: 1 / 1,
@@ -92,9 +84,7 @@ const styles = StyleSheet.create({
         margin: 2,
     },
 
-    text: {
-        fontSize: 100
-    }
+    text: { fontSize: 100 }
 });
 
 export default GameGrid;
