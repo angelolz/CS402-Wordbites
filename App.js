@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Button, Pressable, StyleSheet, Text, View } from 'react-native';
 import KeyboardComponent from './components/components.keyboard';
 import SettingScreen from './components/settingsScreen';
+import StatsScreen from './components/components.stats';
 
 import GameBoard from './components/components.gameboard';
 const STYLES = ['default', 'dark-content', 'light-content'];
@@ -54,6 +55,8 @@ var wordBites = () => {
         return buttonRow;
       case 'GAME':
         return <GameBoard />
+      case 'STATS':
+        return <StatsScreen backGroundColor={appBackground} toggleBackGround={setAppBackGround} changeView={setView}/>
       case 'SETTINGS':
         return <SettingScreen backGroundColor={appBackground} toggleBackGround={setAppBackGround} changeView={setView} />
       default:
