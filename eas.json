@@ -2,15 +2,18 @@
   "build": {
     "development": {
       "developmentClient": true,
+      "prebuildCommand": "prebuild --npm",
       "distribution": "internal"
     },
     "preview": {
-      "distribution": "internal"
+      "distribution": "internal",
+      "prebuildCommand": "prebuild --npm"
     },
     "production": {
-      "android": {
-        "buildType": "apk"
-      }
+        "prebuildCommand": "prebuild --npm",
+        "android": {
+            "buildType": "apk"
+        }
     }
   },
   "cli": {
