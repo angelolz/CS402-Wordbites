@@ -1,0 +1,82 @@
+import React from 'react';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { StyleSheet, Text, SafeAreaView, View, Pressable } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+
+import { Screen } from '../constants/Constants';
+import Settings from './Settings';
+
+const MainMenu = (props) => {
+    return (
+        <SafeAreaView style={[styles.container, { backgroundColor: props.theme === 'light' ? 'white' : '#121213' }]}>
+            {props.showSettingsOverlay ?
+                <Settings
+                    toggleSettingsOverlay={props.toggleSettingsOverlay}
+                    theme={props.theme}
+                    changeTheme={props.changeTheme}
+                    colorblind={props.colorblind}
+                    toggleColorblind={props.toggleColorblind}
+                    swapKeys={props.swapKeys}
+                    toggleSwap={props.toggleSwap}
+                /> : null
+            }
+            <View style={styles.buttonContainer}>
+                <Text>Wordbites logo </Text>
+                <Pressable style={styles.menuButton} onPress={() => props.setView(Screen.GAME)}>
+                    <Ionicons name="play-circle" size={28} color={'white'} />
+                    <Text style={styles.text} adjustsFontSizeToFit={true}>Play</Text>
+                </Pressable>
+                <Pressable style={styles.menuButton} onPress={() => props.setView(Screen.ACCOUNT)}>
+                    <Ionicons name="person-circle" size={28} color={'white'} />
+                    <Text style={styles.text}>Account</Text>
+                </Pressable>
+                <Pressable style={styles.menuButton} onPress={() => props.setView(Screen.STATS)}>
+                    <Ionicons name="stats-chart" size={28} color={'white'} />
+                    <Text style={styles.text}>Stats</Text>
+                </Pressable>
+                <Pressable style={styles.menuButton} onPress={() => props.toggleSettingsOverlay(true)}>
+                    <Ionicons name="settings" size={28} color={'white'} />
+                    <Text style={styles.text}>Settings</Text>
+                </Pressable>
+            </View>
+            <StatusBar
+                backgroundColor={props.theme === 'light' ? 'white' : '#121213'}
+                style={props.theme === 'light' ? 'dark' : 'light'}
+                translucent={false}
+            />
+        </SafeAreaView>
+    );
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column'
+    },
+    buttonContainer: {
+        width: "90%",
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    menuButton: {
+        minWidth: "50%",
+        padding: 10,
+        borderRadius: 5,
+        marginVertical: 10,
+        paddingVertical: 8,
+        backgroundColor: "#4bb84b",
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    text: {
+        flex: 1,
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 20,
+        textAlign: 'center',
+    }
+});
+
+export default MainMenu;

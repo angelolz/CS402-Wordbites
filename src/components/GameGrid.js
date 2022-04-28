@@ -1,32 +1,34 @@
 import React from 'react';
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, View, Dimensions } from 'react-native';
 
-import KeyState from '../constants/KeyState';
+import { KeyState, StateColor } from '../constants/Constants';
 
 const GameGrid = (props) => {
     const boxItem = (rowNum, i) => {
         let bgColor;
         let textColor;
+        let borderColor = props.theme === 'light' ? '#d3d6da' : '#3a3a3c';
         switch (props.guesses[rowNum][i].state) {
             case KeyState.unused:
-                bgColor = '#EDF2EE';
-                textColor = '#000000';
+                bgColor = 'rgba(0,0,0,0)';
+                textColor = props.theme === "light" ? 'black' : 'white';
                 break;
             case KeyState.wrong:
-                bgColor = '#404140';
-                textColor = '#FFFFFF';
+                bgColor = StateColor.wrong
+                textColor = 'white';
                 break;
             case KeyState.close:
-                bgColor = '#b9a539';
-                textColor = '#FFFFFF';
+                bgColor = props.colorblind ? StateColor.cb_close : StateColor.reg_close;
+                textColor = 'white';
                 break;
             case KeyState.correct:
-                bgColor = '#55a24c';
-                textColor = '#FFFFFF';
+                bgColor = props.colorblind ? StateColor.cb_correct : StateColor.reg_correct
+                textColor = 'white';
                 break;
         }
+
         return (
-            <View key={`${rowNum}:${i}`} style={[styles.box, { backgroundColor: bgColor }]}>
+            <View key={`${rowNum}:${i}`} style={[styles.box, { backgroundColor: bgColor, borderColor: borderColor }]}>
                 <Text style={[styles.text, { color: textColor }]} adjustsFontSizeToFit={true}>
                     {props.guesses[rowNum][i].key}
                 </Text>
@@ -58,16 +60,17 @@ const GameGrid = (props) => {
     }
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             {rows()}
-        </View>
+        </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flexShrink: 1,
-        paddingHorizontal: 2
+        flex: 1,
+        paddingHorizontal: 5,
+        justifyContent: 'center'
     },
     row: {
         flexDirection: 'row',
@@ -77,14 +80,15 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         aspectRatio: 1 / 1,
-        borderColor: "black",
-        borderWidth: 1,
+        borderWidth: 3,
         borderRadius: 5,
-        color: "black",
         margin: 2,
+        overflow: 'hidden'
     },
 
-    text: { fontSize: 100 }
+    text: {
+        fontSize: 100
+    }
 });
 
 export default GameGrid;

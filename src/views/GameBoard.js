@@ -1,13 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions, Pressable } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import Toast from 'react-native-root-toast';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { StyleSheet, Text, SafeAreaView, Pressable } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import { Overlay } from 'react-native-elements'
 
+import Settings from './Settings';
 import Keyboard from '../components/Keyboard';
 import GameGrid from '../components/GameGrid';
 import GameControls from '../components/GameControls';
-import KeyState from '../constants/KeyState';
-import Settings from './Settings';
-import { dictionary, commonWords } from '../constants/wordList';
+import { KeyState } from '../constants/Constants';
+import { dictionary, commonWords } from '../constants/WordList';
 
 const GameBoard = (props) => {
     const [wordLength, setWordLength] = useState(5);
@@ -20,15 +23,10 @@ const GameBoard = (props) => {
 
     //game state effect
     useEffect(() => {
-        if (gameState === "WON") {
-            console.log("YOU WIN!!!!")
+        if (gameState === "WON")
             toggleResultsOverlay(true);
-        }
-
-        else if (gameState == "LOST") {
-            console.log("OMEGA LOSER")
+        else if (gameState == "LOST")
             toggleResultsOverlay(true)
-        }
     }, [gameState]);
 
 
@@ -62,13 +60,29 @@ const GameBoard = (props) => {
         if (gameState !== "IN_PROGRESS") return false;
 
         if (!guesses[numGuesses].every((e) => e.key !== "")) {
-            console.log("not all letters filled")
+            Toast.show('Not all letters are filled in!', {
+                duration: Toast.durations.SHORT,
+                position: Toast.positions.TOP,
+                animation: true,
+                shadow: true,
+                hideOnPress: true,
+                backgroundColor: props.theme === 'light' ? 'black' : 'white',
+                textColor: props.theme === 'light' ? 'white' : 'black'
+            })
             return false;
         }
 
         var guess = currentGuess.map((e) => { return e.key; }).join("");
         if (!dictionary.includes(guess.toLowerCase())) {
-            console.log("not a valid word");
+            Toast.show("That's not a valid word!", {
+                duration: Toast.durations.SHORT,
+                position: Toast.positions.TOP,
+                animation: true,
+                shadow: true,
+                hideOnPress: true,
+                backgroundColor: props.theme === 'light' ? 'black' : 'white',
+                textColor: props.theme === 'light' ? 'white' : 'black'
+            })
             return false;
         }
 
@@ -118,18 +132,45 @@ const GameBoard = (props) => {
         setGameState("IN_PROGRESS")
     }
 
+    function winText() {
+        return (
+            <>
+                <Text style={[styles.resultText, { color: props.theme === 'light' ? 'black' : 'white', }]}>You Won!</Text>
+                <Text style={[styles.flavorText, { color: props.theme === 'light' ? 'black' : 'white', }]}>You got it in {numGuesses} {numGuesses == 1 ? 'try' : 'tries'}!</Text>
+            </>
+        )
+    }
+
+    function loseText() {
+        return (
+            <>
+                <Text style={styles.resultText}>You Lost!</Text>
+                <Text style={[styles.flavorText, { color: props.theme === 'light' ? 'black' : 'white', }]}>You'll get it next time!</Text>
+            </>
+        )
+    }
+
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={[styles.container, { backgroundColor: props.theme === 'light' ? 'white' : '#121213' }]}>
             {props.showSettingsOverlay ?
                 <Settings
                     toggleSettingsOverlay={props.toggleSettingsOverlay}
                     theme={props.theme}
                     changeTheme={props.changeTheme}
+                    colorblind={props.colorblind}
+                    toggleColorblind={props.toggleColorblind}
+                    swapKeys={props.swapKeys}
+                    toggleSwap={props.toggleSwap}
                 /> : null
             }
-            <Overlay style={styles.overlay} isVisible={showResultsOverlay} onBackdropPress={toggleResultsOverlay}>
-                <Text>{gameState === "WON" ? "You Won!" : "You lost! loser lol"}</Text>
-                <Pressable style={styles.button} onPress={() => { resetGame(); toggleResultsOverlay(false) }}>
+            <Overlay
+                overlayStyle={{ backgroundColor: props.theme === 'light' ? 'white' : '#121213', width: '75%' }}
+                isVisible={showResultsOverlay}
+                onBackdropPress={toggleResultsOverlay}
+            >
+                {gameState === "WON" ? winText() : loseText()}
+                <Pressable style={styles.menuButton} onPress={() => { resetGame(); toggleResultsOverlay(false) }}>
+                    <Ionicons name="play" size={28} color={'white'} />
                     <Text style={styles.text}>Play Again?</Text>
                 </Pressable>
             </Overlay>
@@ -138,11 +179,14 @@ const GameBoard = (props) => {
                 gameState={gameState}
                 toggleResultsOverlay={toggleResultsOverlay}
                 toggleSettingsOverlay={props.toggleSettingsOverlay}
+                theme={props.theme}
             />
             <GameGrid
                 wordLength={wordLength}
                 maxGuesses={maxGuesses}
                 guesses={guesses}
+                theme={props.theme}
+                colorblind={props.colorblind}
             />
             <Keyboard
                 wordLength={wordLength}
@@ -152,12 +196,21 @@ const GameBoard = (props) => {
                 incrementGuesses={incrementGuesses}
                 checkGuess={checkGuess}
                 gameState={gameState}
+                theme={props.theme}
+                colorblind={props.colorblind}
+                swapKeys={props.swapKeys}
             />
-        </View>
+            <StatusBar
+                backgroundColor={props.theme === 'light' ? 'white' : '#121213'}
+                style={props.theme === 'light' ? 'dark' : 'light'}
+                translucent={false}
+            />
+        </SafeAreaView>
     )
 };
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         flexDirection: 'column',
         alignContent: 'space-between',
     },
@@ -165,19 +218,30 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column'
     },
-    button: {
-        borderWidth: 2,
-        padding: 15,
+    resultText: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        textAlign: 'center'
+    },
+    flavorText: {
+        textAlign: 'center'
+    },
+    menuButton: {
+        minWidth: "50%",
+        padding: 10,
         borderRadius: 5,
-        backgroundColor: "blue",
-        paddingVertical: 12,
-        marginBottom: 20,
+        marginVertical: 10,
+        paddingVertical: 8,
+        backgroundColor: "#4bb84b",
+        flexDirection: 'row',
+        alignItems: 'center'
     },
     text: {
+        flex: 1,
         color: 'white',
-        letterSpacing: 0.25,
         fontWeight: 'bold',
-        textTransform: "uppercase"
+        fontSize: 20,
+        textAlign: 'center',
     }
 });
 
