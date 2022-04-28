@@ -1,10 +1,12 @@
 import React from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { StyleSheet, Text, SafeAreaView, View, Pressable } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, View, Pressable, Image, Dimensions } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
 import { Screen } from '../constants/Constants';
 import Settings from './Settings';
+
+const { width, height } = Dimensions.get('window');
 
 const MainMenu = (props) => {
     return (
@@ -21,7 +23,9 @@ const MainMenu = (props) => {
                 /> : null
             }
             <View style={styles.buttonContainer}>
-                <Text>Wordbites logo </Text>
+                <View style={styles.logoContainer}>
+                    <Image style={styles.logo} source={props.colorblind ? require('../../assets/cb_logo.png') : require('../../assets/logo.png')} />
+                </View>
                 <Pressable style={styles.menuButton} onPress={() => props.setView(Screen.GAME)}>
                     <Ionicons name="play-circle" size={28} color={'white'} />
                     <Text style={styles.text} adjustsFontSizeToFit={true}>Play</Text>
@@ -55,10 +59,18 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         flexDirection: 'column'
     },
+    logoContainer: {
+        width: '75%'
+    },
     buttonContainer: {
         width: "90%",
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    logo: {
+        resizeMode: 'contain',
+        borderColor: 'black',
+        borderWidth: 2
     },
     menuButton: {
         minWidth: "50%",
