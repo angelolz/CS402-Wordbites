@@ -82,10 +82,6 @@ const Keyboard = (props) => {
                 changeIndex(curIndex)
                 props.updateGuesses(guesses);
             }
-
-            else {
-                console.log("word full")
-            }
         }
     }
 

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Toast from 'react-native-root-toast';
 import { StyleSheet, Text, SafeAreaView, Pressable } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Overlay } from 'react-native-elements'
@@ -21,15 +22,10 @@ const GameBoard = (props) => {
 
     //game state effect
     useEffect(() => {
-        if (gameState === "WON") {
-            console.log("YOU WIN!!!!")
+        if (gameState === "WON")
             toggleResultsOverlay(true);
-        }
-
-        else if (gameState == "LOST") {
-            console.log("OMEGA LOSER")
+        else if (gameState == "LOST")
             toggleResultsOverlay(true)
-        }
     }, [gameState]);
 
 
@@ -63,13 +59,29 @@ const GameBoard = (props) => {
         if (gameState !== "IN_PROGRESS") return false;
 
         if (!guesses[numGuesses].every((e) => e.key !== "")) {
-            console.log("not all letters filled")
+            Toast.show('Not all letters are filled in!', {
+                duration: Toast.durations.SHORT,
+                position: Toast.positions.TOP,
+                animation: true,
+                shadow: true,
+                hideOnPress: true,
+                backgroundColor: props.theme === 'light' ? 'black' : 'white',
+                textColor: props.theme === 'light' ? 'white' : 'black'
+            })
             return false;
         }
 
         var guess = currentGuess.map((e) => { return e.key; }).join("");
         if (!dictionary.includes(guess.toLowerCase())) {
-            console.log("not a valid word");
+            Toast.show("That's not a valid word!", {
+                duration: Toast.durations.SHORT,
+                position: Toast.positions.TOP,
+                animation: true,
+                shadow: true,
+                hideOnPress: true,
+                backgroundColor: props.theme === 'light' ? 'black' : 'white',
+                textColor: props.theme === 'light' ? 'white' : 'black'
+            })
             return false;
         }
 

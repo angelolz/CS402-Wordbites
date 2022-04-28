@@ -69,7 +69,7 @@ const GameGrid = (props) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingHorizontal: 2,
+        paddingHorizontal: 5,
         justifyContent: 'center'
     },
     row: {
@@ -86,7 +86,9 @@ const styles = StyleSheet.create({
         overflow: 'hidden'
     },
 
-    text: { fontSize: 100 }
+    text: {
+        fontSize: 100
+    }
 });
 
 export default GameGrid;

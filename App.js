@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { RootSiblingParent } from 'react-native-root-siblings';
 
 import MainMenu from './src/views/MainMenu';
 import GameBoard from './src/views/GameBoard';
@@ -13,46 +14,54 @@ var wordBites = () => {
     const [colorblind, toggleColorblind] = useState(false);
     const [swapKeys, toggleSwap] = useState(false)
 
-    switch (curView) {
-        case Screen.MAIN_MENU:
-            return <MainMenu
-                view={curView}
-                setView={setView}
-                theme={theme}
-                changeTheme={changeTheme}
-                colorblind={colorblind}
-                toggleColorblind={toggleColorblind}
-                swapKeys={swapKeys}
-                toggleSwap={toggleSwap}
-                showSettingsOverlay={showSettingsOverlay}
-                toggleSettingsOverlay={toggleSettingsOverlay}
-            />;
-        case Screen.GAME:
-            return <GameBoard
-                setView={setView}
-                theme={theme}
-                changeTheme={changeTheme}
-                colorblind={colorblind}
-                toggleColorblind={toggleColorblind}
-                swapKeys={swapKeys}
-                toggleSwap={toggleSwap}
-                showSettingsOverlay={showSettingsOverlay}
-                toggleSettingsOverlay={toggleSettingsOverlay}
-            />
-        default:
-            return <MainMenu
-                view={curView}
-                setView={setView}
-                theme={theme}
-                changeTheme={changeTheme}
-                colorblind={colorblind}
-                toggleColorblind={toggleColorblind}
-                swapKeys={swapKeys}
-                toggleSwap={toggleSwap}
-                showSettingsOverlay={showSettingsOverlay}
-                toggleSettingsOverlay={toggleSettingsOverlay}
-            />;
+    function view() {
+        switch (curView) {
+            case Screen.MAIN_MENU:
+                return <MainMenu
+                    view={curView}
+                    setView={setView}
+                    theme={theme}
+                    changeTheme={changeTheme}
+                    colorblind={colorblind}
+                    toggleColorblind={toggleColorblind}
+                    swapKeys={swapKeys}
+                    toggleSwap={toggleSwap}
+                    showSettingsOverlay={showSettingsOverlay}
+                    toggleSettingsOverlay={toggleSettingsOverlay}
+                />;
+            case Screen.GAME:
+                return <GameBoard
+                    setView={setView}
+                    theme={theme}
+                    changeTheme={changeTheme}
+                    colorblind={colorblind}
+                    toggleColorblind={toggleColorblind}
+                    swapKeys={swapKeys}
+                    toggleSwap={toggleSwap}
+                    showSettingsOverlay={showSettingsOverlay}
+                    toggleSettingsOverlay={toggleSettingsOverlay}
+                />
+            default:
+                return <MainMenu
+                    view={curView}
+                    setView={setView}
+                    theme={theme}
+                    changeTheme={changeTheme}
+                    colorblind={colorblind}
+                    toggleColorblind={toggleColorblind}
+                    swapKeys={swapKeys}
+                    toggleSwap={toggleSwap}
+                    showSettingsOverlay={showSettingsOverlay}
+                    toggleSettingsOverlay={toggleSettingsOverlay}
+                />;
+        }
     }
+
+    return (
+        <RootSiblingParent>
+            {view()}
+        </RootSiblingParent>
+    )
 }
 
 export default wordBites;
