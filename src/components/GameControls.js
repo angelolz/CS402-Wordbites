@@ -10,14 +10,16 @@ const GameControls = (props) => {
 
     return (
         <View style={styles.container}>
-            <Overlay overlayStyle={{ backgroundColor: props.theme === 'light' ? 'white' : '#121213' }} isVisible={showHomeOverlay} onBackdropPress={toggleHomeOverlay}>
-                <Text>Are you sure you want to leave the game?</Text>
-                <Pressable style={styles.button} onPress={() => { props.setView(Screen.MAIN_MENU) }}>
-                    <Text style={styles.text}>Yes</Text>
-                </Pressable>
-                <Pressable style={styles.button} onPress={toggleHomeOverlay}>
-                    <Text style={styles.text}>No</Text>
-                </Pressable>
+            <Overlay overlayStyle={{ backgroundColor: props.theme === 'light' ? 'white' : '#121213', width: '75%' }} isVisible={showHomeOverlay} onBackdropPress={toggleHomeOverlay}>
+                <Text style={styles.header}>Are you sure you want to leave the game?</Text>
+                <View style={styles.buttonRow}>
+                    <Pressable style={styles.button} onPress={() => { props.setView(Screen.MAIN_MENU) }}>
+                        <Ionicons style={{ backgroundColor: '#4bb84b', borderRadius: 5, textAlign: 'center' }} name="checkmark-outline" size={42} color={'white'} />
+                    </Pressable>
+                    <Pressable style={styles.button} onPress={toggleHomeOverlay}>
+                        <Ionicons style={{ backgroundColor: '#f92f60', borderRadius: 5, textAlign: 'center' }} name="close-outline" size={42} color={'white'} />
+                    </Pressable>
+                </View>
             </Overlay>
             <View style={styles.buttonContainer}>
                 <Pressable onPress={() => { toggleHomeOverlay() }}>
@@ -46,31 +48,26 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignContent: 'center'
     },
+    header: {
+        fontWeight: 'bold',
+        fontSize: 24,
+        textAlign: 'center',
+        marginVertical: 15
+    },
+    buttonRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center'
+    },
     button: {
-        borderWidth: 2,
-        padding: 15,
-        borderRadius: 5,
-        backgroundColor: "blue",
+        flex: 1,
+        padding: 10,
         paddingVertical: 12,
         marginBottom: 20,
-    },
-    text: {
-        color: 'white',
-        letterSpacing: 0.25,
-        fontWeight: 'bold',
-        textTransform: "uppercase"
     },
     overlay: {
         flex: 1,
         flexDirection: 'column'
-    },
-    button: {
-        borderWidth: 2,
-        padding: 15,
-        borderRadius: 5,
-        backgroundColor: "blue",
-        paddingVertical: 12,
-        marginBottom: 20,
     },
 });
 export default GameControls;

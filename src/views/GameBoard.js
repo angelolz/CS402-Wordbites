@@ -144,7 +144,7 @@ const GameBoard = (props) => {
                     toggleSwap={props.toggleSwap}
                 /> : null
             }
-            <Overlay overlayStyle={{ backgroundColor: props.theme === 'light' ? 'white' : '#121213' }} isVisible={showResultsOverlay} onBackdropPress={toggleResultsOverlay}>
+            <Overlay overlayStyle={{ backgroundColor: props.theme === 'light' ? 'white' : '#121213', width: '75%' }} isVisible={showResultsOverlay} onBackdropPress={toggleResultsOverlay}>
                 <Text>{gameState === "WON" ? "You Won!" : "You lost! loser lol"}</Text>
                 <Pressable style={styles.button} onPress={() => { resetGame(); toggleResultsOverlay(false) }}>
                     <Text style={styles.text}>Play Again?</Text>
