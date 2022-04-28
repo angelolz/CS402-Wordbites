@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('window');
 
-import KeyState from '../constants/KeyState';
+import { KeyState, StateColor } from '../constants/Constants';
 
 var allKeys = [
     { key: 'Q', state: KeyState.unused },
@@ -91,20 +91,20 @@ const Keyboard = (props) => {
         let bgColor;
         switch (keyboardKey.state) {
             case KeyState.unused:
-                bgColor = '#EDF2EE';
-                textColor = '#000000';
+                bgColor = props.theme === "light" ? '#d3d6da' : '#818384';
+                textColor = props.theme === "light" ? 'black' : 'white';
                 break;
             case KeyState.wrong:
-                bgColor = '#404140';
-                textColor = '#FFFFFF';
+                bgColor = StateColor.wrong
+                textColor = 'white';
                 break;
             case KeyState.close:
-                bgColor = '#b9a539';
-                textColor = '#FFFFFF';
+                bgColor = props.colorblind ? StateColor.cb_close : StateColor.reg_close;
+                textColor = 'white';
                 break;
             case KeyState.correct:
-                bgColor = '#55a24c';
-                textColor = '#FFFFFF';
+                bgColor = props.colorblind ? StateColor.reg_correct : StateColor.reg_correct
+                textColor = 'white';
                 break;
         }
         return (
@@ -142,8 +142,12 @@ const Keyboard = (props) => {
                 <View style={{ flex: 0.5, margin: 2 }}></View>
             </View>
             <View style={styles.keyrow}>
-                <TouchableOpacity onPress={() => { if (props.checkGuess()) changeIndex(-1) }} style={[styles.key, { backgroundColor: '#808080', flex: 1.5 }]} key='enter'>
-                    <Text style={styles.text}>ENT</Text>
+                <TouchableOpacity
+                    onPress={() => { if (props.checkGuess()) changeIndex(-1) }}
+                    style={[styles.key, { backgroundColor: props.theme === "light" ? '#d3d6da' : '#818384', flex: 1.5 }]}
+                    key='enter'
+                >
+                    <Text style={[styles.text, { color: props.theme === "light" ? 'black' : 'white' }]}>ENT</Text>
                 </TouchableOpacity>
                 {key(keys[19])}
                 {key(keys[20])}
@@ -152,8 +156,12 @@ const Keyboard = (props) => {
                 {key(keys[23])}
                 {key(keys[24])}
                 {key(keys[25])}
-                <TouchableOpacity onPress={() => logKey({ key: "erase" })} style={[styles.key, { backgroundColor: '#808080', flex: 1.5 }]} key='erase'>
-                    <Text style={styles.text}>ERS</Text>
+                <TouchableOpacity
+                    onPress={() => logKey({ key: "erase" })}
+                    style={[styles.key, { backgroundColor: props.theme === "light" ? '#d3d6da' : '#818384', flex: 1.5 }]}
+                    key='erase'
+                >
+                    <Text style={[styles.text, { color: props.theme === "light" ? 'black' : 'white' }]}>ERS</Text>
                 </TouchableOpacity>
             </View>
         </View>
