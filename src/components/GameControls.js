@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions, Pressable } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { Overlay } from 'react-native-elements'
-const { width, height } = Dimensions.get('window');
-import Screen from '../constants/Screen';
+
+import { Screen } from '../constants/Constants';
 
 const GameControls = (props) => {
     const [showHomeOverlay, toggleHomeOverlay] = useState(false);
 
     return (
         <View style={styles.container}>
-            <Overlay style={styles.overlay} isVisible={showHomeOverlay} onBackdropPress={toggleHomeOverlay}>
+            <Overlay overlayStyle={{ backgroundColor: props.theme === 'light' ? 'white' : '#121213' }} isVisible={showHomeOverlay} onBackdropPress={toggleHomeOverlay}>
                 <Text>Are you sure you want to leave the game?</Text>
                 <Pressable style={styles.button} onPress={() => { props.setView(Screen.MAIN_MENU) }}>
                     <Text style={styles.text}>Yes</Text>

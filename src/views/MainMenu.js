@@ -1,23 +1,25 @@
 import React from 'react';
-import { StyleSheet, Text, View, Pressable } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, View, Pressable } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import Screen from '../constants/Screen';
 
+import { Screen } from '../constants/Constants';
 import Settings from './Settings';
+
 const MainMenu = (props) => {
     return (
-        <View style={styles.container}>
-            <StatusBar barStyle={props.theme} />
+        <SafeAreaView style={[styles.container, { backgroundColor: props.theme === 'light' ? 'white' : '#121213' }]}>
             {props.showSettingsOverlay ?
                 <Settings
                     toggleSettingsOverlay={props.toggleSettingsOverlay}
                     theme={props.theme}
                     changeTheme={props.changeTheme}
+                    colorblind={props.colorblind}
+                    toggleColorblind={props.toggleColorblind}
                 /> : null
             }
             <View style={styles.buttonContainer}>
                 <Text>Wordbites logo </Text>
-                <Pressable style={styles.smallWordButton} onPress={() => props.setView(Screen.GAME)}>
+                <Pressable style={styles.smallWordButton} onPress={() => { console.log(Screen.GAME); props.setView(Screen.GAME) }}>
                     <Text style={styles.text}>Play</Text>
                 </Pressable>
                 <Pressable style={styles.button} onPress={() => props.setView(Screen.ACCOUNT)}>
@@ -30,15 +32,18 @@ const MainMenu = (props) => {
                     <Text style={styles.text}>Settings</Text>
                 </Pressable>
             </View>
-        </View>
+            <StatusBar
+                backgroundColor={props.theme === 'light' ? 'white' : '#121213'}
+                style={props.theme === 'light' ? 'dark' : 'light'}
+                translucent={false}
+            />
+        </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        width: "100%",
-        backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'column'

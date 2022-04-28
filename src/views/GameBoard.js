@@ -1,13 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions, Pressable } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, SafeAreaView, Pressable } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import { Overlay } from 'react-native-elements'
 
+import Settings from './Settings';
 import Keyboard from '../components/Keyboard';
 import GameGrid from '../components/GameGrid';
 import GameControls from '../components/GameControls';
-import KeyState from '../constants/KeyState';
-import Settings from './Settings';
-import { dictionary, commonWords } from '../constants/wordList';
+import { KeyState } from '../constants/Constants';
+import { dictionary, commonWords } from '../constants/WordList';
 
 const GameBoard = (props) => {
     const [wordLength, setWordLength] = useState(5);
@@ -119,15 +120,17 @@ const GameBoard = (props) => {
     }
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={[styles.container, { backgroundColor: props.theme === 'light' ? 'white' : '#121213' }]}>
             {props.showSettingsOverlay ?
                 <Settings
                     toggleSettingsOverlay={props.toggleSettingsOverlay}
                     theme={props.theme}
                     changeTheme={props.changeTheme}
+                    colorblind={props.colorblind}
+                    toggleColorblind={props.toggleColorblind}
                 /> : null
             }
-            <Overlay style={styles.overlay} isVisible={showResultsOverlay} onBackdropPress={toggleResultsOverlay}>
+            <Overlay overlayStyle={{ backgroundColor: props.theme === 'light' ? 'white' : '#121213' }} isVisible={showResultsOverlay} onBackdropPress={toggleResultsOverlay}>
                 <Text>{gameState === "WON" ? "You Won!" : "You lost! loser lol"}</Text>
                 <Pressable style={styles.button} onPress={() => { resetGame(); toggleResultsOverlay(false) }}>
                     <Text style={styles.text}>Play Again?</Text>
@@ -143,6 +146,8 @@ const GameBoard = (props) => {
                 wordLength={wordLength}
                 maxGuesses={maxGuesses}
                 guesses={guesses}
+                theme={props.theme}
+                colorblind={props.colorblind}
             />
             <Keyboard
                 wordLength={wordLength}
@@ -152,12 +157,20 @@ const GameBoard = (props) => {
                 incrementGuesses={incrementGuesses}
                 checkGuess={checkGuess}
                 gameState={gameState}
+                theme={props.theme}
+                colorblind={props.colorblind}
             />
-        </View>
+            <StatusBar
+                backgroundColor={props.theme === 'light' ? 'white' : '#121213'}
+                style={props.theme === 'light' ? 'dark' : 'light'}
+                translucent={false}
+            />
+        </SafeAreaView>
     )
 };
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         flexDirection: 'column',
         alignContent: 'space-between',
     },
