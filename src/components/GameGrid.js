@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, View, Dimensions } from 'react-native';
 
 import { KeyState, StateColor } from '../constants/Constants';
 
@@ -60,9 +60,9 @@ const GameGrid = (props) => {
     }
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             {rows()}
-        </View>
+        </SafeAreaView>
     );
 }
 

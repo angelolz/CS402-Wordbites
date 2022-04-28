@@ -11,7 +11,7 @@ const GameControls = (props) => {
     return (
         <View style={styles.container}>
             <Overlay overlayStyle={{ backgroundColor: props.theme === 'light' ? 'white' : '#121213', width: '75%' }} isVisible={showHomeOverlay} onBackdropPress={toggleHomeOverlay}>
-                <Text style={styles.header}>Are you sure you want to leave the game?</Text>
+                <Text style={[styles.header, { color: props.theme === 'light' ? 'black' : 'white' }]}>Are you sure you want to leave the game?</Text>
                 <View style={styles.buttonRow}>
                     <Pressable style={styles.button} onPress={() => { props.setView(Screen.MAIN_MENU) }}>
                         <Ionicons style={{ backgroundColor: '#4bb84b', borderRadius: 5, textAlign: 'center' }} name="checkmark-outline" size={42} color={'white'} />

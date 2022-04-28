@@ -58,13 +58,13 @@ const Settings = (props) => {
 
 const styles = StyleSheet.create({
     button: {
-        marginVertical: 10,
-        paddingHorizontal: 10
+        marginVertical: 5
     },
     setting: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginHorizontal: 10
     },
     header: {
         flexDirection: 'row',
@@ -78,9 +78,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10
     },
     settingScreenText: {
+        flex: 1,
         fontSize: ((width > height) ? width / 15 : height / 50),
         alignSelf: 'center',
-        padding: 10
+        paddingRight: 5
     },
     backButton: {
         alignItems: 'flex-end',
