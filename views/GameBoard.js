@@ -6,8 +6,8 @@ import Keyboard from '../components/Keyboard';
 import GameGrid from '../components/GameGrid';
 import GameControls from '../components/GameControls';
 import KeyState from '../constants/KeyState';
+import Settings from './Settings';
 import { dictionary, commonWords } from '../constants/wordList';
-
 
 const GameBoard = (props) => {
     const [wordLength, setWordLength] = useState(5);
@@ -120,6 +120,13 @@ const GameBoard = (props) => {
 
     return (
         <View style={styles.container}>
+            {props.showSettingsOverlay ?
+                <Settings
+                    toggleSettingsOverlay={props.toggleSettingsOverlay}
+                    theme={props.theme}
+                    changeTheme={props.changeTheme}
+                /> : null
+            }
             <Overlay style={styles.overlay} isVisible={showResultsOverlay} onBackdropPress={toggleResultsOverlay}>
                 <Text>{gameState === "WON" ? "You Won!" : "You lost! loser lol"}</Text>
                 <Pressable style={styles.button} onPress={() => { resetGame(); toggleResultsOverlay(false) }}>
@@ -130,6 +137,7 @@ const GameBoard = (props) => {
                 setView={props.setView}
                 gameState={gameState}
                 toggleResultsOverlay={toggleResultsOverlay}
+                toggleSettingsOverlay={props.toggleSettingsOverlay}
             />
             <GameGrid
                 wordLength={wordLength}

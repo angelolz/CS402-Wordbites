@@ -1,44 +1,44 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Pressable, Dimensions } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import { Overlay } from 'react-native-elements'
 const { width, height } = Dimensions.get('window');
-
-import Screen from '../constants/Screen';
 
 const Settings = (props) => {
     return (
-        <View style={props.theme === 'light' ? styles.rowBlockLight : styles.rowBlockDark}>
-            <StatusBar barStyle={props.theme} />
-            <View style={styles.backButton}>
-                <Pressable onPress={() => props.setView(Screen.MAIN_MENU)}><Text style={styles.lightButtonText}>Home</Text></Pressable>
-            </View>
-            <View>
-                <Text style={props.theme === 'light' ? styles.settingScreenText : styles.darkSettingScreenText}>Settings</Text>
-            </View>
+        <Overlay style={styles.overlay} isVisible={props.showSettingsOverlay} onBackdropPress={() => { props.toggleSettingsOverlay(false) }}>
+            <View style={styles.rowBlock}>
+                <View style={styles.backButton}>
+                    <Pressable onPress={() => props.toggleSettingsOverlay(false)}><Text style={styles.lightButtonText}>Close</Text></Pressable>
+                </View>
+                <View>
+                    <Text style={props.theme === 'light' ? styles.settingScreenText : styles.darkSettingScreenText}>Settings</Text>
+                </View>
 
-            <View style={styles.buttonRow}>
-                <Text style={props.theme === 'light' ? styles.settingScreenText : styles.darkSettingScreenText}>Background Setting:</Text>
-                <View style={{ flexDirection: 'row' }}>
-                    <View>
-                        <Pressable style={styles.button} onPress={() => props.changeTheme('light')}><Text style={styles.darkButtonText}>Light Mode</Text></Pressable>
-                    </View>
-                    <View>
-                        <Pressable style={styles.button} onPress={() => props.changeTheme('dark')}><Text style={styles.darkButtonText}>Dark Mode</Text></Pressable>
+                <View style={styles.buttonRow}>
+                    <Text style={props.theme === 'light' ? styles.settingScreenText : styles.darkSettingScreenText}>Background Setting:</Text>
+                    <View style={{ flexDirection: 'row' }}>
+                        <View>
+                            <Pressable style={styles.button} onPress={() => props.changeTheme('light')}>
+                                <Text style={styles.darkButtonText}>Light Mode</Text>
+                            </Pressable>
+                        </View>
+                        <View>
+                            <Pressable style={styles.button} onPress={() => props.changeTheme('dark')}>
+                                <Text style={styles.darkButtonText}>Dark Mode</Text>
+                            </Pressable>
+                        </View>
                     </View>
                 </View>
             </View>
-        </View>
+        </Overlay>
     );
 };
 
 const styles = StyleSheet.create({
-    rowBlockLight: {
-        width: "100%",
-        height: "100%",
-    },
-    rowBlockDark: {
-        width: "100%",
-        height: "100%",
+    rowBlock: {
+        // width: "100%",
+        // height: "100%",
     },
     button: {
         borderWidth: 2,

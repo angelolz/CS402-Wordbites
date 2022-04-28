@@ -3,11 +3,19 @@ import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import Screen from '../constants/Screen';
 
+import Settings from './Settings';
 const MainMenu = (props) => {
     return (
         <View style={styles.container}>
+            <StatusBar barStyle={props.theme} />
+            {props.showSettingsOverlay ?
+                <Settings
+                    toggleSettingsOverlay={props.toggleSettingsOverlay}
+                    theme={props.theme}
+                    changeTheme={props.changeTheme}
+                /> : null
+            }
             <View style={styles.buttonContainer}>
-                <StatusBar barStyle={props.theme} />
                 <Text>Wordbites logo </Text>
                 <Pressable style={styles.smallWordButton} onPress={() => props.setView(Screen.GAME)}>
                     <Text style={styles.text}>Play</Text>
@@ -18,7 +26,7 @@ const MainMenu = (props) => {
                 <Pressable style={styles.smallWordButton} onPress={() => props.setView(Screen.STATS)}>
                     <Text style={styles.text}>Stats</Text>
                 </Pressable>
-                <Pressable style={styles.button} onPress={() => props.setView(Screen.SETTINGS)}>
+                <Pressable style={styles.button} onPress={() => props.toggleSettingsOverlay(true)}>
                     <Text style={styles.text}>Settings</Text>
                 </Pressable>
             </View>
