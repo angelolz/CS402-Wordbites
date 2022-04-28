@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Toast from 'react-native-root-toast';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { StyleSheet, Text, SafeAreaView, Pressable } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Overlay } from 'react-native-elements'
@@ -131,6 +132,24 @@ const GameBoard = (props) => {
         setGameState("IN_PROGRESS")
     }
 
+    function winText() {
+        return (
+            <>
+                <Text style={[styles.resultText, { color: props.theme === 'light' ? 'black' : 'white', }]}>You Won!</Text>
+                <Text style={[styles.flavorText, { color: props.theme === 'light' ? 'black' : 'white', }]}>You got it in {numGuesses} {numGuesses == 1 ? 'try' : 'tries'}!</Text>
+            </>
+        )
+    }
+
+    function loseText() {
+        return (
+            <>
+                <Text style={styles.resultText}>You Lost!</Text>
+                <Text style={[styles.flavorText, { color: props.theme === 'light' ? 'black' : 'white', }]}>You'll get it next time!</Text>
+            </>
+        )
+    }
+
     return (
         <SafeAreaView style={[styles.container, { backgroundColor: props.theme === 'light' ? 'white' : '#121213' }]}>
             {props.showSettingsOverlay ?
@@ -144,9 +163,14 @@ const GameBoard = (props) => {
                     toggleSwap={props.toggleSwap}
                 /> : null
             }
-            <Overlay overlayStyle={{ backgroundColor: props.theme === 'light' ? 'white' : '#121213', width: '75%' }} isVisible={showResultsOverlay} onBackdropPress={toggleResultsOverlay}>
-                <Text>{gameState === "WON" ? "You Won!" : "You lost! loser lol"}</Text>
-                <Pressable style={styles.button} onPress={() => { resetGame(); toggleResultsOverlay(false) }}>
+            <Overlay
+                overlayStyle={{ backgroundColor: props.theme === 'light' ? 'white' : '#121213', width: '75%' }}
+                isVisible={showResultsOverlay}
+                onBackdropPress={toggleResultsOverlay}
+            >
+                {gameState === "WON" ? winText() : loseText()}
+                <Pressable style={styles.menuButton} onPress={() => { resetGame(); toggleResultsOverlay(false) }}>
+                    <Ionicons name="play" size={28} color={'white'} />
                     <Text style={styles.text}>Play Again?</Text>
                 </Pressable>
             </Overlay>
@@ -194,19 +218,30 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column'
     },
-    button: {
-        borderWidth: 2,
-        padding: 15,
+    resultText: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        textAlign: 'center'
+    },
+    flavorText: {
+        textAlign: 'center'
+    },
+    menuButton: {
+        minWidth: "50%",
+        padding: 10,
         borderRadius: 5,
-        backgroundColor: "blue",
-        paddingVertical: 12,
-        marginBottom: 20,
+        marginVertical: 10,
+        paddingVertical: 8,
+        backgroundColor: "#4bb84b",
+        flexDirection: 'row',
+        alignItems: 'center'
     },
     text: {
+        flex: 1,
         color: 'white',
-        letterSpacing: 0.25,
         fontWeight: 'bold',
-        textTransform: "uppercase"
+        fontSize: 20,
+        textAlign: 'center',
     }
 });
 

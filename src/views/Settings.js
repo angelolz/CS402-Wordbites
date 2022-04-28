@@ -4,7 +4,6 @@ import { StyleSheet, Text, View, Pressable, Dimensions } from 'react-native';
 import { Overlay } from 'react-native-elements'
 import { StatusBar } from 'expo-status-bar';
 
-import { SharedStyles } from '../constants/Constants'
 const { width, height } = Dimensions.get('window');
 
 const Settings = (props) => {
