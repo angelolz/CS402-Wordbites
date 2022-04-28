@@ -48,6 +48,15 @@ const Keyboard = (props) => {
             });
             updateKeys(newKeys);
         }
+
+        else {
+            let cleanKeys = [...allKeys]
+
+            cleanKeys.map(e => {
+                e.state = keyState.unused;
+            })
+            updateKeys(cleanKeys)
+        }
     }, [props.numGuesses]);
 
     function logKey(pressedKey) {
