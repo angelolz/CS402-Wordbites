@@ -1,4 +1,5 @@
 import React from 'react';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { StyleSheet, Text, SafeAreaView, View, Pressable } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
@@ -15,20 +16,26 @@ const MainMenu = (props) => {
                     changeTheme={props.changeTheme}
                     colorblind={props.colorblind}
                     toggleColorblind={props.toggleColorblind}
+                    swapKeys={props.swapKeys}
+                    toggleSwap={props.toggleSwap}
                 /> : null
             }
             <View style={styles.buttonContainer}>
                 <Text>Wordbites logo </Text>
-                <Pressable style={styles.smallWordButton} onPress={() => { console.log(Screen.GAME); props.setView(Screen.GAME) }}>
-                    <Text style={styles.text}>Play</Text>
+                <Pressable style={styles.menuButton} onPress={() => props.setView(Screen.GAME)}>
+                    <Ionicons name="play-circle" size={28} color={'white'} />
+                    <Text style={styles.text} adjustsFontSizeToFit={true}>Play</Text>
                 </Pressable>
-                <Pressable style={styles.button} onPress={() => props.setView(Screen.ACCOUNT)}>
+                <Pressable style={styles.menuButton} onPress={() => props.setView(Screen.ACCOUNT)}>
+                    <Ionicons name="person-circle" size={28} color={'white'} />
                     <Text style={styles.text}>Account</Text>
                 </Pressable>
-                <Pressable style={styles.smallWordButton} onPress={() => props.setView(Screen.STATS)}>
+                <Pressable style={styles.menuButton} onPress={() => props.setView(Screen.STATS)}>
+                    <Ionicons name="stats-chart" size={28} color={'white'} />
                     <Text style={styles.text}>Stats</Text>
                 </Pressable>
-                <Pressable style={styles.button} onPress={() => props.toggleSettingsOverlay(true)}>
+                <Pressable style={styles.menuButton} onPress={() => props.toggleSettingsOverlay(true)}>
+                    <Ionicons name="settings" size={28} color={'white'} />
                     <Text style={styles.text}>Settings</Text>
                 </Pressable>
             </View>
@@ -49,30 +56,26 @@ const styles = StyleSheet.create({
         flexDirection: 'column'
     },
     buttonContainer: {
+        width: "90%",
         alignItems: 'center',
         justifyContent: 'center'
     },
-    button: {
-        borderWidth: 2,
-        padding: 15,
+    menuButton: {
+        minWidth: "50%",
+        padding: 10,
         borderRadius: 5,
-        backgroundColor: "blue",
-        paddingVertical: 12,
-        marginBottom: 20,
-    },
-    smallWordButton: {
-        borderWidth: 2,
-        borderRadius: 5,
-        backgroundColor: "blue",
-        paddingVertical: 12,
-        paddingHorizontal: 30,
-        marginBottom: 20
+        marginVertical: 10,
+        paddingVertical: 8,
+        backgroundColor: "green",
+        flexDirection: 'row',
+        alignItems: 'center'
     },
     text: {
+        flex: 1,
         color: 'white',
-        letterSpacing: 0.25,
         fontWeight: 'bold',
-        textTransform: "uppercase"
+        fontSize: 20,
+        textAlign: 'center',
     }
 });
 

@@ -22,7 +22,7 @@ const GameGrid = (props) => {
                 textColor = 'white';
                 break;
             case KeyState.correct:
-                bgColor = props.colorblind ? StateColor.reg_correct : StateColor.reg_correct
+                bgColor = props.colorblind ? StateColor.cb_correct : StateColor.reg_correct
                 textColor = 'white';
                 break;
         }
@@ -68,8 +68,9 @@ const GameGrid = (props) => {
 
 const styles = StyleSheet.create({
     container: {
-        flexShrink: 1,
-        paddingHorizontal: 2
+        flex: 1,
+        paddingHorizontal: 2,
+        justifyContent: 'center'
     },
     row: {
         flexDirection: 'row',

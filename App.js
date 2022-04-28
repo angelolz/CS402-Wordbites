@@ -5,10 +5,13 @@ import GameBoard from './src/views/GameBoard';
 import { Screen } from './src/constants/Constants';
 
 var wordBites = () => {
-    const [theme, changeTheme] = useState("light")
     const [curView, setView] = useState(Screen.MAIN_MENU);
     const [showSettingsOverlay, toggleSettingsOverlay] = useState(false);
+
+    //settings
+    const [theme, changeTheme] = useState("light")
     const [colorblind, toggleColorblind] = useState(false);
+    const [swapKeys, toggleSwap] = useState(false)
 
     switch (curView) {
         case Screen.MAIN_MENU:
@@ -19,6 +22,8 @@ var wordBites = () => {
                 changeTheme={changeTheme}
                 colorblind={colorblind}
                 toggleColorblind={toggleColorblind}
+                swapKeys={swapKeys}
+                toggleSwap={toggleSwap}
                 showSettingsOverlay={showSettingsOverlay}
                 toggleSettingsOverlay={toggleSettingsOverlay}
             />;
@@ -29,6 +34,8 @@ var wordBites = () => {
                 changeTheme={changeTheme}
                 colorblind={colorblind}
                 toggleColorblind={toggleColorblind}
+                swapKeys={swapKeys}
+                toggleSwap={toggleSwap}
                 showSettingsOverlay={showSettingsOverlay}
                 toggleSettingsOverlay={toggleSettingsOverlay}
             />
@@ -40,6 +47,8 @@ var wordBites = () => {
                 changeTheme={changeTheme}
                 colorblind={colorblind}
                 toggleColorblind={toggleColorblind}
+                swapKeys={swapKeys}
+                toggleSwap={toggleSwap}
                 showSettingsOverlay={showSettingsOverlay}
                 toggleSettingsOverlay={toggleSettingsOverlay}
             />;

@@ -27,6 +27,12 @@ const Settings = (props) => {
                         <Text style={styles.buttonText}>{props.colorblind ? 'Colorblind ON' : 'Colorblind OFF'}</Text>
                     </Pressable>
                 </View>
+                <View style={styles.setting}>
+                    <Text style={[styles.settingScreenText, { color: props.theme === 'light' ? 'black' : 'white' }]}>Swap Enter/Backspace Keys</Text>
+                    <Pressable style={styles.button} onPress={() => props.toggleSwap(!props.swapKeys)}>
+                        <Text style={styles.buttonText}>{props.swapKeys ? 'Swap ON' : 'Swap OFF'}</Text>
+                    </Pressable>
+                </View>
             </View>
             <StatusBar
                 backgroundColor={props.theme === 'light' ? 'white' : '#121213'}

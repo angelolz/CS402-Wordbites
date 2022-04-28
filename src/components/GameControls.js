@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { Overlay } from 'react-native-elements'
 
@@ -18,25 +19,29 @@ const GameControls = (props) => {
                     <Text style={styles.text}>No</Text>
                 </Pressable>
             </Overlay>
-            <Pressable style={styles.button} onPress={() => { toggleHomeOverlay() }}>
-                <Text style={styles.text}>Home</Text>
-            </Pressable>
-            {
-                props.gameState !== "IN_PROGRESS" ?
-                    <Pressable style={styles.button} onPress={() => { props.toggleResultsOverlay() }}>
-                        <Text style={styles.text}>Results</Text>
-                    </Pressable> : null
-            }
-            <Pressable style={styles.button} onPress={() => { props.toggleSettingsOverlay(true) }}>
-                <Text style={styles.text}>Settings</Text>
-            </Pressable>
-        </View >
+            <View style={styles.buttonContainer}>
+                <Pressable onPress={() => { toggleHomeOverlay() }}>
+                    <Ionicons name="home-sharp" size={40} color={props.theme === 'light' ? 'black' : 'white'} />
+                </Pressable>
+                {
+                    props.gameState !== "IN_PROGRESS" ?
+                        <Pressable onPress={() => { props.toggleResultsOverlay() }}>
+                            <Ionicons name="trophy-sharp" size={40} color={props.theme === 'light' ? 'black' : 'white'} />
+                        </Pressable> : null
+                }
+                <Pressable onPress={() => { props.toggleSettingsOverlay(true) }}>
+                    <Ionicons name="settings" size={40} color={props.theme === 'light' ? 'black' : 'white'} />
+                </Pressable>
+            </View>
+        </View>
     )
 };
 
 const styles = StyleSheet.create({
     container: {
-        // width: "90%",
+        padding: 10
+    },
+    buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignContent: 'center'

@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
-const { width, height } = Dimensions.get('window');
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 import { KeyState, StateColor } from '../constants/Constants';
+
+const { width, height } = Dimensions.get('window');
 
 var allKeys = [
     { key: 'Q', state: KeyState.unused },
@@ -103,7 +105,7 @@ const Keyboard = (props) => {
                 textColor = 'white';
                 break;
             case KeyState.correct:
-                bgColor = props.colorblind ? StateColor.reg_correct : StateColor.reg_correct
+                bgColor = props.colorblind ? StateColor.cb_correct : StateColor.reg_correct
                 textColor = 'white';
                 break;
         }
@@ -113,6 +115,30 @@ const Keyboard = (props) => {
             </TouchableOpacity>
         );
     };
+
+    function getEnterKey() {
+        return (
+            <TouchableOpacity
+                onPress={() => { if (props.checkGuess()) changeIndex(-1) }}
+                style={[styles.key, { backgroundColor: props.theme === "light" ? '#d3d6da' : '#818384', flex: 1.5 }]}
+                key='enter'
+            >
+                <Ionicons name="return-down-back-sharp" size={28} color={props.theme === "light" ? 'black' : 'white'} />
+            </TouchableOpacity>
+        )
+    }
+
+    function getBackspaceKey() {
+        return (
+            <TouchableOpacity
+                onPress={() => logKey({ key: "erase" })}
+                style={[styles.key, { backgroundColor: props.theme === "light" ? '#d3d6da' : '#818384', flex: 1.5 }]}
+                key='erase'
+            >
+                <Ionicons name="backspace-outline" size={28} color={props.theme === "light" ? 'black' : 'white'} />
+            </TouchableOpacity>
+        )
+    }
 
     return (
         <View style={styles.container}>
@@ -142,13 +168,7 @@ const Keyboard = (props) => {
                 <View style={{ flex: 0.5, margin: 2 }}></View>
             </View>
             <View style={styles.keyrow}>
-                <TouchableOpacity
-                    onPress={() => { if (props.checkGuess()) changeIndex(-1) }}
-                    style={[styles.key, { backgroundColor: props.theme === "light" ? '#d3d6da' : '#818384', flex: 1.5 }]}
-                    key='enter'
-                >
-                    <Text style={[styles.text, { color: props.theme === "light" ? 'black' : 'white' }]}>ENT</Text>
-                </TouchableOpacity>
+                {props.swapKeys ? getBackspaceKey() : getEnterKey()}
                 {key(keys[19])}
                 {key(keys[20])}
                 {key(keys[21])}
@@ -156,13 +176,7 @@ const Keyboard = (props) => {
                 {key(keys[23])}
                 {key(keys[24])}
                 {key(keys[25])}
-                <TouchableOpacity
-                    onPress={() => logKey({ key: "erase" })}
-                    style={[styles.key, { backgroundColor: props.theme === "light" ? '#d3d6da' : '#818384', flex: 1.5 }]}
-                    key='erase'
-                >
-                    <Text style={[styles.text, { color: props.theme === "light" ? 'black' : 'white' }]}>ERS</Text>
-                </TouchableOpacity>
+                {props.swapKeys ? getEnterKey() : getBackspaceKey()}
             </View>
         </View>
     );

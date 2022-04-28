@@ -128,6 +128,8 @@ const GameBoard = (props) => {
                     changeTheme={props.changeTheme}
                     colorblind={props.colorblind}
                     toggleColorblind={props.toggleColorblind}
+                    swapKeys={props.swapKeys}
+                    toggleSwap={props.toggleSwap}
                 /> : null
             }
             <Overlay overlayStyle={{ backgroundColor: props.theme === 'light' ? 'white' : '#121213' }} isVisible={showResultsOverlay} onBackdropPress={toggleResultsOverlay}>
@@ -160,6 +162,7 @@ const GameBoard = (props) => {
                 gameState={gameState}
                 theme={props.theme}
                 colorblind={props.colorblind}
+                swapKeys={props.swapKeys}
             />
             <StatusBar
                 backgroundColor={props.theme === 'light' ? 'white' : '#121213'}
