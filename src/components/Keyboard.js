@@ -1,36 +1,38 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
+import Ionicons from '@expo/vector-icons/Ionicons';
+
+import { KeyState, StateColor } from '../constants/Constants';
+
 const { width, height } = Dimensions.get('window');
 
-import keyState from '../constants/keyState';
-
 var allKeys = [
-    { key: 'Q', state: keyState.unused },
-    { key: 'W', state: keyState.unused },
-    { key: 'E', state: keyState.unused },
-    { key: 'R', state: keyState.unused },
-    { key: 'T', state: keyState.unused },
-    { key: 'Y', state: keyState.unused },
-    { key: 'U', state: keyState.unused },
-    { key: 'I', state: keyState.unused },
-    { key: 'O', state: keyState.unused },
-    { key: 'P', state: keyState.unused },
-    { key: 'A', state: keyState.unused },
-    { key: 'S', state: keyState.unused },
-    { key: 'D', state: keyState.unused },
-    { key: 'F', state: keyState.unused },
-    { key: 'G', state: keyState.unused },
-    { key: 'H', state: keyState.unused },
-    { key: 'J', state: keyState.unused },
-    { key: 'K', state: keyState.unused },
-    { key: 'L', state: keyState.unused },
-    { key: 'Z', state: keyState.unused },
-    { key: 'X', state: keyState.unused },
-    { key: 'C', state: keyState.unused },
-    { key: 'V', state: keyState.unused },
-    { key: 'B', state: keyState.unused },
-    { key: 'N', state: keyState.unused },
-    { key: 'M', state: keyState.unused },
+    { key: 'Q', state: KeyState.unused },
+    { key: 'W', state: KeyState.unused },
+    { key: 'E', state: KeyState.unused },
+    { key: 'R', state: KeyState.unused },
+    { key: 'T', state: KeyState.unused },
+    { key: 'Y', state: KeyState.unused },
+    { key: 'U', state: KeyState.unused },
+    { key: 'I', state: KeyState.unused },
+    { key: 'O', state: KeyState.unused },
+    { key: 'P', state: KeyState.unused },
+    { key: 'A', state: KeyState.unused },
+    { key: 'S', state: KeyState.unused },
+    { key: 'D', state: KeyState.unused },
+    { key: 'F', state: KeyState.unused },
+    { key: 'G', state: KeyState.unused },
+    { key: 'H', state: KeyState.unused },
+    { key: 'J', state: KeyState.unused },
+    { key: 'K', state: KeyState.unused },
+    { key: 'L', state: KeyState.unused },
+    { key: 'Z', state: KeyState.unused },
+    { key: 'X', state: KeyState.unused },
+    { key: 'C', state: KeyState.unused },
+    { key: 'V', state: KeyState.unused },
+    { key: 'B', state: KeyState.unused },
+    { key: 'N', state: KeyState.unused },
+    { key: 'M', state: KeyState.unused },
 ];
 
 const Keyboard = (props) => {
@@ -53,7 +55,7 @@ const Keyboard = (props) => {
             let cleanKeys = [...allKeys]
 
             cleanKeys.map(e => {
-                e.state = keyState.unused;
+                e.state = KeyState.unused;
             })
             updateKeys(cleanKeys)
         }
@@ -80,31 +82,27 @@ const Keyboard = (props) => {
                 changeIndex(curIndex)
                 props.updateGuesses(guesses);
             }
-
-            else {
-                console.log("word full")
-            }
         }
     }
 
     const key = (keyboardKey) => {
         let bgColor;
         switch (keyboardKey.state) {
-            case keyState.unused:
-                bgColor = '#EDF2EE';
-                textColor = '#000000';
+            case KeyState.unused:
+                bgColor = props.theme === "light" ? '#d3d6da' : '#818384';
+                textColor = props.theme === "light" ? 'black' : 'white';
                 break;
-            case keyState.wrong:
-                bgColor = '#404140';
-                textColor = '#FFFFFF';
+            case KeyState.wrong:
+                bgColor = StateColor.wrong
+                textColor = 'white';
                 break;
-            case keyState.close:
-                bgColor = '#b9a539';
-                textColor = '#FFFFFF';
+            case KeyState.close:
+                bgColor = props.colorblind ? StateColor.cb_close : StateColor.reg_close;
+                textColor = 'white';
                 break;
-            case keyState.correct:
-                bgColor = '#55a24c';
-                textColor = '#FFFFFF';
+            case KeyState.correct:
+                bgColor = props.colorblind ? StateColor.cb_correct : StateColor.reg_correct
+                textColor = 'white';
                 break;
         }
         return (
@@ -113,6 +111,30 @@ const Keyboard = (props) => {
             </TouchableOpacity>
         );
     };
+
+    function getEnterKey() {
+        return (
+            <TouchableOpacity
+                onPress={() => { if (props.checkGuess()) changeIndex(-1) }}
+                style={[styles.key, { backgroundColor: props.theme === "light" ? '#d3d6da' : '#818384', flex: 1.5 }]}
+                key='enter'
+            >
+                <Ionicons name="return-down-back-sharp" size={28} color={props.theme === "light" ? 'black' : 'white'} />
+            </TouchableOpacity>
+        )
+    }
+
+    function getBackspaceKey() {
+        return (
+            <TouchableOpacity
+                onPress={() => logKey({ key: "erase" })}
+                style={[styles.key, { backgroundColor: props.theme === "light" ? '#d3d6da' : '#818384', flex: 1.5 }]}
+                key='erase'
+            >
+                <Ionicons name="backspace-outline" size={28} color={props.theme === "light" ? 'black' : 'white'} />
+            </TouchableOpacity>
+        )
+    }
 
     return (
         <View style={styles.container}>
@@ -142,9 +164,7 @@ const Keyboard = (props) => {
                 <View style={{ flex: 0.5, margin: 2 }}></View>
             </View>
             <View style={styles.keyrow}>
-                <TouchableOpacity onPress={() => { if (props.checkGuess()) changeIndex(-1) }} style={[styles.key, { backgroundColor: '#808080', flex: 1.5 }]} key='enter'>
-                    <Text style={styles.text}>ENT</Text>
-                </TouchableOpacity>
+                {props.swapKeys ? getBackspaceKey() : getEnterKey()}
                 {key(keys[19])}
                 {key(keys[20])}
                 {key(keys[21])}
@@ -152,9 +172,7 @@ const Keyboard = (props) => {
                 {key(keys[23])}
                 {key(keys[24])}
                 {key(keys[25])}
-                <TouchableOpacity onPress={() => logKey({ key: "erase" })} style={[styles.key, { backgroundColor: '#808080', flex: 1.5 }]} key='erase'>
-                    <Text style={styles.text}>ERS</Text>
-                </TouchableOpacity>
+                {props.swapKeys ? getEnterKey() : getBackspaceKey()}
             </View>
         </View>
     );
