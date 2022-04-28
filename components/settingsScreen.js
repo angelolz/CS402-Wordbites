@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingLeft: 10,
         justifyContent: 'space-between',
+        marginTop: 10
     },
     lightButtonText: {
         color: 'white'
@@ -133,7 +134,7 @@ const styles = StyleSheet.create({
     },
     backButton: {
         borderWidth: 2,
-        marginTop: 25,
+        marginTop: 35,
         marginLeft: 10,
         padding: 10,
         borderRadius: 5,
