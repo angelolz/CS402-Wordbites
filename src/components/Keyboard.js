@@ -182,6 +182,7 @@ const styles = StyleSheet.create({
     container: {
         width: "100%",
         paddingHorizontal: 5,
+        marginTop: 5
     },
     keyrow: {
         flexDirection: 'row',

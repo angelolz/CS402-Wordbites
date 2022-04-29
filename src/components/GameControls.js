@@ -41,7 +41,11 @@ const GameControls = (props) => {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 10
+        paddingTop: 10,
+        paddingBottom: 5,
+        paddingHorizontal: 10,
+        marginBottom: 5,
+        borderBottomWidth: 1
     },
     buttonContainer: {
         flexDirection: 'row',

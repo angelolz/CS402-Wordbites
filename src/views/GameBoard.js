@@ -23,10 +23,8 @@ const GameBoard = (props) => {
 
     //game state effect
     useEffect(() => {
-        if (gameState === "WON")
+        if (gameState !== "IN_PROGRESS")
             toggleResultsOverlay(true);
-        else if (gameState == "LOST")
-            toggleResultsOverlay(true)
     }, [gameState]);
 
 

@@ -36,47 +36,32 @@ const GameGrid = (props) => {
         );
     };
 
-    // const boxes = (rowNum) => {
-    //     let box = [];
-
-    //     for (let i = 0; i < props.wordLength; i++)
-    //         box.push(boxItem(rowNum, i));
-
-    //     return box;
-    // }
-
-    // const rows = () => {
-    //     let row = [];
-
-    //     for (let i = 0; i < props.maxGuesses; i++) {
-    //         row.push(
-    //             <View key={`${i}`} style={styles.row}>
-    //                 {boxes(i)}
-    //             </View>
-    //         );
-    //     }
-
-    //     return row;
-    // }
-
-    function renderItem({ item, index }) {
+    const boxes = (rowNum) => {
         let box = [];
-        for (let i = 0; i < item.length; i++) {
-            box.push(boxItem(index, i))
-        }
 
-        return box
+        for (let i = 0; i < props.wordLength; i++)
+            box.push(boxItem(rowNum, i));
+
+        return box;
+    }
+
+    function renderItem({ index }) {
+        return (
+            <View key={`${index}`} style={styles.row}>
+                {boxes(index)}
+            </View>
+        )
     }
 
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             <FlatList
-                numColumns={5}
+                contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
+                key={props.wordLength}
                 data={props.guesses}
                 renderItem={renderItem}
             />
-
-        </SafeAreaView>
+        </View>
     );
 }
 
@@ -84,7 +69,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingHorizontal: 5,
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     row: {
         flexDirection: 'row',
