@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     logoContainer: {
         width: width,
         height: height * 0.21,
-        padding: 5
+        padding: width * 0.02
     },
     buttonContainer: {
         width: "90%",
