@@ -8,7 +8,7 @@ const GameGrid = (props) => {
         let bgColor;
         let textColor;
         let borderColor = props.theme === 'light' ? '#d3d6da' : '#3a3a3c';
-        switch (props.guesses[rowNum][i].state) {
+        switch (props.guesses[rowNum].wordArray[i].state) {
             case KeyState.unused:
                 bgColor = 'rgba(0,0,0,0)';
                 textColor = props.theme === "light" ? 'black' : 'white';
@@ -30,7 +30,7 @@ const GameGrid = (props) => {
         return (
             <View key={`${rowNum}:${i}`} style={[styles.box, { backgroundColor: bgColor, borderColor: borderColor }]}>
                 <Text style={[styles.text, { color: textColor }]} adjustsFontSizeToFit={true}>
-                    {props.guesses[rowNum][i].key}
+                    {props.guesses[rowNum].wordArray[i].key}
                 </Text>
             </View>
         );
@@ -59,6 +59,7 @@ const GameGrid = (props) => {
                 contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
                 key={props.wordLength}
                 data={props.guesses}
+                keyExtractor={(item) => item.key}
                 renderItem={renderItem}
             />
         </View>

@@ -37,9 +37,10 @@ const GameBoard = (props) => {
                 wordArray.push({ key: "", state: KeyState.unused });
             }
 
-            initArray.push(wordArray);
+            initArray.push({ key: `row_${i}`, wordArray });
         }
 
+        console.log(initArray)
         updateGuesses(initArray)
     }
 
@@ -53,11 +54,11 @@ const GameBoard = (props) => {
 
     function checkGuess() {
         var currentGuesses = [...guesses];
-        var currentGuess = currentGuesses[numGuesses];
+        var currentGuess = currentGuesses[numGuesses].wordArray;
 
         if (gameState !== "IN_PROGRESS") return false;
 
-        if (!guesses[numGuesses].every((e) => e.key !== "")) {
+        if (!guesses[numGuesses].wordArray.every((e) => e.key !== "")) {
             Toast.show('Not all letters are filled in!', {
                 duration: Toast.durations.SHORT,
                 position: Toast.positions.TOP,
@@ -109,7 +110,7 @@ const GameBoard = (props) => {
         incrementGuesses(numGuesses + 1);
 
         //check if win or lose
-        if (guesses[numGuesses].every(e => e.state == KeyState.correct)) {
+        if (guesses[numGuesses].wordArray.every(e => e.state == KeyState.correct)) {
             console.log("you win!")
             setGameState("WON")
         }
