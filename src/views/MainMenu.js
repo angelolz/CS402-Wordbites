@@ -60,7 +60,9 @@ const styles = StyleSheet.create({
         flexDirection: 'column'
     },
     logoContainer: {
-        width: '75%'
+        width: width,
+        height: height * 0.2
+
     },
     buttonContainer: {
         width: "90%",
@@ -68,9 +70,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     logo: {
-        resizeMode: 'contain',
-        borderColor: 'black',
-        borderWidth: 2
+        width: '100%',
+        height: '100%',
+        resizeMode: 'cover',
     },
     menuButton: {
         minWidth: "50%",
