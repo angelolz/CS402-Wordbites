@@ -4,6 +4,7 @@ import { RootSiblingParent } from 'react-native-root-siblings';
 import MainMenu from './src/views/MainMenu';
 import GameBoard from './src/views/GameBoard';
 import { Screen } from './src/constants/Constants';
+import StatsScreen from './src/views/Stats';
 
 var wordBites = () => {
     const [curView, setView] = useState(Screen.MAIN_MENU);
@@ -40,6 +41,11 @@ var wordBites = () => {
                     toggleSwap={toggleSwap}
                     showSettingsOverlay={showSettingsOverlay}
                     toggleSettingsOverlay={toggleSettingsOverlay}
+                />
+            case Screen.STATS:
+                return <StatsScreen
+                    setView={setView}
+                    theme={theme}
                 />
             default:
                 return <MainMenu
