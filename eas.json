@@ -1,0 +1,23 @@
+{
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "prebuildCommand": "prebuild --npm",
+      "distribution": "internal"
+    },
+    "preview": {
+      "distribution": "internal",
+      "prebuildCommand": "prebuild --npm"
+    },
+    "production": {
+        "prebuildCommand": "prebuild --npm",
+        "android": {
+            "buildType": "apk"
+        }
+    }
+  },
+  "cli": {
+    "version": ">= 0.48.1",
+    "requireCommit": true
+  }
+}
