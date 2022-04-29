@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, SafeAreaView, View, Dimensions } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, View, Dimensions, FlatList } from 'react-native';
 
 import { KeyState, StateColor } from '../constants/Constants';
 
@@ -36,32 +36,46 @@ const GameGrid = (props) => {
         );
     };
 
-    const boxes = (rowNum) => {
+    // const boxes = (rowNum) => {
+    //     let box = [];
+
+    //     for (let i = 0; i < props.wordLength; i++)
+    //         box.push(boxItem(rowNum, i));
+
+    //     return box;
+    // }
+
+    // const rows = () => {
+    //     let row = [];
+
+    //     for (let i = 0; i < props.maxGuesses; i++) {
+    //         row.push(
+    //             <View key={`${i}`} style={styles.row}>
+    //                 {boxes(i)}
+    //             </View>
+    //         );
+    //     }
+
+    //     return row;
+    // }
+
+    function renderItem({ item, index }) {
         let box = [];
-
-        for (let i = 0; i < props.wordLength; i++)
-            box.push(boxItem(rowNum, i));
-
-        return box;
-    }
-
-    const rows = () => {
-        let row = [];
-
-        for (let i = 0; i < props.maxGuesses; i++) {
-            row.push(
-                <View key={`${i}`} style={styles.row}>
-                    {boxes(i)}
-                </View>
-            );
+        for (let i = 0; i < item.length; i++) {
+            box.push(boxItem(index, i))
         }
 
-        return row;
+        return box
     }
 
     return (
         <SafeAreaView style={styles.container}>
-            {rows()}
+            <FlatList
+                numColumns={5}
+                data={props.guesses}
+                renderItem={renderItem}
+            />
+
         </SafeAreaView>
     );
 }
