@@ -43,7 +43,7 @@ const Keyboard = (props) => {
     useEffect(() => {
         let newKeys = [...keys];
         if (props.numGuesses > 0) {
-            props.guesses[props.numGuesses - 1].map((e) => {
+            props.guesses[props.numGuesses - 1].wordArray.map((e) => {
                 const foundKey = newKeys[newKeys.findIndex((findKey) => findKey.key === e.key)]
                 if (foundKey.state < e.state)
                     foundKey.state = e.state;
@@ -63,7 +63,7 @@ const Keyboard = (props) => {
 
     function logKey(pressedKey) {
         var guesses = [...props.guesses];
-        var currentGuess = guesses[props.numGuesses];
+        var currentGuess = guesses[props.numGuesses].wordArray;
 
         if (props.gameState !== "IN_PROGRESS") return;
 
@@ -182,6 +182,7 @@ const styles = StyleSheet.create({
     container: {
         width: "100%",
         paddingHorizontal: 5,
+        marginTop: 5
     },
     keyrow: {
         flexDirection: 'row',
