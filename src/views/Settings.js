@@ -61,7 +61,8 @@ const Settings = (props) => {
                         setWordLengthCopy(itemValue)
                     }}
                     mode="dropdown"
-                    style={[styles.picker, { color: props.theme === 'light' ? 'black' : 'white' }]}
+                    dropdownIconColor={props.theme === 'light' ? 'black' : 'white'}
+                    style={[styles.picker, {color: props.theme === 'light' ? 'black' : 'white' }]}
                 >
                     <Picker.Item label="4" value="4" />
                     <Picker.Item label="5" value="5" />
