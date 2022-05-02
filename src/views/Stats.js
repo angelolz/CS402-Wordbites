@@ -2,87 +2,87 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, Pressable, Dimensions } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { DataTable } from 'react-native-paper';
-import { Screen } from '../constants/Constants';
+import { Screen, ColorSchemes } from '../constants/Constants';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 const { width, height } = Dimensions.get('window');
 
 const StatsScreen = (props) => {
     return (
-        <View style={[styles.container, { backgroundColor: props.theme === 'light' ? 'white' : '#121213' }]}>
+        <View style={[styles.container, { backgroundColor: props.theme === 'light' ? ColorSchemes.light.bgColor : ColorSchemes.dark.bgColor }]}>
             <View style={styles.backButton}>
                 <Pressable onPress={() => { props.setView(Screen.MAIN_MENU) }}>
-                    <Ionicons name="home-sharp" size={40} color={props.theme === 'light' ? 'black' : 'white'} />
+                    <Ionicons name="home-sharp" size={40} color={props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor} />
                 </Pressable>
             </View>
-            <Text style={[styles.title, { color: props.theme === 'light' ? 'black' : 'white' }]}>Stats</Text>
+            <Text style={[styles.title, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>Stats</Text>
             <View>
                 <DataTable style={styles.table}>
                     <DataTable.Header>
                         <DataTable.Title>
-                            <Text style={[styles.headerText, { color: props.theme === 'light' ? 'black' : 'white' }]}>Results</Text>
+                            <Text style={[styles.headerText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>Results</Text>
                         </DataTable.Title>
                         <DataTable.Title numeric>
-                            <Text style={[styles.headerText, { color: props.theme === 'light' ? 'black' : 'white' }]}>Wins</Text>
+                            <Text style={[styles.headerText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>Wins</Text>
                         </DataTable.Title>
                         <DataTable.Title numeric>
-                            <Text style={[styles.headerText, { color: props.theme === 'light' ? 'black' : 'white' }]}>Loses</Text>
+                            <Text style={[styles.headerText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>Loses</Text>
                         </DataTable.Title>
                     </DataTable.Header>
 
-                    <DataTable.Row style={{ borderBottomColor: props.theme === 'light' ? '#d3d6da' : '#3a3a3c' }}>
+                    <DataTable.Row style={{ borderBottomColor: props.theme === 'light' ? ColorSchemes.light.toneColor : ColorSchemes.dark.toneColor }}>
                         <DataTable.Cell>
-                            <Text style={{ color: props.theme === 'light' ? 'black' : 'white' }}>4 Letter Stats</Text>
+                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>4 Letter Stats</Text>
                         </DataTable.Cell>
                         <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? 'black' : 'white' }}>125</Text>
+                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>125</Text>
                         </DataTable.Cell>
                         <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? 'black' : 'white' }}>102</Text>
+                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>102</Text>
                         </DataTable.Cell>
                     </DataTable.Row>
-                    <DataTable.Row style={{ borderBottomColor: props.theme === 'light' ? '#d3d6da' : '#3a3a3c' }}>
+                    <DataTable.Row style={{ borderBottomColor: props.theme === 'light' ? ColorSchemes.light.toneColor : ColorSchemes.dark.toneColor }}>
                         <DataTable.Cell>
-                            <Text style={{ color: props.theme === 'light' ? 'black' : 'white' }}>5 Letter Stats</Text>
+                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>5 Letter Stats</Text>
                         </DataTable.Cell>
                         <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? 'black' : 'white' }}>420</Text>
+                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>420</Text>
                         </DataTable.Cell>
                         <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? 'black' : 'white' }}>104</Text>
+                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>104</Text>
                         </DataTable.Cell>
                     </DataTable.Row>
-                    <DataTable.Row style={{ borderBottomColor: props.theme === 'light' ? '#d3d6da' : '#3a3a3c' }}>
+                    <DataTable.Row style={{ borderBottomColor: props.theme === 'light' ? ColorSchemes.light.toneColor : ColorSchemes.dark.toneColor }}>
                         <DataTable.Cell>
-                            <Text style={{ color: props.theme === 'light' ? 'black' : 'white' }}>6 Letter Stats</Text>
+                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>6 Letter Stats</Text>
                         </DataTable.Cell>
                         <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? 'black' : 'white' }}>40</Text>
+                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>40</Text>
                         </DataTable.Cell>
                         <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? 'black' : 'white' }}>15</Text>
+                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>15</Text>
                         </DataTable.Cell>
                     </DataTable.Row>
-                    <DataTable.Row style={{ borderBottomColor: props.theme === 'light' ? '#d3d6da' : '#3a3a3c' }}>
+                    <DataTable.Row style={{ borderBottomColor: props.theme === 'light' ? ColorSchemes.light.toneColor : ColorSchemes.dark.toneColor }}>
                         <DataTable.Cell>
-                            <Text style={{ color: props.theme === 'light' ? 'black' : 'white' }}>7 Letter Stats</Text>
+                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>7 Letter Stats</Text>
                         </DataTable.Cell>
                         <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? 'black' : 'white' }}>25</Text>
+                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>25</Text>
                         </DataTable.Cell>
                         <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? 'black' : 'white' }}>20</Text>
+                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>20</Text>
                         </DataTable.Cell>
                     </DataTable.Row>
-                    <DataTable.Row style={{ borderBottomColor: props.theme === 'light' ? '#d3d6da' : '#3a3a3c' }}>
+                    <DataTable.Row style={{ borderBottomColor: props.theme === 'light' ? ColorSchemes.light.toneColor : ColorSchemes.dark.toneColor }}>
                         <DataTable.Cell>
-                            <Text style={{ color: props.theme === 'light' ? 'black' : 'white' }}>8 Letter Stats</Text>
+                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>8 Letter Stats</Text>
                         </DataTable.Cell>
                         <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? 'black' : 'white' }}>0</Text>
+                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>0</Text>
                         </DataTable.Cell>
                         <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? 'black' : 'white' }}>0</Text>
+                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>0</Text>
                         </DataTable.Cell>
                     </DataTable.Row>
                 </DataTable>
@@ -90,74 +90,74 @@ const StatsScreen = (props) => {
                 <DataTable style={styles.table}>
                     <DataTable.Header>
                         <DataTable.Title>
-                            <Text style={[styles.headerText, { color: props.theme === 'light' ? 'black' : 'white' }]}>Streaks</Text>
+                            <Text style={[styles.headerText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>Streaks</Text>
                         </DataTable.Title>
                         <DataTable.Title numeric>
-                            <Text style={[styles.headerText, { color: props.theme === 'light' ? 'black' : 'white' }]}>Current</Text>
+                            <Text style={[styles.headerText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>Current</Text>
                         </DataTable.Title>
                         <DataTable.Title numeric>
-                            <Text style={[styles.headerText, { color: props.theme === 'light' ? 'black' : 'white' }]}>Top</Text>
+                            <Text style={[styles.headerText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>Top</Text>
                         </DataTable.Title>
                     </DataTable.Header>
-                    <DataTable.Row style={{ borderBottomColor: props.theme === 'light' ? '#d3d6da' : '#3a3a3c' }}>
+                    <DataTable.Row style={{ borderBottomColor: props.theme === 'light' ? ColorSchemes.light.toneColor : ColorSchemes.dark.toneColor }}>
                         <DataTable.Cell>
-                            <Text style={{ color: props.theme === 'light' ? 'black' : 'white' }}>4 Letter Streak</Text>
+                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>4 Letter Streak</Text>
                         </DataTable.Cell>
                         <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? 'black' : 'white' }}>102</Text>
+                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>102</Text>
                         </DataTable.Cell>
                         <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? 'black' : 'white' }}>142</Text>
+                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>142</Text>
                         </DataTable.Cell>
                     </DataTable.Row>
-                    <DataTable.Row style={{ borderBottomColor: props.theme === 'light' ? '#d3d6da' : '#3a3a3c' }}>
+                    <DataTable.Row style={{ borderBottomColor: props.theme === 'light' ? ColorSchemes.light.toneColor : ColorSchemes.dark.toneColor }}>
                         <DataTable.Cell>
-                            <Text style={{ color: props.theme === 'light' ? 'black' : 'white' }}>5 Letter Streak</Text>
+                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>5 Letter Streak</Text>
                         </DataTable.Cell>
                         <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? 'black' : 'white' }}>229</Text>
+                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>229</Text>
                         </DataTable.Cell>
                         <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? 'black' : 'white' }}>572</Text>
+                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>572</Text>
                         </DataTable.Cell>
                     </DataTable.Row>
-                    <DataTable.Row style={{ borderBottomColor: props.theme === 'light' ? '#d3d6da' : '#3a3a3c' }}>
+                    <DataTable.Row style={{ borderBottomColor: props.theme === 'light' ? ColorSchemes.light.toneColor : ColorSchemes.dark.toneColor }}>
                         <DataTable.Cell >
-                            <Text style={{ color: props.theme === 'light' ? 'black' : 'white' }}>6 Letter Streak</Text>
+                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>6 Letter Streak</Text>
                         </DataTable.Cell>
                         <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? 'black' : 'white' }}>32</Text>
+                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>32</Text>
                         </DataTable.Cell>
                         <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? 'black' : 'white' }}>79</Text>
+                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>79</Text>
                         </DataTable.Cell>
                     </DataTable.Row>
-                    <DataTable.Row style={{ borderBottomColor: props.theme === 'light' ? '#d3d6da' : '#3a3a3c' }}>
+                    <DataTable.Row style={{ borderBottomColor: props.theme === 'light' ? ColorSchemes.light.toneColor : ColorSchemes.dark.toneColor }}>
                         <DataTable.Cell>
-                            <Text style={{ color: props.theme === 'light' ? 'black' : 'white' }}>7 Letter Streak</Text>
+                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>7 Letter Streak</Text>
                         </DataTable.Cell>
                         <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? 'black' : 'white' }}>2</Text>
+                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>2</Text>
                         </DataTable.Cell>
                         <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? 'black' : 'white' }}>3</Text>
+                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>3</Text>
                         </DataTable.Cell>
                     </DataTable.Row>
-                    <DataTable.Row style={{ borderBottomColor: props.theme === 'light' ? '#d3d6da' : '#3a3a3c' }}>
+                    <DataTable.Row style={{ borderBottomColor: props.theme === 'light' ? ColorSchemes.light.toneColor : ColorSchemes.dark.toneColor }}>
                         <DataTable.Cell>
-                            <Text style={{ color: props.theme === 'light' ? 'black' : 'white' }}>8 Letter Streak</Text>
+                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>8 Letter Streak</Text>
                         </DataTable.Cell>
                         <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? 'black' : 'white' }}>0</Text>
+                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>0</Text>
                         </DataTable.Cell>
                         <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? 'black' : 'white' }}>0</Text>
+                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>0</Text>
                         </DataTable.Cell>
                     </DataTable.Row>
                 </DataTable>
             </View>
             <StatusBar
-                backgroundColor={props.theme === 'light' ? 'white' : '#121213'}
+                backgroundColor={props.theme === 'light' ? ColorSchemes.light.bgColor : ColorSchemes.dark.bgColor}
                 style={props.theme === 'light' ? 'dark' : 'light'}
                 translucent={false}
             />

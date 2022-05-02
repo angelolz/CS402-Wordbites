@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-import { KeyState, StateColor } from '../constants/Constants';
+import { KeyState, StateColor, ColorSchemes } from '../constants/Constants';
 
 const { width, height } = Dimensions.get('window');
 
@@ -93,11 +93,11 @@ const Keyboard = (props) => {
         let bgColor;
         switch (keyboardKey.state) {
             case KeyState.unused:
-                bgColor = props.theme === "light" ? '#d3d6da' : '#818384';
-                textColor = props.theme === "light" ? 'black' : 'white';
+                bgColor = props.theme === 'light' ? ColorSchemes.light.tone2Color : ColorSchemes.dark.tone2Color
+                textColor = props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor
                 break;
             case KeyState.wrong:
-                bgColor = StateColor.wrong
+                bgColor = props.theme === 'light' ? StateColor.wrong : StateColor.alt_wrong;
                 textColor = 'white';
                 break;
             case KeyState.close:
@@ -120,10 +120,10 @@ const Keyboard = (props) => {
         return (
             <TouchableOpacity
                 onPress={() => { if (props.checkGuess()) changeIndex(-1) }}
-                style={[styles.key, { backgroundColor: props.theme === "light" ? '#d3d6da' : '#818384', flex: 1.5 }]}
+                style={[styles.key, { backgroundColor: props.theme === 'light' ? ColorSchemes.light.tone2Color : ColorSchemes.dark.tone2Color, flex: 1.5 }]}
                 key='enter'
             >
-                <Ionicons name="return-down-back-sharp" size={28} color={props.theme === "light" ? 'black' : 'white'} />
+                <Ionicons name="return-down-back-sharp" size={28} color={props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor} />
             </TouchableOpacity>
         )
     }
@@ -132,10 +132,10 @@ const Keyboard = (props) => {
         return (
             <TouchableOpacity
                 onPress={() => logKey({ key: "erase" })}
-                style={[styles.key, { backgroundColor: props.theme === "light" ? '#d3d6da' : '#818384', flex: 1.5 }]}
+                style={[styles.key, { backgroundColor: props.theme === 'light' ? ColorSchemes.light.tone2Color : ColorSchemes.dark.tone2Color, flex: 1.5 }]}
                 key='erase'
             >
-                <Ionicons name="backspace-outline" size={28} color={props.theme === "light" ? 'black' : 'white'} />
+                <Ionicons name="backspace-outline" size={28} color={props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor} />
             </TouchableOpacity>
         )
     }

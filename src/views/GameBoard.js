@@ -9,19 +9,19 @@ import Settings from './Settings';
 import Keyboard from '../components/Keyboard';
 import GameGrid from '../components/GameGrid';
 import GameControls from '../components/GameControls';
-import { KeyState } from '../constants/Constants';
+import { KeyState, ColorSchemes } from '../constants/Constants';
+import { showToast } from '../constants/Utils';
 import { dictionary, commonWords4, commonWords5, commonWords6, commonWords7, commonWords8 } from '../constants/WordList';
 
-
 const GameBoard = (props) => {
-    const [wordLength, setWordLength] = useState(4);
+    const [wordLength, setWordLength] = useState(5);
     const [maxGuesses, setMaxGuesses] = useState(6);
     const [numGuesses, incrementGuesses] = useState(0);
     const [guesses, updateGuesses] = useState([]);
     const [word, setWord] = useState(null);
     const [gameState, setGameState] = useState("IN_PROGRESS");
     const [showResultsOverlay, toggleResultsOverlay] = useState(false);
-    const [commonWords, setCommonWords] = useState(commonWords4);
+    const [commonWords, setCommonWords] = useState(commonWords5);
 
     //game state effect
     useEffect(() => {
@@ -54,39 +54,47 @@ const GameBoard = (props) => {
     }
 
     function checkGuess() {
-        var currentGuesses = [...guesses];
-        var currentGuess = currentGuesses[numGuesses].wordArray;
+        var tempWord = [...word];
+        const currentGuesses = [...guesses];
+        const currentGuess = currentGuesses[numGuesses].wordArray;
+        const guess = currentGuess.map((e) => { return e.key; }).join('');
 
+        //if game is no longer in progress, don't check guess
         if (gameState !== "IN_PROGRESS") return false;
 
-        if (!guesses[numGuesses].wordArray.every((e) => e.key !== "")) {
-            Toast.show('Not all letters are filled in!', {
-                duration: Toast.durations.SHORT,
-                position: Toast.positions.TOP,
-                animation: true,
-                shadow: true,
-                hideOnPress: true,
-                backgroundColor: props.theme === 'light' ? 'black' : 'white',
-                textColor: props.theme === 'light' ? 'white' : 'black'
-            })
+        //check if all letters are filled in
+        if (guess.length != wordLength) {
+            showToast('Not all letters are filled in!', props.theme);
             return false;
         }
 
-        var guess = currentGuess.map((e) => { return e.key; }).join("");
+        //check if guess is a valid word
         if (!dictionary.includes(guess.toLowerCase())) {
-            Toast.show("That's not a valid word!", {
-                duration: Toast.durations.SHORT,
-                position: Toast.positions.TOP,
-                animation: true,
-                shadow: true,
-                hideOnPress: true,
-                backgroundColor: props.theme === 'light' ? 'black' : 'white',
-                textColor: props.theme === 'light' ? 'white' : 'black'
-            })
+            showToast("That's not a valid word!", props.theme);
             return false;
         }
 
-        var tempWord = [...word];
+        //hard mode checks
+        if (props.hardMode && numGuesses > 0) {
+            const requiredLetters = guesses[numGuesses - 1].wordArray;
+            for (var i = 0; i < requiredLetters.length; i++) {
+                switch (requiredLetters[i].state) {
+                    case KeyState.close:
+                        if (guess.indexOf(requiredLetters[i].key) == -1) {
+                            showToast(`Your guess must contain ${requiredLetters[i].key}`, props.theme)
+                            return false;
+                        }
+                        break;
+                    case KeyState.correct:
+                        if (guess.charAt(i) !== requiredLetters[i].key) {
+                            showToast(`Letter in position ${i + 1} must be ${requiredLetters[i].key}`, props.theme)
+                            return false;
+                        }
+                        break;
+                }
+            }
+        }
+
         for (var i = 0; i < word.length; i++) {
             if (tempWord[i] === currentGuess[i].key) {
                 currentGuess[i].state = KeyState.correct;
@@ -135,8 +143,8 @@ const GameBoard = (props) => {
     function winText() {
         return (
             <>
-                <Text style={[styles.resultText, { color: props.theme === 'light' ? 'black' : 'white', }]}>You Won!</Text>
-                <Text style={[styles.flavorText, { color: props.theme === 'light' ? 'black' : 'white', }]}>You got it in {numGuesses} {numGuesses == 1 ? 'try' : 'tries'}!</Text>
+                <Text style={[styles.resultText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>You Won!</Text>
+                <Text style={[styles.flavorText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>You got it in {numGuesses} {numGuesses == 1 ? 'try' : 'tries'}!</Text>
             </>
         )
     }
@@ -145,7 +153,7 @@ const GameBoard = (props) => {
         return (
             <>
                 <Text style={styles.resultText}>You Lost!</Text>
-                <Text style={[styles.flavorText, { color: props.theme === 'light' ? 'black' : 'white', }]}>You'll get it next time!</Text>
+                <Text style={[styles.flavorText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor, }]}>You'll get it next time!</Text>
             </>
         )
     }
@@ -153,7 +161,7 @@ const GameBoard = (props) => {
     const changeWordLength = (newLength) => {
         const length = parseInt(newLength);
         setWordLength(length);
-        switch(length){
+        switch (length) {
             case 4:
                 setCommonWords([...commonWords4]);
                 break;
@@ -174,10 +182,13 @@ const GameBoard = (props) => {
     }
 
     return (
-        <SafeAreaView style={[styles.container, { backgroundColor: props.theme === 'light' ? 'white' : '#121213' }]}>
+        <SafeAreaView style={[styles.container, { backgroundColor: props.theme === 'light' ? ColorSchemes.light.bgColor : ColorSchemes.dark.bgColor }]}>
             {props.showSettingsOverlay ?
                 <Settings
                     toggleSettingsOverlay={props.toggleSettingsOverlay}
+                    numGuesses={numGuesses}
+                    hardMode={props.hardMode}
+                    toggleHardMode={props.toggleHardMode}
                     theme={props.theme}
                     changeTheme={props.changeTheme}
                     colorblind={props.colorblind}
@@ -190,7 +201,7 @@ const GameBoard = (props) => {
                 /> : null
             }
             <Overlay
-                overlayStyle={{ backgroundColor: props.theme === 'light' ? 'white' : '#121213', width: '75%' }}
+                overlayStyle={{ backgroundColor: props.theme === 'light' ? ColorSchemes.light.bgColor : ColorSchemes.dark.bgColor, width: '75%' }}
                 isVisible={showResultsOverlay}
                 onBackdropPress={toggleResultsOverlay}
             >
@@ -227,7 +238,7 @@ const GameBoard = (props) => {
                 swapKeys={props.swapKeys}
             />
             <StatusBar
-                backgroundColor={props.theme === 'light' ? 'white' : '#121213'}
+                backgroundColor={props.theme === 'light' ? ColorSchemes.light.bgColor : ColorSchemes.dark.bgColor}
                 style={props.theme === 'light' ? 'dark' : 'light'}
                 translucent={false}
             />

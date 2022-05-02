@@ -3,19 +3,17 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { StyleSheet, Text, SafeAreaView, View, Pressable, Image, Dimensions } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
-import { Screen } from '../constants/Constants';
+import { Screen, ColorSchemes } from '../constants/Constants';
 import Settings from './Settings';
 
-
-const { width, height } = Dimensions.get('window');
-
 const MainMenu = (props) => {
-
     return (
-        <SafeAreaView style={[styles.container, { backgroundColor: props.theme === 'light' ? 'white' : '#121213' }]}>
+        <SafeAreaView style={[styles.container, { backgroundColor: props.theme === 'light' ? ColorSchemes.light.bgColor : ColorSchemes.dark.bgColor }]}>
             {props.showSettingsOverlay ?
                 <Settings
                     toggleSettingsOverlay={props.toggleSettingsOverlay}
+                    hardMode={props.hardMode}
+                    toggleHardMode={props.toggleHardMode}
                     theme={props.theme}
                     changeTheme={props.changeTheme}
                     colorblind={props.colorblind}
@@ -46,7 +44,7 @@ const MainMenu = (props) => {
                 </Pressable>
             </View>
             <StatusBar
-                backgroundColor={props.theme === 'light' ? 'white' : '#121213'}
+                backgroundColor={props.theme === 'light' ? ColorSchemes.light.bgColor : ColorSchemes.dark.bgColor}
                 style={props.theme === 'light' ? 'dark' : 'light'}
                 translucent={false}
             />
