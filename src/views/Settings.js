@@ -99,7 +99,6 @@ const Settings = (props) => {
                         onValueChange={(itemValue, itemIndex) => {
                             props.changeWordLength(itemValue);
                             setWordLengthCopy(itemValue)
-                            setGuessCopy(0);
                         }}
                         enabled={props.guesses > 0 ? false : true}
                         mode="dropdown"
