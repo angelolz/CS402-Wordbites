@@ -93,7 +93,7 @@ const Keyboard = (props) => {
                 textColor = props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor
                 break;
             case KeyState.wrong:
-                bgColor = StateColor.wrong
+                bgColor = props.theme === 'light' ? StateColor.wrong : StateColor.alt_wrong;
                 textColor = 'white';
                 break;
             case KeyState.close:

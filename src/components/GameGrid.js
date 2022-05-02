@@ -7,23 +7,29 @@ const GameGrid = (props) => {
     const boxItem = (rowNum, i) => {
         let bgColor;
         let textColor;
-        let borderColor = props.theme === 'light' ? ColorSchemes.light.toneColor : ColorSchemes.dark.toneColor;
+        let borderColor;
+
+        if (props.guesses[rowNum].wordArray[i].state === KeyState.unused)
+            textColor = props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor;
+        else
+            textColor = 'white';
+
         switch (props.guesses[rowNum].wordArray[i].state) {
             case KeyState.unused:
                 bgColor = 'rgba(0,0,0,0)';
-                textColor = props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor;
+                borderColor = props.theme === 'light' ? ColorSchemes.light.toneColor : ColorSchemes.dark.toneColor;
                 break;
             case KeyState.wrong:
-                bgColor = StateColor.wrong
-                textColor = 'white';
+                bgColor = props.theme === 'light' ? StateColor.wrong : StateColor.alt_wrong;
+                borderColor = props.theme === 'light' ? StateColor.wrong : StateColor.alt_wrong;
                 break;
             case KeyState.close:
                 bgColor = props.colorblind ? StateColor.cb_close : StateColor.reg_close;
-                textColor = 'white';
+                borderColor = bgColor = props.colorblind ? StateColor.cb_close : StateColor.reg_close;
                 break;
             case KeyState.correct:
-                bgColor = props.colorblind ? StateColor.cb_correct : StateColor.reg_correct
-                textColor = 'white';
+                bgColor = props.colorblind ? StateColor.cb_correct : StateColor.reg_correct;
+                borderColor = props.colorblind ? StateColor.cb_correct : StateColor.reg_correct;
                 break;
         }
 

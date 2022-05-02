@@ -19,7 +19,10 @@ const Settings = (props) => {
                 </View>
             </View>
             <View style={styles.setting}>
-                <Text style={[styles.settingScreenText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>Use Dark Theme</Text>
+                <View style={styles.settingText}>
+                    <Text includeFontPadding={true} textAlignVertical={'center'} style={[styles.settingTitleText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>Hard Mode</Text>
+                    <Text includeFontPadding={true} textAlignVertical={'center'} style={[styles.settingDescText, { color: props.theme === 'light' ? ColorSchemes.light.text2Color : ColorSchemes.dark.text2Color }]}>Revealed hints must be used in next guesses</Text>
+                </View>
                 <Pressable style={styles.button} onPress={() => props.theme === 'light' ? props.changeTheme('dark') : props.changeTheme('light')}>
                     {
                         props.theme === 'light' ?
@@ -29,7 +32,21 @@ const Settings = (props) => {
                 </Pressable>
             </View>
             <View style={styles.setting}>
-                <Text style={[styles.settingScreenText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>Toggle Colorblind Mode</Text>
+                <View style={styles.settingText}>
+                    <Text style={[styles.settingTitleText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>Use Dark Theme</Text>
+                </View>
+                <Pressable style={styles.button} onPress={() => props.theme === 'light' ? props.changeTheme('dark') : props.changeTheme('light')}>
+                    {
+                        props.theme === 'light' ?
+                            <Ionicons name="ellipse-outline" size={32} color={props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor} /> :
+                            <Ionicons name="checkmark-circle-outline" size={32} color={props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor} />
+                    }
+                </Pressable>
+            </View>
+            <View style={styles.setting}>
+                <View style={styles.settingText}>
+                    <Text style={[styles.settingTitleText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>Toggle Colorblind Mode</Text>
+                </View>
                 <Pressable style={styles.button} onPress={() => props.toggleColorblind(!props.colorblind)}>
                     {
                         props.colorblind ?
@@ -39,7 +56,9 @@ const Settings = (props) => {
                 </Pressable>
             </View>
             <View style={styles.setting}>
-                <Text style={[styles.settingScreenText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>Swap Enter/Backspace Keys</Text>
+                <View style={styles.settingText}>
+                    <Text style={[styles.settingTitleText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>Swap Enter/Delete Keys</Text>
+                </View>
                 <Pressable style={styles.button} onPress={() => props.toggleSwap(!props.swapKeys)}>
                     {
                         props.swapKeys ?
@@ -78,11 +97,16 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         paddingHorizontal: 10
     },
-    settingScreenText: {
-        flex: 1,
+    settingText: {
+        flexDirection: 'column'
+    },
+    settingTitleText: {
         fontSize: ((width > height) ? width / 15 : height / 40),
-        alignSelf: 'center',
-        paddingRight: 5
+        paddingBottom: 0,
+        paddingRight: 5,
+    },
+    settingDescText: {
+        fontSize: ((width > height) ? width / 15 : height / 65),
     },
     backButton: {
         alignItems: 'flex-end',
