@@ -6,9 +6,11 @@ import { StatusBar } from 'expo-status-bar';
 import { Screen } from '../constants/Constants';
 import Settings from './Settings';
 
+
 const { width, height } = Dimensions.get('window');
 
 const MainMenu = (props) => {
+
     return (
         <SafeAreaView style={[styles.container, { backgroundColor: props.theme === 'light' ? 'white' : '#121213' }]}>
             {props.showSettingsOverlay ?

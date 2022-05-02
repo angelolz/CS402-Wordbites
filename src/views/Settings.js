@@ -1,12 +1,15 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { StyleSheet, Text, View, Pressable, Dimensions } from 'react-native';
 import { Overlay } from 'react-native-elements'
 import { StatusBar } from 'expo-status-bar';
-
+import { Picker } from '@react-native-picker/picker';
 const { width, height } = Dimensions.get('window');
 
 const Settings = (props) => {
+
+    const [wordLengthCopy, setWordLengthCopy] = useState(props.wordLength);
+
     return (
         <Overlay overlayStyle={{ backgroundColor: props.theme === 'light' ? 'white' : '#121213', width: '75%' }} isVisible={props.showSettingsOverlay} onBackdropPress={() => { props.toggleSettingsOverlay(false) }}>
             <View style={styles.header}>
@@ -47,6 +50,32 @@ const Settings = (props) => {
                     }
                 </Pressable>
             </View>
+            {props.changeWordLength ?
+            <View style={styles.setting}>
+                <Text style={[styles.settingScreenText, { color: props.guesses > 0 ? "red": (props.theme === 'light' ? 'black' : 'white') }]}>
+                    {props.guesses > 0 ? "Disabled during round": "Word length"}
+                </Text>
+                <Picker
+                    selectedValue={wordLengthCopy.toString()}
+                    onValueChange={(itemValue, itemIndex) => {
+                        props.changeWordLength(itemValue);
+                        setWordLengthCopy(itemValue)
+                        setGuessCopy(0);
+                    }}
+                    enabled={props.guesses > 0 ? false: true}
+                    mode="dropdown"
+                    dropdownIconColor={props.theme === 'light' ? 'black' : 'white'}
+                    style={[styles.picker, {color: props.theme === 'light' ? (props.guesses > 0 ? 'white' : 'black') : 'white' , backgroundColor: props.guesses > 0 ? 'gray' : '#00000000'}]}
+                >
+                    <Picker.Item label="4" value="4" />
+                    <Picker.Item label="5" value="5" />
+                    <Picker.Item label="6" value="6" />
+                    <Picker.Item label="7" value="7" />
+                    <Picker.Item label="8" value="8" />
+                </Picker>
+            </View> : null
+            }
+            
             <StatusBar
                 backgroundColor={props.theme === 'light' ? 'white' : '#121213'}
                 style={props.theme === 'light' ? 'dark' : 'light'}
@@ -57,6 +86,10 @@ const Settings = (props) => {
 };
 
 const styles = StyleSheet.create({
+    picker: {
+        width: '30%',
+        textAlign: 'center'
+    },
     button: {
         marginVertical: 5
     },
