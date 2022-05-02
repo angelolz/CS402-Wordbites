@@ -8,22 +8,38 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 const { width, height } = Dimensions.get('window');
 
 const StatsScreen = (props) => {
+    function getRatio(stat) {
+        if (stat.played === 0)
+            return '0.00%'
+        else
+            return `${parseFloat(((stat.won * 1.0 / stat.played) * 100).toFixed(2))}%`
+    }
+
+    function getCell(text, numeric) {
+        if (numeric) {
+            return (
+                <DataTable.Cell numeric>
+                    <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>{text}</Text>
+                </DataTable.Cell>
+            )
+        }
+
+        else {
+            return (
+                <DataTable.Cell>
+                    <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>{text}</Text>
+                </DataTable.Cell>
+            )
+        }
+    }
 
     function getStatsRow(length) {
         return (
             <DataTable.Row style={{ borderBottomColor: props.theme === 'light' ? ColorSchemes.light.toneColor : ColorSchemes.dark.toneColor }}>
-                <DataTable.Cell>
-                    <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>{length} Letter Stats</Text>
-                </DataTable.Cell>
-                <DataTable.Cell numeric>
-                    <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>{props.stats[`${length}`].wins}</Text>
-                </DataTable.Cell>
-                <DataTable.Cell numeric>
-                    <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>{props.stats[`${length}`].played - props.stats[`${length}`].wins}</Text>
-                </DataTable.Cell>
-                <DataTable.Cell numeric>
-                    <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>{props.stats[`${length}`].wins / props.stats[`${length}`].played - props.stats[`${length}`].wins}</Text>
-                </DataTable.Cell>
+                {getCell(`${length} Letter Stats`, false)}
+                {getCell(props.stats[`${length}`].wins, true)}
+                {getCell(props.stats[`${length}`].played - props.stats[`${length}`].wins, true)}
+                {getCell(getRatio(props.stats[`${length}`]), true)}
             </DataTable.Row>
         )
     }
