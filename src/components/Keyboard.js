@@ -41,6 +41,10 @@ const Keyboard = (props) => {
     const [letterIndex, changeIndex] = useState(-1);
 
     useEffect(() => {
+        changeIndex(-1);
+    }, [props.wordLength])
+
+    useEffect(() => {
         let newKeys = [...keys];
         if (props.numGuesses > 0) {
             props.guesses[props.numGuesses - 1].wordArray.map((e) => {
