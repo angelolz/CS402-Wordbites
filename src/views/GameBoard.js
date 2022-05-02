@@ -80,14 +80,16 @@ const GameBoard = (props) => {
                 switch (requiredLetters[i].state) {
                     case KeyState.close:
                         if (guess.indexOf(requiredLetters[i].key) == -1) {
-                            showToast(`Your guess must contain an ${requiredLetters[i].key}`, props.theme)
+                            showToast(`Your guess must contain ${requiredLetters[i].key}`, props.theme)
                             return false;
                         }
+                        break;
                     case KeyState.correct:
                         if (guess.charAt(i) !== requiredLetters[i].key) {
-                            showToast(`Letter in position ${i + 1} must be a ${requiredLetters[i].key}`, props.theme)
+                            showToast(`Letter in position ${i + 1} must be ${requiredLetters[i].key}`, props.theme)
                             return false;
                         }
+                        break;
                 }
             }
         }
