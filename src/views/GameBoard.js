@@ -186,6 +186,7 @@ const GameBoard = (props) => {
                     toggleSwap={props.toggleSwap}
                     changeWordLength={changeWordLength}
                     wordLength={wordLength}
+                    guesses={numGuesses}
                 /> : null
             }
             <Overlay
