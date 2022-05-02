@@ -120,13 +120,29 @@ const GameBoard = (props) => {
 
         //check if win or lose
         if (guesses[numGuesses].wordArray.every(e => e.state == KeyState.correct)) {
-            console.log("you win!")
-            setGameState("WON")
+            console.log("you win!");
+            setGameState("WON");
+
+            var newStats = { ...props.stats };
+            newStats[`${wordLength}`].wins++;
+            newStats[`${wordLength}`].played++;
+            newStats[`${wordLength}`].streak++;
+
+            if (newStats[`${wordLength}`].streak > newStats[`${wordLength}`].top_streak)
+                newStats[`${wordLength}`].top_streak = newStats[`${wordLength}`].streak;
+
+            props.updateStats(newStats);
         }
 
         else if (numGuesses + 1 == maxGuesses) {
-            console.log("loser lmfao")
+            console.log("loser lmfao");
             setGameState("LOST");
+
+            var newStats = { ...props.stats };
+            newStats[`${wordLength}`].played++;
+            newStats[`${wordLength}`].streak = 0;
+
+            props.updateStats(newStats);
         }
 
         //return true if valid guess

@@ -12,7 +12,7 @@ const StatsScreen = (props) => {
         if (stat.played === 0)
             return '0.00%'
         else
-            return `${parseFloat(((stat.won * 1.0 / stat.played) * 100).toFixed(2))}%`
+            return `${parseFloat(((stat.wins * 1.0 / stat.played) * 100).toFixed(2))}%`
     }
 
     function getCell(text, numeric) {

@@ -69,9 +69,9 @@ const Keyboard = (props) => {
         var guesses = [...props.guesses];
         var currentGuess = guesses[props.numGuesses].wordArray;
 
-        if (props.gameState !== "IN_PROGRESS") return;
+        if (props.gameState !== 'IN_PROGRESS') return;
 
-        if (pressedKey.key === "erase") {
+        if (pressedKey.key === 'erase') {
             if (letterIndex >= 0) {
                 currentGuess[letterIndex].key = "";
                 changeIndex(letterIndex - 1);
@@ -110,7 +110,10 @@ const Keyboard = (props) => {
                 break;
         }
         return (
-            <TouchableOpacity onPress={() => logKey(keyboardKey)} style={[styles.key, { backgroundColor: bgColor }]} key={keyboardKey.key}>
+            <TouchableOpacity
+                onPress={() => logKey(keyboardKey)} style={[styles.key, { backgroundColor: bgColor }]} key={keyboardKey.key}
+                disabled={props.gameState !== 'IN_PROGRESS'}
+            >
                 <Text style={[styles.text, { color: textColor }]}>{keyboardKey.key}</Text>
             </TouchableOpacity>
         );
@@ -121,6 +124,7 @@ const Keyboard = (props) => {
             <TouchableOpacity
                 onPress={() => { if (props.checkGuess()) changeIndex(-1) }}
                 style={[styles.key, { backgroundColor: props.theme === 'light' ? ColorSchemes.light.tone2Color : ColorSchemes.dark.tone2Color, flex: 1.5 }]}
+                disabled={props.gameState !== 'IN_PROGRESS'}
                 key='enter'
             >
                 <Ionicons name="return-down-back-sharp" size={28} color={props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor} />
@@ -133,6 +137,7 @@ const Keyboard = (props) => {
             <TouchableOpacity
                 onPress={() => logKey({ key: "erase" })}
                 style={[styles.key, { backgroundColor: props.theme === 'light' ? ColorSchemes.light.tone2Color : ColorSchemes.dark.tone2Color, flex: 1.5 }]}
+                disabled={props.gameState !== 'IN_PROGRESS'}
                 key='erase'
             >
                 <Ionicons name="backspace-outline" size={28} color={props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor} />

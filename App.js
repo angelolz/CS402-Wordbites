@@ -37,6 +37,8 @@ var wordBites = () => {
             case Screen.GAME:
                 return <GameBoard
                     setView={setView}
+                    stats={stats}
+                    updateStats={updateStats}
                     hardMode={hardMode}
                     toggleHardMode={toggleHardMode}
                     theme={theme}
