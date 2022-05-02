@@ -20,26 +20,7 @@ const Settings = (props) => {
                     </Pressable>
                 </View>
             </View>
-            <View style={styles.setting}>
-                <View style={styles.settingText}>
-                    <Text style={[styles.settingTitleText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>Hard Mode</Text>
-                    <Text style={[styles.settingDescText, { color: props.theme === 'light' ? ColorSchemes.light.text2Color : ColorSchemes.dark.text2Color }]}>Revealed hints must be used in next guesses</Text>
-                </View>
-                <Pressable style={styles.button} onPress={() => {
-                    if (props.numGuesses == undefined || props.numGuesses === 0)
-                        props.toggleHardMode(!props.hardMode)
-                    else
-                        showToast('Hard mode can only be changed at the start of the round', props.theme)
-                }}
 
-                >
-                    {
-                        props.hardMode ?
-                            <Ionicons name="checkmark-circle-outline" size={32} color={props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor} /> :
-                            <Ionicons name="ellipse-outline" size={32} color={props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor} />
-                    }
-                </Pressable>
-            </View>
             <View style={styles.setting}>
                 <View style={styles.settingText}>
                     <Text style={[styles.settingTitleText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>Use Dark Theme</Text>
@@ -71,6 +52,26 @@ const Settings = (props) => {
                 <Pressable style={styles.button} onPress={() => props.toggleSwap(!props.swapKeys)}>
                     {
                         props.swapKeys ?
+                            <Ionicons name="checkmark-circle-outline" size={32} color={props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor} /> :
+                            <Ionicons name="ellipse-outline" size={32} color={props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor} />
+                    }
+                </Pressable>
+            </View>
+            <View style={styles.setting}>
+                <View style={styles.settingText}>
+                    <Text style={[styles.settingTitleText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>Hard Mode</Text>
+                    <Text style={[styles.settingDescText, { color: props.theme === 'light' ? ColorSchemes.light.text2Color : ColorSchemes.dark.text2Color }]}>Revealed hints must be used in next guesses</Text>
+                </View>
+                <Pressable style={styles.button} onPress={() => {
+                    if (props.numGuesses == undefined || props.numGuesses === 0)
+                        props.toggleHardMode(!props.hardMode)
+                    else
+                        showToast('Hard mode can only be changed at the start of the round', props.theme)
+                }}
+
+                >
+                    {
+                        props.hardMode ?
                             <Ionicons name="checkmark-circle-outline" size={32} color={props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor} /> :
                             <Ionicons name="ellipse-outline" size={32} color={props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor} />
                     }
