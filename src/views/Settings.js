@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { StyleSheet, Text, View, Pressable, Dimensions } from 'react-native';
 import { Overlay } from 'react-native-elements'
@@ -8,7 +8,8 @@ const { width, height } = Dimensions.get('window');
 
 const Settings = (props) => {
 
-    const [wordLengthCopy, setWordLengthCopy] = useState(4);
+    const [wordLengthCopy, setWordLengthCopy] = useState(props.wordLength);
+
 
     return (
         <Overlay overlayStyle={{ backgroundColor: props.theme === 'light' ? 'white' : '#121213', width: '75%' }} isVisible={props.showSettingsOverlay} onBackdropPress={() => { props.toggleSettingsOverlay(false) }}>
@@ -54,7 +55,7 @@ const Settings = (props) => {
             <View style={styles.setting}>
                 <Text style={[styles.settingScreenText, { color: props.theme === 'light' ? 'black' : 'white' }]}>Word Length</Text>
                 <Picker
-                    selectedValue={wordLengthCopy}
+                    selectedValue={wordLengthCopy.toString()}
                     onValueChange={(itemValue, itemIndex) => {
                         props.changeWordLength(itemValue);
                         setWordLengthCopy(itemValue)
