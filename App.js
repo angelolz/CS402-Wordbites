@@ -11,6 +11,7 @@ var wordBites = () => {
     const [showSettingsOverlay, toggleSettingsOverlay] = useState(false);
 
     //settings
+    const [hardMode, toggleHardMode] = useState(true);
     const [theme, changeTheme] = useState("light")
     const [colorblind, toggleColorblind] = useState(false);
     const [swapKeys, toggleSwap] = useState(false)
@@ -21,6 +22,8 @@ var wordBites = () => {
                 return <MainMenu
                     view={curView}
                     setView={setView}
+                    hardMode={hardMode}
+                    toggleHardMode={toggleHardMode}
                     theme={theme}
                     changeTheme={changeTheme}
                     colorblind={colorblind}
@@ -33,6 +36,8 @@ var wordBites = () => {
             case Screen.GAME:
                 return <GameBoard
                     setView={setView}
+                    hardMode={hardMode}
+                    toggleHardMode={toggleHardMode}
                     theme={theme}
                     changeTheme={changeTheme}
                     colorblind={colorblind}
@@ -51,6 +56,8 @@ var wordBites = () => {
                 return <MainMenu
                     view={curView}
                     setView={setView}
+                    hardMode={hardMode}
+                    toggleHardMode={toggleHardMode}
                     theme={theme}
                     changeTheme={changeTheme}
                     colorblind={colorblind}

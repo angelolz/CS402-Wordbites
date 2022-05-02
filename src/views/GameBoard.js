@@ -40,7 +40,6 @@ const GameBoard = (props) => {
             initArray.push({ key: `row_${i}`, wordArray });
         }
 
-        console.log(initArray)
         updateGuesses(initArray)
     }
 
@@ -52,40 +51,58 @@ const GameBoard = (props) => {
         setWord(chosenWord);
     }
 
-    function checkGuess() {
-        var currentGuesses = [...guesses];
-        var currentGuess = currentGuesses[numGuesses].wordArray;
+    function showToast(text) {
+        Toast.show(text, {
+            duration: Toast.durations.SHORT,
+            position: Toast.positions.TOP,
+            animation: true,
+            shadow: true,
+            hideOnPress: true,
+            backgroundColor: props.theme === 'light' ? 'black' : 'white',
+            textColor: props.theme === 'light' ? 'white' : 'black'
+        })
+    }
 
+    function checkGuess() {
+        var tempWord = [...word];
+        const currentGuesses = [...guesses];
+        const currentGuess = currentGuesses[numGuesses].wordArray;
+        const guess = currentGuess.map((e) => { return e.key; }).join('');
+
+        //if game is no longer in progress, don't check guess
         if (gameState !== "IN_PROGRESS") return false;
 
-        if (!guesses[numGuesses].wordArray.every((e) => e.key !== "")) {
-            Toast.show('Not all letters are filled in!', {
-                duration: Toast.durations.SHORT,
-                position: Toast.positions.TOP,
-                animation: true,
-                shadow: true,
-                hideOnPress: true,
-                backgroundColor: props.theme === 'light' ? 'black' : 'white',
-                textColor: props.theme === 'light' ? 'white' : 'black'
-            })
+        //check if all letters are filled in
+        if (guess.length != wordLength) {
+            showToast('Not all letters are filled in!');
             return false;
         }
 
-        var guess = currentGuess.map((e) => { return e.key; }).join("");
+        //check if guess is a valid word
         if (!dictionary.includes(guess.toLowerCase())) {
-            Toast.show("That's not a valid word!", {
-                duration: Toast.durations.SHORT,
-                position: Toast.positions.TOP,
-                animation: true,
-                shadow: true,
-                hideOnPress: true,
-                backgroundColor: props.theme === 'light' ? 'black' : 'white',
-                textColor: props.theme === 'light' ? 'white' : 'black'
-            })
+            showToast("That's not a valid word!");
             return false;
         }
 
-        var tempWord = [...word];
+        //hard mode checks
+        if (props.hardMode && numGuesses > 0) {
+            const requiredLetters = guesses[numGuesses - 1].wordArray;
+            for (var i = 0; i < requiredLetters.length; i++) {
+                switch (requiredLetters[i].state) {
+                    case KeyState.close:
+                        if (guess.indexOf(requiredLetters[i].key) == -1) {
+                            showToast(`Your guess must contain an ${requiredLetters[i].key}`)
+                            return false;
+                        }
+                    case KeyState.correct:
+                        if (guess.charAt(i) !== requiredLetters[i].key) {
+                            showToast(`Letter in position ${i + 1} must be a ${requiredLetters[i].key}`)
+                            return false;
+                        }
+                }
+            }
+        }
+
         for (var i = 0; i < word.length; i++) {
             if (tempWord[i] === currentGuess[i].key) {
                 currentGuess[i].state = KeyState.correct;
