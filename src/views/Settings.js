@@ -3,7 +3,9 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { StyleSheet, Text, View, Pressable, Dimensions } from 'react-native';
 import { Overlay } from 'react-native-elements'
 import { StatusBar } from 'expo-status-bar';
+
 import { ColorSchemes } from '../constants/Constants'
+import { showToast } from '../constants/Utils';
 
 const { width, height } = Dimensions.get('window');
 
@@ -20,14 +22,21 @@ const Settings = (props) => {
             </View>
             <View style={styles.setting}>
                 <View style={styles.settingText}>
-                    <Text includeFontPadding={true} textAlignVertical={'center'} style={[styles.settingTitleText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>Hard Mode</Text>
-                    <Text includeFontPadding={true} textAlignVertical={'center'} style={[styles.settingDescText, { color: props.theme === 'light' ? ColorSchemes.light.text2Color : ColorSchemes.dark.text2Color }]}>Revealed hints must be used in next guesses</Text>
+                    <Text style={[styles.settingTitleText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>Hard Mode</Text>
+                    <Text style={[styles.settingDescText, { color: props.theme === 'light' ? ColorSchemes.light.text2Color : ColorSchemes.dark.text2Color }]}>Revealed hints must be used in next guesses</Text>
                 </View>
-                <Pressable style={styles.button} onPress={() => props.theme === 'light' ? props.changeTheme('dark') : props.changeTheme('light')}>
+                <Pressable style={styles.button} onPress={() => {
+                    if (props.numGuesses == undefined || props.numGuesses === 0)
+                        props.toggleHardMode(!props.hardMode)
+                    else
+                        showToast('Hard mode can only be changed at the start of the round', props.theme)
+                }}
+
+                >
                     {
-                        props.theme === 'light' ?
-                            <Ionicons name="ellipse-outline" size={32} color={props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor} /> :
-                            <Ionicons name="checkmark-circle-outline" size={32} color={props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor} />
+                        props.hardMode ?
+                            <Ionicons name="checkmark-circle-outline" size={32} color={props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor} /> :
+                            <Ionicons name="ellipse-outline" size={32} color={props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor} />
                     }
                 </Pressable>
             </View>

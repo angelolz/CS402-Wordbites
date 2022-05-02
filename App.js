@@ -11,7 +11,7 @@ var wordBites = () => {
     const [showSettingsOverlay, toggleSettingsOverlay] = useState(false);
 
     //settings
-    const [hardMode, toggleHardMode] = useState(true);
+    const [hardMode, toggleHardMode] = useState(false);
     const [theme, changeTheme] = useState("light")
     const [colorblind, toggleColorblind] = useState(false);
     const [swapKeys, toggleSwap] = useState(false)

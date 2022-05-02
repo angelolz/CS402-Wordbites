@@ -12,6 +12,8 @@ const MainMenu = (props) => {
             {props.showSettingsOverlay ?
                 <Settings
                     toggleSettingsOverlay={props.toggleSettingsOverlay}
+                    hardMode={props.hardMode}
+                    toggleHardMode={props.toggleHardMode}
                     theme={props.theme}
                     changeTheme={props.changeTheme}
                     colorblind={props.colorblind}

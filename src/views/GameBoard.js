@@ -10,6 +10,7 @@ import Keyboard from '../components/Keyboard';
 import GameGrid from '../components/GameGrid';
 import GameControls from '../components/GameControls';
 import { KeyState, ColorSchemes } from '../constants/Constants';
+import { showToast } from '../constants/Utils';
 import { dictionary, commonWords } from '../constants/WordList';
 
 const GameBoard = (props) => {
@@ -51,18 +52,6 @@ const GameBoard = (props) => {
         setWord(chosenWord);
     }
 
-    function showToast(text) {
-        Toast.show(text, {
-            duration: Toast.durations.SHORT,
-            position: Toast.positions.TOP,
-            animation: true,
-            shadow: true,
-            hideOnPress: true,
-            backgroundColor: props.theme === 'light' ? 'black' : 'white',
-            textColor: props.theme === 'light' ? 'white' : 'black'
-        })
-    }
-
     function checkGuess() {
         var tempWord = [...word];
         const currentGuesses = [...guesses];
@@ -74,13 +63,13 @@ const GameBoard = (props) => {
 
         //check if all letters are filled in
         if (guess.length != wordLength) {
-            showToast('Not all letters are filled in!');
+            showToast('Not all letters are filled in!', props.theme);
             return false;
         }
 
         //check if guess is a valid word
         if (!dictionary.includes(guess.toLowerCase())) {
-            showToast("That's not a valid word!");
+            showToast("That's not a valid word!", props.theme);
             return false;
         }
 
@@ -91,12 +80,12 @@ const GameBoard = (props) => {
                 switch (requiredLetters[i].state) {
                     case KeyState.close:
                         if (guess.indexOf(requiredLetters[i].key) == -1) {
-                            showToast(`Your guess must contain an ${requiredLetters[i].key}`)
+                            showToast(`Your guess must contain an ${requiredLetters[i].key}`, props.theme)
                             return false;
                         }
                     case KeyState.correct:
                         if (guess.charAt(i) !== requiredLetters[i].key) {
-                            showToast(`Letter in position ${i + 1} must be a ${requiredLetters[i].key}`)
+                            showToast(`Letter in position ${i + 1} must be a ${requiredLetters[i].key}`, props.theme)
                             return false;
                         }
                 }
@@ -171,6 +160,9 @@ const GameBoard = (props) => {
             {props.showSettingsOverlay ?
                 <Settings
                     toggleSettingsOverlay={props.toggleSettingsOverlay}
+                    numGuesses={numGuesses}
+                    hardMode={props.hardMode}
+                    toggleHardMode={props.toggleHardMode}
                     theme={props.theme}
                     changeTheme={props.changeTheme}
                     colorblind={props.colorblind}
