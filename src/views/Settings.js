@@ -64,7 +64,11 @@ const Settings = (props) => {
             <View style={styles.setting}>
                 <View style={styles.settingText}>
                     <Text style={[styles.settingTitleText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>Hard Mode</Text>
-                    <Text style={[styles.settingDescText, { color: props.theme === 'light' ? ColorSchemes.light.text2Color : ColorSchemes.dark.text2Color }]}>Revealed hints must be used in next guesses</Text>
+                    {
+                        props.numGuesses != undefined && props.numGuesses > 0 ?
+                            <Text style={[styles.settingDescText, { color: 'red' }]}>Disabled during mid-game</Text>
+                            : <Text style={[styles.settingDescText, { color: props.theme === 'light' ? ColorSchemes.light.text2Color : ColorSchemes.dark.text2Color }]}>Revealed hints must be used in next guesses</Text>
+                    }
                 </View>
                 <Pressable style={styles.button} onPress={() => {
                     if (props.numGuesses == undefined || props.numGuesses === 0)
@@ -72,7 +76,6 @@ const Settings = (props) => {
                     else
                         showToast('Hard mode can only be changed at the start of the round', props.theme)
                 }}
-
                 >
                     {
                         props.hardMode ?
@@ -83,15 +86,19 @@ const Settings = (props) => {
             </View>
             {props.changeWordLength ?
                 <View style={styles.setting}>
-                    <Text style={[styles.settingScreenText, { color: props.guesses > 0 ? "red" : (props.theme === 'light' ? 'black' : 'white') }]}>
-                        {props.guesses > 0 ? "Disabled during round" : "Word length"}
-                    </Text>
+                    <View style={styles.settingText}>
+                        <Text style={[styles.settingTitleText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>Word Length</Text>
+                        {
+                            props.guesses > 0 ?
+                                <Text style={[styles.settingDescText, { color: 'red' }]}>Disabled during mid-game</Text>
+                                : null
+                        }
+                    </View>
                     <Picker
                         selectedValue={wordLengthCopy.toString()}
                         onValueChange={(itemValue, itemIndex) => {
                             props.changeWordLength(itemValue);
                             setWordLengthCopy(itemValue)
-                            setGuessCopy(0);
                         }}
                         enabled={props.guesses > 0 ? false : true}
                         mode="dropdown"
