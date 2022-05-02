@@ -3,18 +3,12 @@ import { StyleSheet, Text, View, Pressable, Dimensions } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { DataTable } from 'react-native-paper';
 import { Screen, ColorSchemes } from '../constants/Constants';
+import { getRatio } from '../constants/Utils'
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 const { width, height } = Dimensions.get('window');
 
 const StatsScreen = (props) => {
-    function getRatio(stat) {
-        if (stat.played === 0)
-            return '0.00%'
-        else
-            return `${parseFloat(((stat.wins * 1.0 / stat.played) * 100).toFixed(2))}%`
-    }
-
     function getCell(text, numeric) {
         if (numeric) {
             return (
@@ -66,6 +60,7 @@ const StatsScreen = (props) => {
                 </Pressable>
             </View>
             <Text style={[styles.title, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>Stats</Text>
+            <Text style={[styles.subTitle, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>Word Length can be changed at the in-game settings.</Text>
             <View>
                 <DataTable style={styles.table}>
                     <DataTable.Header>
@@ -137,7 +132,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: ((width > height) ? width / 15 : height / 30),
         textAlign: 'center',
-        paddingHorizontal: 10
+    },
+    subTitle: {
+        textAlign: 'center'
     },
     backButton: {
         margin: 10,
