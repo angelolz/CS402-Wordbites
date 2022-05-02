@@ -9,7 +9,7 @@ import Settings from './Settings';
 import Keyboard from '../components/Keyboard';
 import GameGrid from '../components/GameGrid';
 import GameControls from '../components/GameControls';
-import { KeyState } from '../constants/Constants';
+import { KeyState, ColorSchemes } from '../constants/Constants';
 import { dictionary, commonWords } from '../constants/WordList';
 
 const GameBoard = (props) => {
@@ -151,8 +151,8 @@ const GameBoard = (props) => {
     function winText() {
         return (
             <>
-                <Text style={[styles.resultText, { color: props.theme === 'light' ? 'black' : 'white', }]}>You Won!</Text>
-                <Text style={[styles.flavorText, { color: props.theme === 'light' ? 'black' : 'white', }]}>You got it in {numGuesses} {numGuesses == 1 ? 'try' : 'tries'}!</Text>
+                <Text style={[styles.resultText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>You Won!</Text>
+                <Text style={[styles.flavorText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>You got it in {numGuesses} {numGuesses == 1 ? 'try' : 'tries'}!</Text>
             </>
         )
     }
@@ -161,13 +161,13 @@ const GameBoard = (props) => {
         return (
             <>
                 <Text style={styles.resultText}>You Lost!</Text>
-                <Text style={[styles.flavorText, { color: props.theme === 'light' ? 'black' : 'white', }]}>You'll get it next time!</Text>
+                <Text style={[styles.flavorText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor, }]}>You'll get it next time!</Text>
             </>
         )
     }
 
     return (
-        <SafeAreaView style={[styles.container, { backgroundColor: props.theme === 'light' ? 'white' : '#121213' }]}>
+        <SafeAreaView style={[styles.container, { backgroundColor: props.theme === 'light' ? ColorSchemes.light.bgColor : ColorSchemes.dark.bgColor }]}>
             {props.showSettingsOverlay ?
                 <Settings
                     toggleSettingsOverlay={props.toggleSettingsOverlay}
@@ -180,7 +180,7 @@ const GameBoard = (props) => {
                 /> : null
             }
             <Overlay
-                overlayStyle={{ backgroundColor: props.theme === 'light' ? 'white' : '#121213', width: '75%' }}
+                overlayStyle={{ backgroundColor: props.theme === 'light' ? ColorSchemes.light.bgColor : ColorSchemes.dark.bgColor, width: '75%' }}
                 isVisible={showResultsOverlay}
                 onBackdropPress={toggleResultsOverlay}
             >
@@ -217,7 +217,7 @@ const GameBoard = (props) => {
                 swapKeys={props.swapKeys}
             />
             <StatusBar
-                backgroundColor={props.theme === 'light' ? 'white' : '#121213'}
+                backgroundColor={props.theme === 'light' ? ColorSchemes.light.bgColor : ColorSchemes.dark.bgColor}
                 style={props.theme === 'light' ? 'dark' : 'light'}
                 translucent={false}
             />

@@ -1,5 +1,20 @@
 import { StyleSheet } from 'react-native';
 
+const ColorSchemes = Object.freeze({
+    light: {
+        bgColor: 'white',
+        toneColor: '#d3d6da',
+        tone2Color: '#d3d6da',
+        textColor: 'black'
+    },
+    dark: {
+        bgColor: '#121213',
+        toneColor: '#3a3a3c',
+        tone2Color: '#818384',
+        textColor: 'white'
+    }
+});
+
 const SharedStyles = StyleSheet.create({});
 
 const KeyState = Object.freeze({
@@ -24,4 +39,4 @@ const Screen = Object.freeze({
     ACCOUNT: 3
 });
 
-module.exports = { KeyState, StateColor, Screen, SharedStyles }
+module.exports = { KeyState, StateColor, Screen, ColorSchemes, SharedStyles }

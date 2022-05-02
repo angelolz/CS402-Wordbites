@@ -1,17 +1,17 @@
 import React from 'react';
-import { StyleSheet, Text, SafeAreaView, View, Dimensions, FlatList } from 'react-native';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
 
-import { KeyState, StateColor } from '../constants/Constants';
+import { KeyState, StateColor, ColorSchemes } from '../constants/Constants';
 
 const GameGrid = (props) => {
     const boxItem = (rowNum, i) => {
         let bgColor;
         let textColor;
-        let borderColor = props.theme === 'light' ? '#d3d6da' : '#3a3a3c';
+        let borderColor = props.theme === 'light' ? ColorSchemes.light.toneColor : ColorSchemes.dark.toneColor;
         switch (props.guesses[rowNum].wordArray[i].state) {
             case KeyState.unused:
                 bgColor = 'rgba(0,0,0,0)';
-                textColor = props.theme === "light" ? 'black' : 'white';
+                textColor = props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor;
                 break;
             case KeyState.wrong:
                 bgColor = StateColor.wrong
