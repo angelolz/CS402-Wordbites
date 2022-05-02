@@ -10,16 +10,18 @@ import Keyboard from '../components/Keyboard';
 import GameGrid from '../components/GameGrid';
 import GameControls from '../components/GameControls';
 import { KeyState } from '../constants/Constants';
-import { dictionary, commonWords } from '../constants/WordList';
+import { dictionary, commonWords4, commonWords5, commonWords6, commonWords7, commonWords8 } from '../constants/WordList';
+
 
 const GameBoard = (props) => {
-    const [wordLength, setWordLength] = useState(5);
+    const [wordLength, setWordLength] = useState(4);
     const [maxGuesses, setMaxGuesses] = useState(6);
     const [numGuesses, incrementGuesses] = useState(0);
     const [guesses, updateGuesses] = useState([]);
     const [word, setWord] = useState(null);
     const [gameState, setGameState] = useState("IN_PROGRESS");
     const [showResultsOverlay, toggleResultsOverlay] = useState(false);
+    const [commonWords, setCommonWords] = useState(commonWords4);
 
     //game state effect
     useEffect(() => {
@@ -40,7 +42,6 @@ const GameBoard = (props) => {
             initArray.push({ key: `row_${i}`, wordArray });
         }
 
-        console.log(initArray)
         updateGuesses(initArray)
     }
 
@@ -149,6 +150,29 @@ const GameBoard = (props) => {
         )
     }
 
+    const changeWordLength = (newLength) => {
+        const length = parseInt(newLength);
+        setWordLength(length);
+        switch(length){
+            case 4:
+                setCommonWords([...commonWords4]);
+                break;
+            case 5:
+                setCommonWords([...commonWords5]);
+                break;
+            case 6:
+                setCommonWords([...commonWords6]);
+                break;
+            case 7:
+                setCommonWords([...commonWords7]);
+                break;
+            case 8:
+                setCommonWords([...commonWords8]);
+                break;
+        }
+        resetGame();
+    }
+
     return (
         <SafeAreaView style={[styles.container, { backgroundColor: props.theme === 'light' ? 'white' : '#121213' }]}>
             {props.showSettingsOverlay ?
@@ -160,6 +184,8 @@ const GameBoard = (props) => {
                     toggleColorblind={props.toggleColorblind}
                     swapKeys={props.swapKeys}
                     toggleSwap={props.toggleSwap}
+                    changeWordLength={changeWordLength}
+                    wordLength={wordLength}
                 /> : null
             }
             <Overlay
