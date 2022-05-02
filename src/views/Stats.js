@@ -8,6 +8,40 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 const { width, height } = Dimensions.get('window');
 
 const StatsScreen = (props) => {
+
+    function getStatsRow(length) {
+        return (
+            <DataTable.Row style={{ borderBottomColor: props.theme === 'light' ? ColorSchemes.light.toneColor : ColorSchemes.dark.toneColor }}>
+                <DataTable.Cell>
+                    <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>{length} Letter Stats</Text>
+                </DataTable.Cell>
+                <DataTable.Cell numeric>
+                    <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>{props.stats[`${length}`].wins}</Text>
+                </DataTable.Cell>
+                <DataTable.Cell numeric>
+                    <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>{props.stats[`${length}`].played - props.stats[`${length}`].wins}</Text>
+                </DataTable.Cell>
+                <DataTable.Cell numeric>
+                    <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>{props.stats[`${length}`].wins / props.stats[`${length}`].played - props.stats[`${length}`].wins}</Text>
+                </DataTable.Cell>
+            </DataTable.Row>
+        )
+    }
+
+    function getStreakRow(length) {
+        return (<DataTable.Row style={{ borderBottomColor: props.theme === 'light' ? ColorSchemes.light.toneColor : ColorSchemes.dark.toneColor }}>
+            <DataTable.Cell>
+                <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>{length} Letter Streak</Text>
+            </DataTable.Cell>
+            <DataTable.Cell numeric>
+                <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>{props.stats[`${length}`].streak}</Text>
+            </DataTable.Cell>
+            <DataTable.Cell numeric>
+                <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>{props.stats[`${length}`].top_streak}</Text>
+            </DataTable.Cell>
+        </DataTable.Row>)
+    }
+
     return (
         <View style={[styles.container, { backgroundColor: props.theme === 'light' ? ColorSchemes.light.bgColor : ColorSchemes.dark.bgColor }]}>
             <View style={styles.backButton}>
@@ -28,64 +62,18 @@ const StatsScreen = (props) => {
                         <DataTable.Title numeric>
                             <Text style={[styles.headerText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>Loses</Text>
                         </DataTable.Title>
+                        <DataTable.Title numeric>
+                            <Text style={[styles.headerText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>Ratio</Text>
+                        </DataTable.Title>
                     </DataTable.Header>
 
-                    <DataTable.Row style={{ borderBottomColor: props.theme === 'light' ? ColorSchemes.light.toneColor : ColorSchemes.dark.toneColor }}>
-                        <DataTable.Cell>
-                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>4 Letter Stats</Text>
-                        </DataTable.Cell>
-                        <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>125</Text>
-                        </DataTable.Cell>
-                        <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>102</Text>
-                        </DataTable.Cell>
-                    </DataTable.Row>
-                    <DataTable.Row style={{ borderBottomColor: props.theme === 'light' ? ColorSchemes.light.toneColor : ColorSchemes.dark.toneColor }}>
-                        <DataTable.Cell>
-                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>5 Letter Stats</Text>
-                        </DataTable.Cell>
-                        <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>420</Text>
-                        </DataTable.Cell>
-                        <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>104</Text>
-                        </DataTable.Cell>
-                    </DataTable.Row>
-                    <DataTable.Row style={{ borderBottomColor: props.theme === 'light' ? ColorSchemes.light.toneColor : ColorSchemes.dark.toneColor }}>
-                        <DataTable.Cell>
-                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>6 Letter Stats</Text>
-                        </DataTable.Cell>
-                        <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>40</Text>
-                        </DataTable.Cell>
-                        <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>15</Text>
-                        </DataTable.Cell>
-                    </DataTable.Row>
-                    <DataTable.Row style={{ borderBottomColor: props.theme === 'light' ? ColorSchemes.light.toneColor : ColorSchemes.dark.toneColor }}>
-                        <DataTable.Cell>
-                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>7 Letter Stats</Text>
-                        </DataTable.Cell>
-                        <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>25</Text>
-                        </DataTable.Cell>
-                        <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>20</Text>
-                        </DataTable.Cell>
-                    </DataTable.Row>
-                    <DataTable.Row style={{ borderBottomColor: props.theme === 'light' ? ColorSchemes.light.toneColor : ColorSchemes.dark.toneColor }}>
-                        <DataTable.Cell>
-                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>8 Letter Stats</Text>
-                        </DataTable.Cell>
-                        <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>0</Text>
-                        </DataTable.Cell>
-                        <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>0</Text>
-                        </DataTable.Cell>
-                    </DataTable.Row>
+                    {getStatsRow(4)}
+                    {getStatsRow(5)}
+                    {getStatsRow(6)}
+                    {getStatsRow(7)}
+                    {getStatsRow(8)}
                 </DataTable>
+
 
                 <DataTable style={styles.table}>
                     <DataTable.Header>
@@ -99,61 +87,12 @@ const StatsScreen = (props) => {
                             <Text style={[styles.headerText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>Top</Text>
                         </DataTable.Title>
                     </DataTable.Header>
-                    <DataTable.Row style={{ borderBottomColor: props.theme === 'light' ? ColorSchemes.light.toneColor : ColorSchemes.dark.toneColor }}>
-                        <DataTable.Cell>
-                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>4 Letter Streak</Text>
-                        </DataTable.Cell>
-                        <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>102</Text>
-                        </DataTable.Cell>
-                        <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>142</Text>
-                        </DataTable.Cell>
-                    </DataTable.Row>
-                    <DataTable.Row style={{ borderBottomColor: props.theme === 'light' ? ColorSchemes.light.toneColor : ColorSchemes.dark.toneColor }}>
-                        <DataTable.Cell>
-                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>5 Letter Streak</Text>
-                        </DataTable.Cell>
-                        <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>229</Text>
-                        </DataTable.Cell>
-                        <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>572</Text>
-                        </DataTable.Cell>
-                    </DataTable.Row>
-                    <DataTable.Row style={{ borderBottomColor: props.theme === 'light' ? ColorSchemes.light.toneColor : ColorSchemes.dark.toneColor }}>
-                        <DataTable.Cell >
-                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>6 Letter Streak</Text>
-                        </DataTable.Cell>
-                        <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>32</Text>
-                        </DataTable.Cell>
-                        <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>79</Text>
-                        </DataTable.Cell>
-                    </DataTable.Row>
-                    <DataTable.Row style={{ borderBottomColor: props.theme === 'light' ? ColorSchemes.light.toneColor : ColorSchemes.dark.toneColor }}>
-                        <DataTable.Cell>
-                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>7 Letter Streak</Text>
-                        </DataTable.Cell>
-                        <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>2</Text>
-                        </DataTable.Cell>
-                        <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>3</Text>
-                        </DataTable.Cell>
-                    </DataTable.Row>
-                    <DataTable.Row style={{ borderBottomColor: props.theme === 'light' ? ColorSchemes.light.toneColor : ColorSchemes.dark.toneColor }}>
-                        <DataTable.Cell>
-                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>8 Letter Streak</Text>
-                        </DataTable.Cell>
-                        <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>0</Text>
-                        </DataTable.Cell>
-                        <DataTable.Cell numeric>
-                            <Text style={{ color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }}>0</Text>
-                        </DataTable.Cell>
-                    </DataTable.Row>
+
+                    {getStreakRow(4)}
+                    {getStreakRow(5)}
+                    {getStreakRow(6)}
+                    {getStreakRow(7)}
+                    {getStreakRow(8)}
                 </DataTable>
             </View>
             <StatusBar
