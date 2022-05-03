@@ -1,5 +1,38 @@
 import { StyleSheet } from 'react-native';
 
+const emptyStats = {
+    4: {
+        wins: 0,
+        played: 0,
+        streak: 0,
+        top_streak: 0
+    },
+    5: {
+        wins: 0,
+        played: 0,
+        streak: 0,
+        top_streak: 0
+    },
+    6: {
+        wins: 0,
+        played: 0,
+        streak: 0,
+        top_streak: 0
+    },
+    7: {
+        wins: 0,
+        played: 0,
+        streak: 0,
+        top_streak: 0
+    },
+    8: {
+        wins: 0,
+        played: 0,
+        streak: 0,
+        top_streak: 0
+    },
+}
+
 const ColorSchemes = Object.freeze({
     light: {
         bgColor: 'white',
@@ -42,4 +75,4 @@ const Screen = Object.freeze({
     ACCOUNT: 3
 });
 
-module.exports = { KeyState, StateColor, Screen, ColorSchemes, SharedStyles }
+module.exports = { emptyStats, KeyState, StateColor, Screen, ColorSchemes, SharedStyles }

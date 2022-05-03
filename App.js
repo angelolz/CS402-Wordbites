@@ -3,12 +3,13 @@ import { RootSiblingParent } from 'react-native-root-siblings';
 
 import MainMenu from './src/views/MainMenu';
 import GameBoard from './src/views/GameBoard';
-import { Screen } from './src/constants/Constants';
+import { emptyStats, Screen } from './src/constants/Constants';
 import StatsScreen from './src/views/Stats';
 
 var wordBites = () => {
     const [curView, setView] = useState(Screen.MAIN_MENU);
     const [showSettingsOverlay, toggleSettingsOverlay] = useState(false);
+    const [stats, updateStats] = useState(emptyStats);
 
     //settings
     const [hardMode, toggleHardMode] = useState(false);
@@ -36,6 +37,8 @@ var wordBites = () => {
             case Screen.GAME:
                 return <GameBoard
                     setView={setView}
+                    stats={stats}
+                    updateStats={updateStats}
                     hardMode={hardMode}
                     toggleHardMode={toggleHardMode}
                     theme={theme}
@@ -51,6 +54,7 @@ var wordBites = () => {
                 return <StatsScreen
                     setView={setView}
                     theme={theme}
+                    stats={stats}
                 />
             default:
                 return <MainMenu

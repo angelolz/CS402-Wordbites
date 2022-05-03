@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Toast from 'react-native-root-toast';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { StyleSheet, Text, SafeAreaView, Pressable } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, Pressable, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Overlay } from 'react-native-elements'
 
@@ -10,7 +10,7 @@ import Keyboard from '../components/Keyboard';
 import GameGrid from '../components/GameGrid';
 import GameControls from '../components/GameControls';
 import { KeyState, ColorSchemes } from '../constants/Constants';
-import { showToast } from '../constants/Utils';
+import { showToast, getRatio } from '../constants/Utils';
 import { dictionary, commonWords4, commonWords5, commonWords6, commonWords7, commonWords8 } from '../constants/WordList';
 
 const GameBoard = (props) => {
@@ -120,12 +120,28 @@ const GameBoard = (props) => {
 
         //check if win or lose
         if (guesses[numGuesses].wordArray.every(e => e.state == KeyState.correct)) {
-            console.log("you win!")
-            setGameState("WON")
+            console.log("you win!");
+
+            var newStats = { ...props.stats };
+            newStats[`${wordLength}`].wins++;
+            newStats[`${wordLength}`].played++;
+            newStats[`${wordLength}`].streak++;
+
+            if (newStats[`${wordLength}`].streak > newStats[`${wordLength}`].top_streak)
+                newStats[`${wordLength}`].top_streak = newStats[`${wordLength}`].streak;
+
+            props.updateStats(newStats);
+            setGameState("WON");
         }
 
         else if (numGuesses + 1 == maxGuesses) {
-            console.log("loser lmfao")
+            console.log("loser lmfao");
+
+            var newStats = { ...props.stats };
+            newStats[`${wordLength}`].played++;
+            newStats[`${wordLength}`].streak = 0;
+
+            props.updateStats(newStats);
             setGameState("LOST");
         }
 
@@ -143,8 +159,8 @@ const GameBoard = (props) => {
     function winText() {
         return (
             <>
-                <Text style={[styles.resultText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>You Won!</Text>
-                <Text style={[styles.flavorText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>You got it in {numGuesses} {numGuesses == 1 ? 'try' : 'tries'}!</Text>
+                <Text style={[styles.titleText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>You Won!</Text>
+                <Text style={[styles.subtitleText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>You got it in {numGuesses} {numGuesses == 1 ? 'try' : 'tries'}!</Text>
             </>
         )
     }
@@ -152,8 +168,8 @@ const GameBoard = (props) => {
     function loseText() {
         return (
             <>
-                <Text style={[styles.resultText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>You Lost!</Text>
-                <Text style={[styles.flavorText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor, }]}>You'll get it next time!</Text>
+                <Text style={[styles.titleText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>You Lost!</Text>
+                <Text style={[styles.subtitleText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor, }]}>You'll get it next time!</Text>
             </>
         )
     }
@@ -206,6 +222,33 @@ const GameBoard = (props) => {
                 onBackdropPress={toggleResultsOverlay}
             >
                 {gameState === "WON" ? winText() : loseText()}
+                <View style={styles.stats}>
+                    <Text style={[styles.titleText, , { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>{wordLength}-Letter Stats</Text>
+                    <View style={styles.statRow}>
+                        <View style={styles.stat}>
+                            <Text style={[styles.titleText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>Wins</Text>
+                            <Text style={[styles.subtitleText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>{props.stats[`${wordLength}`].wins}</Text>
+                        </View>
+                        <View style={styles.stat}>
+                            <Text style={[styles.titleText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>Losses</Text>
+                            <Text style={[styles.subtitleText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>{props.stats[`${wordLength}`].played - props.stats[`${wordLength}`].wins}</Text>
+                        </View>
+                        <View style={styles.stat}>
+                            <Text style={[styles.titleText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>Ratio</Text>
+                            <Text style={[styles.subtitleText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>{getRatio(props.stats[`${wordLength}`])}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.statRow}>
+                        <View style={styles.stat}>
+                            <Text style={[styles.titleText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>Streak</Text>
+                            <Text style={[styles.subtitleText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>{props.stats[`${wordLength}`].streak}</Text>
+                        </View>
+                        <View style={styles.stat}>
+                            <Text style={[styles.titleText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>Top Streak</Text>
+                            <Text style={[styles.subtitleText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>{props.stats[`${wordLength}`].top_streak}</Text>
+                        </View>
+                    </View>
+                </View>
                 <Pressable style={styles.menuButton} onPress={() => { resetGame(); toggleResultsOverlay(false) }}>
                     <Ionicons name="play" size={28} color={'white'} />
                     <Text style={styles.text}>Play Again?</Text>
@@ -248,20 +291,30 @@ const GameBoard = (props) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'column',
         alignContent: 'space-between',
     },
     overlay: {
         flex: 1,
-        flexDirection: 'column'
     },
-    resultText: {
+    stats: {
+        marginVertical: 10,
+    },
+    stat: {
+        textAlign: 'center'
+    },
+    statRow: {
+        marginVertical: 5,
+        flexDirection: 'row',
+        justifyContent: 'space-around'
+    },
+    titleText: {
         fontSize: 24,
         fontWeight: 'bold',
         textAlign: 'center'
     },
-    flavorText: {
-        textAlign: 'center'
+    subtitleText: {
+        textAlign: 'center',
+        fontSize: 18
     },
     menuButton: {
         minWidth: "50%",
