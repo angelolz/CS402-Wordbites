@@ -152,7 +152,7 @@ const GameBoard = (props) => {
     function loseText() {
         return (
             <>
-                <Text style={styles.resultText}>You Lost!</Text>
+                <Text style={[styles.resultText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>You Lost!</Text>
                 <Text style={[styles.flavorText, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor, }]}>You'll get it next time!</Text>
             </>
         )
