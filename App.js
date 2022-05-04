@@ -41,7 +41,7 @@ var wordBites = () => {
             await AsyncStorage.setItem('@stats', JSON.stringify(stats));
         }
         catch(e){
-
+            console.error(e);
         }
     }, [hardMode, theme, colorblind, swapKeys, stats]);
     
@@ -65,7 +65,7 @@ var wordBites = () => {
             }
         }
         catch(e) {
-
+            console.error(e);
         }
     }, []);
 
