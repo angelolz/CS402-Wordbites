@@ -10,6 +10,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "~1.15.0",
     "@react-native-picker/picker": "2.2.1",
     "expo": "^44.0.0",
     "expo-status-bar": "~1.2.0",
@@ -19,8 +20,7 @@
     "react-native-elements": "^3.4.2",
     "react-native-paper": "^4.12.1",
     "react-native-root-toast": "^3.3.0",
-    "react-native-web": "0.17.1",
-    "@react-native-async-storage/async-storage": "~1.15.0"
+    "react-native-web": "0.17.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

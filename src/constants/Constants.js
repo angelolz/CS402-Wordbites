@@ -1,5 +1,3 @@
-import { StyleSheet } from 'react-native';
-
 const emptyStats = {
     4: {
         wins: 0,
@@ -50,8 +48,6 @@ const ColorSchemes = Object.freeze({
     }
 });
 
-const SharedStyles = StyleSheet.create({});
-
 const KeyState = Object.freeze({
     unused: 0,
     wrong: 1,
@@ -75,4 +71,4 @@ const Screen = Object.freeze({
     ACCOUNT: 3
 });
 
-module.exports = { emptyStats, KeyState, StateColor, Screen, ColorSchemes, SharedStyles }
+export { emptyStats, KeyState, StateColor, Screen, ColorSchemes }

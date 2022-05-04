@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import { RootSiblingParent } from 'react-native-root-siblings';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import MainMenu from './src/views/MainMenu';
 import GameBoard from './src/views/GameBoard';
-import { emptyStats, Screen } from './src/constants/Constants';
 import StatsScreen from './src/views/Stats';
-
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { emptyStats, Screen } from './src/constants/Constants';
 
 var wordBites = () => {
     const [curView, setView] = useState(Screen.MAIN_MENU);
@@ -15,7 +14,7 @@ var wordBites = () => {
 
     //settings
     const [hardMode, toggleHardMode] = useState(false);
-    const [theme, changeTheme] = useState("light")
+    const [theme, changeTheme] = useState('light')
     const [colorblind, toggleColorblind] = useState(false);
     const [swapKeys, toggleSwap] = useState(false)
 
@@ -68,7 +67,6 @@ var wordBites = () => {
             console.error(e);
         }
     }, []);
-
 
     function view() {
         switch (curView) {
