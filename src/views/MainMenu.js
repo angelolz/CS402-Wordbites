@@ -30,10 +30,6 @@ const MainMenu = (props) => {
                     <Ionicons name="play-circle" size={28} color={'white'} />
                     <Text style={styles.text} adjustsFontSizeToFit={true}>Play</Text>
                 </Pressable>
-                <Pressable style={styles.menuButton} onPress={() => props.setView(Screen.ACCOUNT)}>
-                    <Ionicons name="person-circle" size={28} color={'white'} />
-                    <Text style={styles.text}>Account</Text>
-                </Pressable>
                 <Pressable style={styles.menuButton} onPress={() => props.setView(Screen.STATS)}>
                     <Ionicons name="stats-chart" size={28} color={'white'} />
                     <Text style={styles.text}>Stats</Text>

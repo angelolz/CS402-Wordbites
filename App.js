@@ -23,15 +23,15 @@ var wordBites = () => {
     const [loadedInitialSettings, setLoadedInitialSettings] = useState(false);
 
     useEffect(async () => {
-        try{
+        try {
             // Skip the first render
-            if(initialRender){
+            if (initialRender) {
                 setInitialRender(false);
                 return;
             }
 
             // Skip if change was due to saved settings
-            if(!loadedInitialSettings){
+            if (!loadedInitialSettings) {
                 return;
             }
             await AsyncStorage.setItem('@hardMode', JSON.stringify(hardMode));
@@ -40,15 +40,15 @@ var wordBites = () => {
             await AsyncStorage.setItem('@swapKeys', JSON.stringify(swapKeys));
             await AsyncStorage.setItem('@stats', JSON.stringify(stats));
         }
-        catch(e){
+        catch (e) {
             console.error(e);
         }
     }, [hardMode, theme, colorblind, swapKeys, stats]);
-    
+
     // Load settings on startup
     useEffect(async () => {
-        try{
-            if(!loadedInitialSettings){
+        try {
+            if (!loadedInitialSettings) {
                 const hardModeStorage = await AsyncStorage.getItem('@hardMode');
                 const themeStorage = await AsyncStorage.getItem('@theme');
                 const colorblindStorage = await AsyncStorage.getItem('@colorblind');
@@ -58,13 +58,13 @@ var wordBites = () => {
                 changeTheme(JSON.parse(themeStorage));
                 toggleColorblind(JSON.parse(colorblindStorage));
                 toggleSwap(JSON.parse(swapKeysStorage));
-                if(JSON.parse(statsStorage)){
+                if (JSON.parse(statsStorage)) {
                     updateStats(JSON.parse(statsStorage));
                 }
                 setLoadedInitialSettings(true);
             }
         }
-        catch(e) {
+        catch (e) {
             console.error(e);
         }
     }, []);
@@ -109,21 +109,6 @@ var wordBites = () => {
                     theme={theme}
                     stats={stats}
                 />
-            default:
-                return <MainMenu
-                    view={curView}
-                    setView={setView}
-                    hardMode={hardMode}
-                    toggleHardMode={toggleHardMode}
-                    theme={theme}
-                    changeTheme={changeTheme}
-                    colorblind={colorblind}
-                    toggleColorblind={toggleColorblind}
-                    swapKeys={swapKeys}
-                    toggleSwap={toggleSwap}
-                    showSettingsOverlay={showSettingsOverlay}
-                    toggleSettingsOverlay={toggleSettingsOverlay}
-                />;
         }
     }
 
