@@ -17,7 +17,8 @@ These were the feature that we planned to add while developing this project, but
 *Note: During the app's development, playtesting was mostly done on mobile phones (16:9 and 16:10 screens). Using this app on tablet-sized devices may not have the best visual experience.*
 
 ### **Alternate Run Instuctions**
-If you want to try out the app without cloning the repo, you could just download Expo Go (from Step 5 above) and use this [link](exp://exp.host/@angelolz/Wordbites?release-channel=default) to try out the app.
+If you want to try out the app without cloning the repo, you could just download Expo Go (from Step 5 above) and use the link below to try out the app.
+```exp://exp.host/@angelolz/Wordbites?release-channel=default```
 
 ## Build instructions
 1) Before building, you would need `eas-cli`. If you don't have it yet, use `npm i -g eas-cli` to install it.
