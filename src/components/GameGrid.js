@@ -1,4 +1,3 @@
-import React from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 
 import { KeyState, StateColor, ColorSchemes } from '../constants/Constants';
@@ -62,7 +61,6 @@ const GameGrid = (props) => {
     return (
         <View style={styles.container}>
             <FlatList
-                contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
                 key={props.wordLength}
                 data={props.guesses}
                 keyExtractor={(item) => item.key}
@@ -76,7 +74,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingHorizontal: 5,
-        justifyContent: 'center',
     },
     row: {
         flexDirection: 'row',
@@ -88,10 +85,8 @@ const styles = StyleSheet.create({
         aspectRatio: 1 / 1,
         borderWidth: 3,
         borderRadius: 5,
-        margin: 2,
-        overflow: 'hidden'
+        margin: 2
     },
-
     text: {
         fontSize: 100
     }

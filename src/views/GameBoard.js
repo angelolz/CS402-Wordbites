@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import Toast from 'react-native-root-toast';
+import { useState, useEffect } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { StyleSheet, Text, SafeAreaView, Pressable, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
@@ -10,7 +9,7 @@ import Keyboard from '../components/Keyboard';
 import GameGrid from '../components/GameGrid';
 import GameControls from '../components/GameControls';
 import { KeyState, ColorSchemes } from '../constants/Constants';
-import { showToast, getRatio } from '../constants/Utils';
+import { showToast, getRatio, moderateScale } from '../constants/Utils';
 import { dictionary, commonWords4, commonWords5, commonWords6, commonWords7, commonWords8 } from '../constants/WordList';
 
 const GameBoard = (props) => {
@@ -194,6 +193,7 @@ const GameBoard = (props) => {
                 setCommonWords([...commonWords8]);
                 break;
         }
+
         resetGame();
     }
 
@@ -217,7 +217,7 @@ const GameBoard = (props) => {
                 /> : null
             }
             <Overlay
-                overlayStyle={{ backgroundColor: props.theme === 'light' ? ColorSchemes.light.bgColor : ColorSchemes.dark.bgColor, width: '75%' }}
+                overlayStyle={[styles.overlay, { backgroundColor: props.theme === 'light' ? ColorSchemes.light.bgColor : ColorSchemes.dark.bgColor }]}
                 isVisible={showResultsOverlay}
                 onBackdropPress={toggleResultsOverlay}
             >
@@ -250,7 +250,7 @@ const GameBoard = (props) => {
                     </View>
                 </View>
                 <Pressable style={styles.menuButton} onPress={() => { resetGame(); toggleResultsOverlay(false) }}>
-                    <Ionicons name="play" size={28} color={'white'} />
+                    <Ionicons name="play" size={moderateScale(20)} color={'white'} />
                     <Text style={styles.text}>Play Again?</Text>
                 </Pressable>
             </Overlay>
@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
         alignContent: 'space-between',
     },
     overlay: {
-        flex: 1,
+        width: moderateScale(300, .35)
     },
     stats: {
         marginVertical: 10,
@@ -308,16 +308,15 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around'
     },
     titleText: {
-        fontSize: 24,
+        fontSize: moderateScale(22, 0.10),
         fontWeight: 'bold',
         textAlign: 'center'
     },
     subtitleText: {
         textAlign: 'center',
-        fontSize: 18
+        fontSize: moderateScale(18, .25)
     },
     menuButton: {
-        minWidth: "50%",
         padding: 10,
         borderRadius: 5,
         marginVertical: 10,
@@ -330,7 +329,7 @@ const styles = StyleSheet.create({
         flex: 1,
         color: 'white',
         fontWeight: 'bold',
-        fontSize: 20,
+        fontSize: moderateScale(20, .25),
         textAlign: 'center',
     }
 });

@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Pressable, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Pressable, ScrollView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { DataTable } from 'react-native-paper';
-import { Screen, ColorSchemes } from '../constants/Constants';
-import { getRatio } from '../constants/Utils'
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-const { width, height } = Dimensions.get('window');
+import { Screen, ColorSchemes } from '../constants/Constants';
+import { getRatio, moderateScale, verticalScale } from '../constants/Utils'
 
 const StatsScreen = (props) => {
     function getCell(text, numeric) {
@@ -56,12 +54,12 @@ const StatsScreen = (props) => {
         <View style={[styles.container, { backgroundColor: props.theme === 'light' ? ColorSchemes.light.bgColor : ColorSchemes.dark.bgColor }]}>
             <View style={styles.backButton}>
                 <Pressable onPress={() => { props.setView(Screen.MAIN_MENU) }}>
-                    <Ionicons name="home-sharp" size={40} color={props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor} />
+                    <Ionicons name="home-sharp" size={moderateScale(40, 0.25)} color={props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor} />
                 </Pressable>
             </View>
             <Text style={[styles.title, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>Stats</Text>
             <Text style={[styles.subTitle, { color: props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor }]}>Word Length can be changed at the in-game settings.</Text>
-            <View>
+            <ScrollView>
                 <DataTable style={styles.table}>
                     <DataTable.Header>
                         <DataTable.Title>
@@ -85,7 +83,6 @@ const StatsScreen = (props) => {
                     {getStatsRow(8)}
                 </DataTable>
 
-
                 <DataTable style={styles.table}>
                     <DataTable.Header>
                         <DataTable.Title>
@@ -105,7 +102,7 @@ const StatsScreen = (props) => {
                     {getStreakRow(7)}
                     {getStreakRow(8)}
                 </DataTable>
-            </View>
+            </ScrollView>
             <StatusBar
                 backgroundColor={props.theme === 'light' ? ColorSchemes.light.bgColor : ColorSchemes.dark.bgColor}
                 style={props.theme === 'light' ? 'dark' : 'light'}
@@ -118,26 +115,28 @@ const StatsScreen = (props) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'column',
         alignContent: 'space-between',
     },
     table: {
         marginVertical: 10
     },
     headerText: {
-        fontSize: 20,
+        fontSize: 26,
         fontWeight: 'bold'
     },
     title: {
         fontWeight: 'bold',
-        fontSize: ((width > height) ? width / 15 : height / 30),
+        fontSize: moderateScale(20),
         textAlign: 'center',
     },
     subTitle: {
         textAlign: 'center'
     },
     backButton: {
-        margin: 10,
+        marginTop: verticalScale(10),
+        paddingHorizontal: 10,
+        paddingTop: 10,
+        paddingBottom: 5,
         flexDirection: 'row',
         alignItems: 'center'
     }

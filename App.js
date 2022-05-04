@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import { RootSiblingParent } from 'react-native-root-siblings';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import MainMenu from './src/views/MainMenu';
 import GameBoard from './src/views/GameBoard';
-import { emptyStats, Screen } from './src/constants/Constants';
 import StatsScreen from './src/views/Stats';
-
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { emptyStats, Screen } from './src/constants/Constants';
 
 var wordBites = () => {
     const [curView, setView] = useState(Screen.MAIN_MENU);
@@ -15,7 +14,7 @@ var wordBites = () => {
 
     //settings
     const [hardMode, toggleHardMode] = useState(false);
-    const [theme, changeTheme] = useState("light")
+    const [theme, changeTheme] = useState('light')
     const [colorblind, toggleColorblind] = useState(false);
     const [swapKeys, toggleSwap] = useState(false)
 
@@ -23,15 +22,15 @@ var wordBites = () => {
     const [loadedInitialSettings, setLoadedInitialSettings] = useState(false);
 
     useEffect(async () => {
-        try{
+        try {
             // Skip the first render
-            if(initialRender){
+            if (initialRender) {
                 setInitialRender(false);
                 return;
             }
 
             // Skip if change was due to saved settings
-            if(!loadedInitialSettings){
+            if (!loadedInitialSettings) {
                 return;
             }
             await AsyncStorage.setItem('@hardMode', JSON.stringify(hardMode));
@@ -40,15 +39,15 @@ var wordBites = () => {
             await AsyncStorage.setItem('@swapKeys', JSON.stringify(swapKeys));
             await AsyncStorage.setItem('@stats', JSON.stringify(stats));
         }
-        catch(e){
+        catch (e) {
             console.error(e);
         }
     }, [hardMode, theme, colorblind, swapKeys, stats]);
-    
+
     // Load settings on startup
     useEffect(async () => {
-        try{
-            if(!loadedInitialSettings){
+        try {
+            if (!loadedInitialSettings) {
                 const hardModeStorage = await AsyncStorage.getItem('@hardMode');
                 const themeStorage = await AsyncStorage.getItem('@theme');
                 const colorblindStorage = await AsyncStorage.getItem('@colorblind');
@@ -58,17 +57,16 @@ var wordBites = () => {
                 changeTheme(JSON.parse(themeStorage));
                 toggleColorblind(JSON.parse(colorblindStorage));
                 toggleSwap(JSON.parse(swapKeysStorage));
-                if(JSON.parse(statsStorage)){
+                if (JSON.parse(statsStorage)) {
                     updateStats(JSON.parse(statsStorage));
                 }
                 setLoadedInitialSettings(true);
             }
         }
-        catch(e) {
+        catch (e) {
             console.error(e);
         }
     }, []);
-
 
     function view() {
         switch (curView) {
@@ -109,21 +107,6 @@ var wordBites = () => {
                     theme={theme}
                     stats={stats}
                 />
-            default:
-                return <MainMenu
-                    view={curView}
-                    setView={setView}
-                    hardMode={hardMode}
-                    toggleHardMode={toggleHardMode}
-                    theme={theme}
-                    changeTheme={changeTheme}
-                    colorblind={colorblind}
-                    toggleColorblind={toggleColorblind}
-                    swapKeys={swapKeys}
-                    toggleSwap={toggleSwap}
-                    showSettingsOverlay={showSettingsOverlay}
-                    toggleSettingsOverlay={toggleSettingsOverlay}
-                />;
         }
     }
 

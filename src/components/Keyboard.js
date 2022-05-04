@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 import { KeyState, StateColor, ColorSchemes } from '../constants/Constants';
-
-const { width, height } = Dimensions.get('window');
+import { moderateScale, verticalScale } from '../constants/Utils';
 
 var allKeys = [
     { key: 'Q', state: KeyState.unused },
@@ -109,6 +108,7 @@ const Keyboard = (props) => {
                 textColor = 'white';
                 break;
         }
+
         return (
             <TouchableOpacity
                 onPress={() => logKey(keyboardKey)} style={[styles.key, { backgroundColor: bgColor }]} key={keyboardKey.key}
@@ -127,7 +127,7 @@ const Keyboard = (props) => {
                 disabled={props.gameState !== 'IN_PROGRESS'}
                 key='enter'
             >
-                <Ionicons name="return-down-back-sharp" size={28} color={props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor} />
+                <Ionicons name="return-down-back-sharp" size={moderateScale(25)} color={props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor} />
             </TouchableOpacity>
         )
     }
@@ -140,7 +140,7 @@ const Keyboard = (props) => {
                 disabled={props.gameState !== 'IN_PROGRESS'}
                 key='erase'
             >
-                <Ionicons name="backspace-outline" size={28} color={props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor} />
+                <Ionicons name="backspace-outline" size={moderateScale(25)} color={props.theme === 'light' ? ColorSchemes.light.textColor : ColorSchemes.dark.textColor} />
             </TouchableOpacity>
         )
     }
@@ -189,24 +189,23 @@ const Keyboard = (props) => {
 
 const styles = StyleSheet.create({
     container: {
-        width: "100%",
         paddingHorizontal: 5,
         marginTop: 5
     },
     keyrow: {
-        flexDirection: 'row',
+        flexDirection: 'row'
     },
     key: {
         flex: 1,
         margin: 2,
-        height: ((width > height) ? width / 12 : height / 12),
+        height: verticalScale(55),
         alignItems: "center",
         justifyContent: "center",
         borderRadius: 5
     },
     text: {
         fontWeight: "bold",
-        fontSize: ((width > height) ? width / 12 : height / 48)
+        fontSize: moderateScale(20)
     }
 });
 
